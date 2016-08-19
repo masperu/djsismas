@@ -16,11 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from apps.administracion.views import VistaInicio
+# from apps.administracion.views import VistaInicio
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', VistaInicio),
+    url(r'^login/', include('apps.administracion.urls')),
     #url(r'^$', ),
     # url(r'^ficha/$', include("apps.ficha.urls", namespace='ficha')),
     # url(r'^persona/$', include("apps.persona.urls", namespace='persona')),

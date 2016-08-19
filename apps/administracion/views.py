@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 
 def VistaInicio(request):
-	return render( request, 'administracion/templates/login.html')
+	return render( request, 'login.html')
