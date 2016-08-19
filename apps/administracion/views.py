@@ -3,5 +3,5 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def HomeView(request):
-	return "Hola mundo"
+def VistaInicio(request):
+	return render( request, 'administracion/templates/login.html')

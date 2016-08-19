@@ -1,0 +1,25 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>
+        {% block maestro_titulo %}
+        {% endblock maestro_titulo %}
+    </title>
+
+    <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}" />
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/custom-style.css' %}">
+
+    {% block maestro_estilos %}
+    {% endblock maestro_estilos %}
+</head>
+<body>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	{% block maestro_scripts %}
+	{% endblock maestro_scripts %}
+</body>
+</html>
