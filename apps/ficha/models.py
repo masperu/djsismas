@@ -1,8 +1,10 @@
 from django.db import models
+from apps.comite.models import Comite
 
 # Create your models here.
 
 class Ficha(models.Model):
+	comite = models.ForeignKey(Comite, on_delete=models.PROTECT)
 	estado = models.CharField(max_length = 20)
 	fechaafiliacion = models.DateField(auto_now_add=True)
 	alcance = mmodels.CharField(max_length = 10)
@@ -20,4 +22,4 @@ class Ficha(models.Model):
 
 	def __str__(self):
 		return self.nombres + " " + self.paterno + " " + self.materno
-		
+				
