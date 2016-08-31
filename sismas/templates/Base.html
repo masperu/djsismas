@@ -11,6 +11,7 @@
 
     <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}" />
 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/custom-style.css' %}">
 
@@ -18,8 +19,20 @@
     {% endblock maestro_estilos %}
 </head>
 <body>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<div class="container">
+    <div class="row">
+        {% block maestro_contenido %}
+
+        {% endblock maestro_contenido %}
+    </div>    
+</div>
+
+    
+
+
 	{% block maestro_scripts %}
 	{% endblock maestro_scripts %}
+
+    <!-- script src="{% static 'js/bootstrap.min.jssss' %}"></script -->
 </body>
 </html>
