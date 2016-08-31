@@ -1,0 +1,54 @@
+{% extends "Base.html" %}
+
+{% load static from staticfiles %}
+
+
+{% block maestro_estilos %}
+
+{% endblock maestro_estilos %}
+
+
+{% block maestro_contenido %}
+
+<div class="col-sm-6">
+	<form class="form-horizontal" role="form" method="post" action="/login/">
+		{% csrf_token %}
+	  <div class="form-group">
+	    <label for="ejemplo_email_3" class="col-lg-2 control-label">Email</label>
+	    <div class="col-lg-10">
+	      <input type="input" class="form-control" id="ejemplo_email_3"
+	             placeholder="Email">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="ejemplo_password_3" class="col-lg-2 control-label">Contraseña</label>
+	    <div class="col-lg-10">
+	      <input type="password" class="form-control" id="ejemplo_password_3" 
+	             placeholder="Contraseña">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-lg-offset-2 col-lg-10">
+	      <div class="checkbox">
+	        <label>
+	          <input type="checkbox"> No cerrar sesión
+	        </label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-lg-offset-2 col-lg-10">
+	      <button type="submit" class="btn btn-default">Entrar</button>
+	    </div>
+	  </div>
+	</form>	
+</div>
+
+    
+
+{% endblock maestro_contenido %}
+
+
+{% block maestro_scripts %}
+
+{% endblock maestro_scripts %}
