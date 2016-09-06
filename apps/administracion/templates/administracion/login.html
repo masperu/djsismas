@@ -1,4 +1,4 @@
-{% extends "Base.html" %}
+{% extends "Base_form.html" %}
 
 {% load static from staticfiles %}
 
@@ -10,30 +10,20 @@
 
 {% block maestro_contenido %}
 
-<div class="col-sm-6">
+<div class="col-sm-6 col-centered ">
 	<form class="form-horizontal" role="form" method="post" action="/login/">
 		{% csrf_token %}
 	  <div class="form-group">
-	    <label for="ejemplo_email_3" class="col-lg-2 control-label">Email</label>
+	    <label for="ejemplo_email_3" class="col-lg-2 control-label">usuario</label>
 	    <div class="col-lg-10">
-	      <input type="input" class="form-control" id="ejemplo_email_3"
-	             placeholder="Email">
+	      <input type="input" class="form-control" id="ejemplo_email_3" name = "usuario" 
+	             placeholder="Ususario">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label for="ejemplo_password_3" class="col-lg-2 control-label">Contraseña</label>
 	    <div class="col-lg-10">
-	      <input type="password" class="form-control" id="ejemplo_password_3" 
-	             placeholder="Contraseña">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <div class="col-lg-offset-2 col-lg-10">
-	      <div class="checkbox">
-	        <label>
-	          <input type="checkbox"> No cerrar sesión
-	        </label>
-	      </div>
+	      <input type="password" class="form-control" id="ejemplo_password_3" name = "password" >
 	    </div>
 	  </div>
 	  <div class="form-group">
@@ -41,6 +31,9 @@
 	      <button type="submit" class="btn btn-default">Entrar</button>
 	    </div>
 	  </div>
+	   <div class="form-group">
+	   	{{msj}}
+	   </div>
 	</form>	
 </div>
 

@@ -1,13 +1,10 @@
 from django.db import models
 from apps.persona.models import *
+from django.contrib.auth.models import User
 # Create your models here.
 
-
-
-
 class Usuario(models.Model):
-	usuario = models.CharField(max_length=45)
-	clave = models.CharField(max_length=45)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	persona = models.ForeignKey(Persona)
 
 	def __str__(self):
@@ -26,16 +23,7 @@ class Perfil(models.Model):
 	rol = models.ForeignKey(Rol)
 
 	def __str__(self):
-		return self.usuario
-
-class Perfil(models.Model):
-	usuario = models.ForeignKey(Usuario)
-	rol = models.ForeignKey(Rol)
-
-	def __str__(self):
 		return self.usuario+' '+self.rol
-
-
 
 class UbigeoPerfil(models.Model):
 	perfil = models.ForeignKey(Perfil)
