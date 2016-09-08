@@ -79,3 +79,11 @@ def MenuEliminar(request, idmenu):
 		return redirect('/login/')
 
 
+def ListaRol(request):
+	if(request.session.get("idusuario", False)):
+		rol = Rol.objects.all()
+		return render(request, 'administracion/roles_grilla.html',{'rol': rol})
+	else:
+		return redirect('/login/')
+
+

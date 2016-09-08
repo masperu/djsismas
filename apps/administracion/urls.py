@@ -15,7 +15,7 @@ urlpatterns = [
 	# 
 
     # ROLES
-    # 
+    url(r'^rol/$', ListaRol , name="lista_rol"),
     # 
     # 
     # 
