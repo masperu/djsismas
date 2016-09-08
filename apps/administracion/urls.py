@@ -8,9 +8,9 @@ urlpatterns = [
     
     # MENUS
     url(r'^menu/$', ListaMenus , name="lista_menu"),
-    url(r'^menu-form/$', MenuAgregar , name="menu-agregar"),
-    url(r'^menu/eliminar/(?P<idmenu>[0-9]+)/$', MenuEliminar , name="menu-eliminar"),
-    # 
+    url(r'^menu/agregar/$', MenuAgregar , name="menu-agregar"),
+    url(r'^menu/eliminar/$', MenuEliminar , name="menu-eliminar"),
+    url(r'^menu/editar/$', MenuEditar , name="menu-editar"),
 	#
 	# 
 

@@ -11,7 +11,7 @@
 
 {% block maestro_contenido %}
 
-   <form class="form-horizontal" role="form" method="post" action="/menu-form/">
+   <form class="form-horizontal" role="form" method="post">
    {% csrf_token %}
    {% for field in form %}
 

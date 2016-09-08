@@ -11,7 +11,7 @@
 {% block maestro_contenido %}
 
 <div class="table-responsive">
-	<a class="btn btn-default" href="/menu-form/" role="button">Agregar</a>
+	<a class="btn btn-default" href="/menu/agregar/" role="button">Agregar</a>
     <table class="table table-hover">
       <thead class="thead-inverse">
         <tr>
@@ -36,10 +36,10 @@
 			<td>{{menu.estado}}</td>
 			<td>{{menu.menupadre|default_if_none:"Sin Padre"}}</td>
 			<td>
-				<a href="#" class="btn btn-primary" role="button">
+				<a href="/menu/editar/?idmenu={{menu.id}}" class="btn btn-primary" role="button">
 					<span class="glyphicon glyphicon-pencil"></span> Editar
 				</a>
-				<a href= "/menu/eliminar/{{menu.id}}"class="btn btn-danger" role="button">
+				<a href= "/menu/eliminar/?idmenu={{menu.id}}"class="btn btn-danger" role="button">
 					<span class="glyphicon glyphicon-trash"></span> Eliminar
 				</a>
 			</td>
@@ -53,34 +53,26 @@
 
     
 
-	
-
-	<!-- Inicio del Paginador -->
-	
 	<nav aria-label="Page navigation">
 		<ul class="pagination">
-			<li>
-			  <a href="#" aria-label="Previous">
-			    <span aria-hidden="true">&laquo;</span>
-			  </a>
-			</li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li>
-			  <a href="#" aria-label="Next">
-			    <span aria-hidden="true">&raquo;</span>
-			  </a>
-			</li>
+
+		    {% if menu.has_previous %}
+		        <li><a href="?page={{ menu.previous_page_number }}">Atras</a></li>
+		    {% endif %}
+
+		   <li>
+		   	<span class="current">
+		        Pagina {{ menu.number }} de {{ menu.paginator.num_pages }}.
+		    </span>
+
+		   </li> 
+
+		    {% if menu.has_next %}
+		        <li><a href="?page={{ menu.next_page_number }}">Siguiente</a></li>
+		    {% endif %}
 		</ul>
 	</nav>
 
-	<!-- Fin del Paginador -->
-
-
-  </div>
 </div>
 
 {% endblock maestro_contenido %}

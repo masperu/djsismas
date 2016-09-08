@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
@@ -43,6 +44,17 @@ def Logout(request):
 def ListaMenus(request):
 	if(request.session.get("idusuario", False)):
 		menu = Menu.objects.all()
+		paginator = Paginator(menu, 3) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			menu = paginator.page(page)
+		except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+			menu = paginator.page(1)
+		except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+			menu = paginator.page(paginator.num_pages)
 		return render(request, 'administracion/menu_grilla.html',{'menu': menu})
 	else:
 		return redirect('/login/')
@@ -68,13 +80,33 @@ def MenuAgregar(request):
 	else:
 		return redirect('/login/')
 
-def MenuEliminar(request, idmenu):
+def MenuEliminar(request):
 	if(request.session.get("idusuario", False)):
+		idmenu = request.GET.get('idmenu')
 		if idmenu :
 			menu = Menu.objects.get(id = idmenu)
 			menu.delete()
 			if menu:
 				return HttpResponseRedirect('/menu/')
+	else:
+		return redirect('/login/')
+
+
+def MenuEditar(request):
+	if(request.session.get("idusuario", False)):
+		idmenu = request.GET.get('idmenu')
+		instance = get_object_or_404(Menu, id=idmenu)
+		form = MenuForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			return redirect(ListaMenus)
+		return render(
+				request, 
+				'administracion/menu_form.html',
+				{
+					'form': form,
+				}
+			)
 	else:
 		return redirect('/login/')
 
