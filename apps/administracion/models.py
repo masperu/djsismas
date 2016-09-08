@@ -31,12 +31,12 @@ class UbigeoPerfil(models.Model):
 
 class Menu(models.Model):
 	nombre = models.CharField(max_length=50)
-	Descripcion = models.CharField(max_length=500)
+	descripcion = models.CharField(max_length=500)
 	ruta = models.CharField(max_length=350)
 	orden = models.IntegerField()
 	estado = models.BooleanField(max_length=50)
-	menupadre = models.ForeignKey('self')
-
+	menupadre = models.ForeignKey('self', blank=True, null=True)
+	
 	def __str__(self):
 		return self.nombre
 

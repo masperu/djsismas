@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from .models import *
+from .forms import *
 
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -36,3 +39,66 @@ def Logout(request):
 		pass
 	logout(request)
 	return redirect('/login/')
+
+def ListaMenus(request):
+	if(request.session.get("idusuario", False)):
+		menu = Menu.objects.all()
+		return render(request, 'administracion/menu_grilla.html',{'menu': menu})
+	else:
+		return redirect('/login/')
+
+def MenuAgregar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			# create a form instance and populate it with data from the request:
+			form = MenuForm(request.POST)
+			# check whether it's valid:
+			if form.is_valid():
+
+				menu = form.save(commit=False)
+				menu.save()
+				form.cleaned_data
+				return redirect(ListaMenus)
+
+			# if a GET (or any other method) we'll create a blank form
+		else:
+			form = MenuForm()
+			return render(request, 'administracion/menu_form.html',{'form':form })
+	
+	else:
+		return redirect('/login/')
+
+def MenuEliminar(request, idmenu):
+	if(request.session.get("idusuario", False)):
+		if idmenu :
+			menu = Menu.objects.get(id = idmenu)
+			menu.delete()
+			if menu:
+				return HttpResponseRedirect('/menu/')
+	else:
+		return redirect('/login/')
+
+
+def ListaRol(request):
+	if(request.session.get("idusuario", False)):
+		rol = Rol.objects.all()
+		return render(request, 'administracion/roles_grilla.html',{'rol': rol})
+	else:
+		return redirect('/login/')
+
+
+def ListaAccesos(request):
+	if(request.session.get("idusuario", False)):
+		acceso = Acceso.objects.all()
+		return render(request, 'administracion/acceso_grilla.html',{'acceso': acceso})
+	else:
+		return redirect('/login/')		
+
+
+def ListaPerfil(request):
+	if(request.session.get("idusuario", False)):
+		perfil = Perfil.objects.all()
+		return render(request, 'administracion/perfil_grilla.html',{'perfil': perfil})
+	else:
+		return redirect('/login/')	
+
