@@ -87,3 +87,18 @@ def ListaRol(request):
 		return redirect('/login/')
 
 
+def ListaAccesos(request):
+	if(request.session.get("idusuario", False)):
+		acceso = Acceso.objects.all()
+		return render(request, 'administracion/acceso_grilla.html',{'acceso': acceso})
+	else:
+		return redirect('/login/')		
+
+
+def ListaPerfil(request):
+	if(request.session.get("idusuario", False)):
+		perfil = Perfil.objects.all()
+		return render(request, 'administracion/perfil_grilla.html',{'perfil': perfil})
+	else:
+		return redirect('/login/')	
+

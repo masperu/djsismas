@@ -23,7 +23,7 @@ urlpatterns = [
     # 
 
     # ACCESOS
-    # 
+ 	url(r'^acceso/$', ListaAccesos , name="lista_accesos"),
     # 
     # 
     # 
@@ -31,7 +31,7 @@ urlpatterns = [
     # 
 
     # PERFIL
-    # 
+ 	url(r'^perfil/$', ListaPerfil , name="lista_perfil"),    
     # 
     # 
     # 
