@@ -13,29 +13,36 @@
 <div class="table-responsive">
 	<a class="btn btn-default" href="/menu-form/" role="button">Agregar</a>
     <table class="table table-hover">
-      <thead>
+      <thead class="thead-inverse">
         <tr>
           <th>#</th>
-          <th>ID</th>
           <th>Nombre</th>
           <th>Descipción</th>
           <th>Ruta</th>
           <th>Orden</th>
           <th>Estado</th>   
           <th>Menú padre</th>          
+          <th>Botones</th>           
         </tr>
       </thead>
       <tbody>
       {% for menu in menu %}
 		<tr>
-			<td>1</td>
-			<td>{{menu.id}}</td>
+			<td>{{ forloop.counter }}</td>
 			<td>{{menu.nombre}}</td>
 			<td>{{menu.descripcion}}</td>
 			<td>{{menu.ruta}}</td>
 			<td>{{menu.orden}}</td>
 			<td>{{menu.estado}}</td>
-			<td>{{menu.menupadre|default_if_none:"Padre"}}</td>
+			<td>{{menu.menupadre|default_if_none:"Sin Padre"}}</td>
+			<td>
+				<a href="#" class="btn btn-primary" role="button">
+					<span class="glyphicon glyphicon-pencil"></span> Editar
+				</a>
+				<a href= "/menu/eliminar/{{menu.id}}"class="btn btn-danger" role="button">
+					<span class="glyphicon glyphicon-trash"></span> Eliminar
+				</a>
+			</td>
 		</tr>
       {% endfor %}
         

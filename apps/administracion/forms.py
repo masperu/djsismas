@@ -2,7 +2,7 @@ from django import forms
 from .models import Menu
 
 
-class MenuForm(forms.Form):
+class MenuForm(forms.ModelForm):
 	YES_OR_NO = ((True, 'Yes'),(False, 'No'))
 	nombre = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class': 'form-control'}))
 	descripcion = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
@@ -14,4 +14,7 @@ class MenuForm(forms.Form):
 			empty_label="(Menu Padre)",
 			widget=forms.Select(attrs={'class':'form-control'})
 		)
+	class Meta:
+		model = Menu
+		fields = ('nombre','descripcion','ruta', 'orden','estado','menupadre',)
 

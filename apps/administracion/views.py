@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -53,24 +54,11 @@ def MenuAgregar(request):
 			form = MenuForm(request.POST)
 			# check whether it's valid:
 			if form.is_valid():
-				descripcion = form.cleaned_data['descripcion']
-				estado = form.cleaned_data['estado']
-				menupadre = form.cleaned_data['menupadre']
-				nombre = form.cleaned_data['nombre']
-				orden = form.cleaned_data['orden']
-				ruta = form.cleaned_data['ruta']
-			
-				menu = Menu(
-						nombre = nombre, 
-						descripcion= descripcion, 
-						ruta = ruta, 
-						orden = orden, 
-						estado = estado, 
-						menupadre_id = menupadre, 
-					)
-				menu.save()
 
-				return HttpResponseRedirect('/menu/')
+				menu = form.save(commit=False)
+				menu.save()
+				form.cleaned_data
+				return redirect(ListaMenus)
 
 			# if a GET (or any other method) we'll create a blank form
 		else:
@@ -79,3 +67,15 @@ def MenuAgregar(request):
 	
 	else:
 		return redirect('/login/')
+
+def MenuEliminar(request, idmenu):
+	if(request.session.get("idusuario", False)):
+		if idmenu :
+			menu = Menu.objects.get(id = idmenu)
+			menu.delete()
+			if menu:
+				return HttpResponseRedirect('/menu/')
+	else:
+		return redirect('/login/')
+
+
