@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<!-- <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>
@@ -17,23 +17,19 @@
 
     {% block maestro_estilos %}
     {% endblock maestro_estilos %}
-</head>
+</head> -->
 <body>
+{% block maestro_contenido %}
 
-<div class="container">
-    <div class="row">
-        {% block maestro_contenido %}
-
-        {% endblock maestro_contenido %}
-    </div>    
-</div>
+{% endblock maestro_contenido %}
 
     
 
 
 	
 
-    <!-- script src="{% static 'js/bootstrap.min.jssss' %}"></script -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     {% block maestro_scripts %}
     {% endblock maestro_scripts %}
