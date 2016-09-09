@@ -5,17 +5,19 @@ from .models import NivelComite
 class NivelComiteForm(forms.ModelForm):
 	YES_OR_NO = ((True, 'Si'),(False, 'No'))
 	nombre = forms.CharField(
+				required = True,
 				max_length = 50,
 				widget = forms.TextInput(
 					attrs = {
 						'class': 'form-control',
 						'placeholder': 'Nombre',
-						'title':'Ingrese el nombre'
+						'title':'Ingrese el nombre',
 					}
 				),
-				help_text='Use puns liberally',
+				#help_text='Use puns liberally',
 			)
 	codigo = forms.CharField(
+				required = True,
 				max_length = 15,
 				widget = forms.TextInput(
 					attrs = {
@@ -25,17 +27,17 @@ class NivelComiteForm(forms.ModelForm):
 					}
 				),
 				# label = 'Mi label',
-				help_text='Use puns liberally liberally liberally',
+				#help_text='Use puns liberally liberally liberally',
 			)
 	permiteafiliacion = forms.BooleanField(
 				# widget = forms.RadioSelect(
-				# 	#choices=YES_OR_NO,
+				# 	choices=YES_OR_NO,
 				# 	# attrs = {
 				# 	# 	'class': 'form-radios',
 				# 	# }
 				# ),
 				label = 'Permite afiliación',
-				# initial = False,
+				required = False,
 			)
 		
 	class Meta:

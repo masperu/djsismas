@@ -22,7 +22,7 @@
 
 {% block maestro_contenido %}
 
-<div class="col-sm-6">
+<div class="col-xs-12">
 
 	<!-- Inicio Grilla -->
 	<div class="table-responsive">
@@ -51,8 +51,14 @@
 					<td>{{ item.nombre }}</td>
 					<td>{{ item.codigo }}</td>
 					<td>{{ item.permiteafiliacion }}</td>
-					<td>Editar</td>
-					<td>Eliminar</td>
+					<td>
+						<a href="/nivelcomite/editar/?idnivelcomite={{ item.id }}" class="btn btn-primary menuEditar" role="button">
+							<span class="glyphicon glyphicon-pencil"></span> Editar
+						</a>
+						<a href= "/menu/eliminar/?idmenu={{menu.id}}"class="btn btn-danger" role="button">
+							<span class="glyphicon glyphicon-trash"></span> Eliminar
+						</a>
+					</td>
 				</tr>
 			{% endfor %}
 			</tbody>
@@ -95,11 +101,13 @@
         <h4 class="modal-title">Agregar</h4>
       </div>
       <div class="modal-body">
-        <!-- Mostará el formulario desde la ruta -->
+        
       </div>
       <div class="modal-footer">
+      <!-- <input type="text" id="micajatexto2" class="nuevo"> -->
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-        <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button>
+        <!-- <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button> -->
+        <button type="button" class="btn btn-primary btn-lg " id="guardarNivelComite" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
