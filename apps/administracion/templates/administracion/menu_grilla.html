@@ -3,6 +3,7 @@
 {% load static from staticfiles %}
 
 
+
 {% block maestro_estilos %}
 
 {% endblock maestro_estilos %}
@@ -11,7 +12,7 @@
 {% block maestro_contenido %}
 
 <div class="table-responsive">
-	<a class="btn btn-default" href="/menu/agregar/" role="button">Agregar</a>
+	<a id="agregarMenu" class="btn btn-default" href="/menu/agregar/" role="button">Agregar</a>
     <table class="table table-hover">
       <thead class="thead-inverse">
         <tr>
@@ -36,7 +37,7 @@
 			<td>{{menu.estado}}</td>
 			<td>{{menu.menupadre|default_if_none:"Sin Padre"}}</td>
 			<td>
-				<a href="/menu/editar/?idmenu={{menu.id}}" class="btn btn-primary" role="button">
+				<a href="/menu/editar/?idmenu={{menu.id}}" class="btn btn-primary menuEditar" role="button">
 					<span class="glyphicon glyphicon-pencil"></span> Editar
 				</a>
 				<a href= "/menu/eliminar/?idmenu={{menu.id}}"class="btn btn-danger" role="button">
@@ -62,7 +63,7 @@
 
 		   <li>
 		   	<span class="current">
-		        Pagina {{ menu.number }} de {{ menu.paginator.num_pages }}.
+		        Pagina {{ menu.number }} de {{ menu.paginator.num_pages }}
 		    </span>
 
 		   </li> 
@@ -75,11 +76,30 @@
 
 </div>
 
+
+<div id="modalMenuForm" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Mostará el formulario desde la ruta -->
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {% endblock maestro_contenido %}
 
 
 {% block maestro_scripts %}
-
+<script src="{% static 'js/menu/menu.js' %}"></script>
 {% endblock maestro_scripts %}
 
 

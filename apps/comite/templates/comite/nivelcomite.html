@@ -4,7 +4,19 @@
 
 
 {% block maestro_estilos %}
+<style>
+	/*body {background-color: powderblue;}
+	.form-group ul {
+		list-style: none;
+		padding-left: 0;
+		font-weight: normal;
+	}
 
+	.form-group ul li label {
+		font-weight: normal;
+	}*/
+
+</style>
 {% endblock maestro_estilos %}
 
 
@@ -14,6 +26,7 @@
 
 	<!-- Inicio Grilla -->
 	<div class="table-responsive">
+	<a id="agregarNivelComite" class="btn btn-default" href="/nivelcomite/agregar/" role="button" >Agregar</a>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -25,14 +38,23 @@
 				</tr>
 			</thead>
 			<tbody>
+			{% for  item in nivelcomite %}
 				<tr>
-					<td>1</td>
-					<td>Regional</td>
-					<td>RG</td>
-					<td>No</td>
+					<td>
+					{% if nivelcomite.number > 1 %}
+						{{ nivelcomite.number }}
+					{% else %}
+						{{ forloop.counter }}	
+					{% endif %} 
+					
+					</td>
+					<td>{{ item.nombre }}</td>
+					<td>{{ item.codigo }}</td>
+					<td>{{ item.permiteafiliacion }}</td>
 					<td>Editar</td>
 					<td>Eliminar</td>
 				</tr>
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>
@@ -41,26 +63,48 @@
 	<!-- Inicio del Paginador -->
 	<nav aria-label="Page navigation">
 		<ul class="pagination">
-			<li>
-			  <a href="#" aria-label="Previous">
-			    <span aria-hidden="true">&laquo;</span>
-			  </a>
-			</li>
-			<li><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li>
-			  <a href="#" aria-label="Next">
-			    <span aria-hidden="true">&raquo;</span>
-			  </a>
-			</li>
+
+		    {% if nivelcomite.has_previous %}
+		        <li><a href="?page={{ nivelcomite.previous_page_number }}">Atras</a></li>
+		    {% endif %}
+
+		   <li>
+		   	<span class="current">
+		        Pagina {{ nivelcomite.number }} de {{ nivelcomite.paginator.num_pages }}
+		    </span>
+
+		   </li> 
+
+		    {% if nivelcomite.has_next %}
+		        <li><a href="?page={{ nivelcomite.next_page_number }}">Siguiente</a></li>
+		    {% endif %}
 		</ul>
 	</nav>
 	<!-- Fin del Paginador -->
 
 </div>
+
+
+<!-- Inicio de Codigo para Modales -->
+<div id="modalNivelComite" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" 
+   data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Agregar</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Mostará el formulario desde la ruta -->
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Fin Codigo para modales -->
 
     
 
@@ -68,5 +112,5 @@
 
 
 {% block maestro_scripts %}
-
+<script src="{% static 'js/nivelcomite/nivelcomite.js' %}"></script>
 {% endblock maestro_scripts %}

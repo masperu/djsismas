@@ -1,5 +1,5 @@
 
-{% extends "Base.html" %}
+
 
 {% load static from staticfiles %}
 
@@ -11,18 +11,36 @@
 
 {% block maestro_contenido %}
 
-   <form class="form-horizontal" role="form" method="post">
+   <form class="form-horizontal" role="form" method="post" action="/menu/agregar/">
    {% csrf_token %}
+
+   <input type="hidden" value="/menu/agregar/" id="urlAgregarMenua">
+   <input type="hidden" value="/menu/editar/" id="urlAgregarEditar">
+	
+
+	<!-- <div class="form-group">
+		<div class="col-xs-12 col-sm-4">
+			{{ form.descripcion.label_tag }}
+		</div>	
+		<div class="col-xs-12 col-sm-8">
+			{{ form.descripcion }}
+			<p class="help-block">
+				Ayuda de llenado del campo
+			</p>
+		</div>	
+	</div> -->
+	
+
    {% for field in form %}
 
 		<div class="form-group row">
 	        {{ field.errors }}
 	         
 			
-	         <div class="col-xs-2 control-label">
+	         <div class="col-xs-12 col-sm-4">
 	         	{{ field.label_tag }}
 	         </div>
-	         <div class="col-xs-7">
+	         <div class="col-xs-12 col-sm-8">
 	         	{{ field }}<br>
 			 </div>
 	        

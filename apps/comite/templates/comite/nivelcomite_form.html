@@ -1,55 +1,28 @@
-{% extends "Base.html" %}
+<form class="form-horizontal" role="form" method="POST">
+{% csrf_token %}
 
-{% load static from staticfiles %}
+{% for field in form %}
 
-
-{% block maestro_estilos %}
-
-{% endblock maestro_estilos %}
-
-
-{% block maestro_contenido %}
-
-<div class="col-sm-6">
-	<!-- Inicio del Formulario -->
-
-	<form class="form-horizontal" role="form">
-		<div class="form-group">
-			<label for="nombre" class="col-lg-2 control-label">Nombre</label>
-			<div class="col-lg-10">
-				<input type="input" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="codigo" class="col-lg-2 control-label">Código</label>
-			<div class="col-lg-10">
-				<input type="input" class="form-control" name="codigo" id="codigo"  placeholder="Codigo">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-lg-offset-2 col-lg-10">
-				<div class="checkbox">
-				<label>
-					<input type="checkbox" name="permiteafiliacion"> Permite Afiliacion
-				</label>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-lg-offset-2 col-lg-10">
-				<button type="submit" class="btn btn-default">Guardar</button>
-			</div>
-		</div>
-	</form>
-
-	<!-- Fin del formulario -->	
-</div>
-
-    
-
-{% endblock maestro_contenido %}
+        <div class="form-group">
+        {{ field.errors }}
 
 
-{% block maestro_scripts %}
+                <div class="col-xs-12 col-sm-4">
+                        {{ field.label_tag }}
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                        {{ field }}
+                        {% if field.help_text %}
+                        <div class="help-block">{{ field.help_text|safe }}</div >
+                        {% endif %}
+                </div>
 
-{% endblock maestro_scripts %}
+        </div>
+{% endfor %}
+        
+        <!-- <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-default">Guardar</button>
+                </div>
+        </div> -->
+</form>
