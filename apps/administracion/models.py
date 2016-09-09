@@ -35,7 +35,7 @@ class Menu(models.Model):
 	ruta = models.CharField(max_length=350)
 	orden = models.IntegerField()
 	estado = models.BooleanField(max_length=50)
-	menupadre = models.ForeignKey('self', blank=True, null=True)
+	menupadre = models.ForeignKey('self', blank=True, null=True , on_delete=models.PROTECT )
 	
 	def __str__(self):
 		return self.nombre

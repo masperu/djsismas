@@ -7,8 +7,11 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
-
+import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.db.models.deletion import ProtectedError
+
 # Create your views here.
 
 
@@ -44,7 +47,7 @@ def Logout(request):
 def ListaMenus(request):
 	if(request.session.get("idusuario", False)):
 		menu = Menu.objects.all()
-		paginator = Paginator(menu, 3) # Show 25 contacts per page
+		paginator = Paginator(menu, 10) # Show 25 contacts per page
 
 		page = request.GET.get('page')
 		try:
@@ -71,11 +74,13 @@ def MenuAgregar(request):
 				menu.save()
 				form.cleaned_data
 				return redirect(ListaMenus)
+			else:
+				return render(request, 'administracion/menu_form.html',{'form':form ,'url':'/menu/agregar/', 'titulo': "Agregar"})
 
 			# if a GET (or any other method) we'll create a blank form
 		else:
 			form = MenuForm()
-			return render(request, 'administracion/menu_form.html',{'form':form })
+			return render(request, 'administracion/menu_form.html',{'form':form, 'url':'/menu/agregar/', 'titulo': "Agregar"})
 	
 	else:
 		return redirect('/login/')
@@ -84,12 +89,24 @@ def MenuEliminar(request):
 	if(request.session.get("idusuario", False)):
 		idmenu = request.GET.get('idmenu')
 		if idmenu :
-			menu = Menu.objects.get(id = idmenu)
-			menu.delete()
-			if menu:
-				return HttpResponseRedirect('/menu/')
+			try:
+				menu = Menu.objects.get(id = idmenu)
+				menu.delete()
+				if menu:
+					return HttpResponseRedirect('/menu/')
+			except ProtectedError as e:
+				# return HttpResponseRedirect('/menu/')
+				response_data = {"error": "No se puede eliminar este menu porque tiene hijos"}
+				return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+							
+			
+			
 	else:
 		return redirect('/login/')
+
 
 
 def MenuEditar(request):
@@ -104,7 +121,7 @@ def MenuEditar(request):
 				request, 
 				'administracion/menu_form.html',
 				{
-					'form': form,
+					'form': form, 'url':'/menu/editar/?idmenu='+idmenu, 'titulo': "Editar"
 				}
 			)
 	else:

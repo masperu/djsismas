@@ -12,7 +12,7 @@
 {% block maestro_contenido %}
 
 <div class="table-responsive">
-	<a id="agregarMenu" class="btn btn-default" href="/menu/agregar/" role="button">Agregar</a>
+	<a id="agregarMenu" class="btn btn-default" href="/menu/agregar/" role="button" data-target="#modalMenuForm">Agregar</a>
     <table class="table table-hover">
       <thead class="thead-inverse">
         <tr>
@@ -37,10 +37,10 @@
 			<td>{{menu.estado}}</td>
 			<td>{{menu.menupadre|default_if_none:"Sin Padre"}}</td>
 			<td>
-				<a href="/menu/editar/?idmenu={{menu.id}}" class="btn btn-primary menuEditar" role="button">
+				<a id="editarMenu" href="/menu/editar/?idmenu={{menu.id}}" class="btn btn-primary menuEditar" role="button">
 					<span class="glyphicon glyphicon-pencil"></span> Editar
 				</a>
-				<a href= "/menu/eliminar/?idmenu={{menu.id}}"class="btn btn-danger" role="button">
+				<a  href= "/menu/eliminar/?idmenu={{menu.id}}"class="btn btn-danger" role="button">
 					<span class="glyphicon glyphicon-trash"></span> Eliminar
 				</a>
 			</td>
@@ -80,6 +80,7 @@
 <div id="modalMenuForm" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+       {{titulo}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Modal title</h4>

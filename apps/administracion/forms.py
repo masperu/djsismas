@@ -3,16 +3,23 @@ from .models import Menu
 
 
 class MenuForm(forms.ModelForm):
-	YES_OR_NO = ((True, 'Yes'),(False, 'No'))
-	nombre = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class': 'form-control'}))
+	# YES_OR_NO = ((True, 'Yes'),(False, 'No'))
+	nombre = forms.CharField(
+		label = "Nombres",
+		max_length=50,
+		widget=forms.TextInput(
+			attrs={
+			'class': 'form-control'
+			})
+		)
+
 	descripcion = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows':'2'}))
 	ruta = forms.CharField(max_length=350,widget=forms.TextInput(attrs={'class': 'form-control'}))
 	orden = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'type':'number'}))
-	estado = forms.BooleanField(required=True,widget=forms.RadioSelect(choices=YES_OR_NO))
-	menupadre = forms.ModelChoiceField(required=False,
+	menupadre = forms.ModelChoiceField(required=False,label = "Menu Padre",
 			queryset= Menu.objects.filter(estado=True), 
 			empty_label="(Menu Padre)",
-			widget=forms.Select(attrs={'class':'form-control'})
+			widget=forms.Select(attrs={'class':'form-control selectpicker'})
 		)
 	class Meta:
 		model = Menu
