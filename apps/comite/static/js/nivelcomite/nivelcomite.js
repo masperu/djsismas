@@ -1,6 +1,24 @@
 $( document ).ready(function() {
 
-	var myToast = $.toast('Some toast that needs to be removed.');
+	
+	toastr.options = {
+		  "closeButton": false,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": false,
+		  "positionClass": "toast-bottom-right",
+		  "preventDuplicates": false,
+		  "onclick": null,
+		  "showDuration": "300",
+		  "hideDuration": "1000",
+		  "timeOut": "5000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}	
+	//toastr.options.positionClass = "toast-bottom-left";
 
 	//alert("Hola ");
     $('#agregarNivelComite').on('click', function(e){
@@ -39,39 +57,37 @@ $( document ).ready(function() {
             url:  $("#formNivelComite").attr('action'),
             type: "post",
             data: $("#formNivelComite").serialize(),
+
             success: function(d) {
-                //alert(d);
 
-             $this.button('reset');
-             myToast.update({
-			    text : '<strong>Updated after a few seconds</strong>',
-			    bgColor : '#23B65D'
-			  });
+				if ( d["msg"] ) {
+					
+					$this.button('reset');
 
-             //return;
+					$( ".close" ).trigger( "click" );
+            		
+					toastr.success(d['msg'], 'Correcto');
 
-             if ( d["msg"] ) {
-             	//alert(d["msg"]);
-             	mostrarMesaje(d["msg"]);
-             }
-             else {
-             	$( ".modal-body" ).find("form").remove();
-             	$( ".modal-body" ).html(d);
-             }
+					setTimeout(function(){
+						location.reload();
+					}, 1500);
+
+					// toastr.options.onHidden = function() { 
+					// 	alert("Cerrando mensaje de estado");
+					// }
+
+					
+				}
+				else {
+					$this.button('reset');
+					$( ".modal-body" ).find("form").remove();
+					$( ".modal-body" ).html(d);
+				}
 
             }
         });
 
 	});
-
-	function mostrarMesaje(msj) {
-		$.toast({
-		    heading: 'Correcto',
-		    text: msj,
-		    showHideTransition: 'slide',
-		    icon: 'success'
-		});
-	}
 });
 
 

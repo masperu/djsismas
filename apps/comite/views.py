@@ -6,7 +6,7 @@ import json
 from .models import *
 from .forms import *
 
-#import time
+import time
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -85,12 +85,20 @@ def NivelComiteEditar(request):
 		form = NivelComiteForm(request.POST or None, instance=instance)
 
 		if form.is_valid():
+			# time.sleep(10)
 
 			form.save()
 			#return redirect(ListaNivelComite)
 			msg = {"msg" : "Datos guardados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
 
 		else:
+
+			# print("No se han guardado los cambios")
+			# time.sleep(5)
 			return render(request, 'comite/nivelcomite_form.html',{'form':form, 'url': url})		
 
 		return render(request, 'comite/nivelcomite_form.html',{'form':form, 'url': url})
