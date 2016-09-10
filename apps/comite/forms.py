@@ -1,5 +1,5 @@
 from django import forms
-from .models import NivelComite
+from .models import NivelComite, TipoCargo
 
 
 class NivelComiteForm(forms.ModelForm):
@@ -26,16 +26,8 @@ class NivelComiteForm(forms.ModelForm):
 						'title':'Ingrese el codigo'
 					}
 				),
-				# label = 'Mi label',
-				#help_text='Use puns liberally liberally liberally',
 			)
 	permiteafiliacion = forms.BooleanField(
-				# widget = forms.RadioSelect(
-				# 	choices=YES_OR_NO,
-				# 	# attrs = {
-				# 	# 	'class': 'form-radios',
-				# 	# }
-				# ),
 				label = 'Permite afiliación',
 				required = False,
 			)
@@ -43,3 +35,24 @@ class NivelComiteForm(forms.ModelForm):
 	class Meta:
 		model = NivelComite
 		fields = ('nombre','codigo','permiteafiliacion',)
+
+
+
+class TipoCargoForm(forms.ModelForm):
+	nombre = forms.CharField(
+				max_length = 50,
+				widget = forms.TextInput(
+					attrs = {
+						'class': 'form-control',
+						'placeholder': 'Nombre',
+						'title':'Ingrese el nombre',
+					}
+				),
+			)
+		
+	class Meta:
+		model = TipoCargo
+		fields = ('nombre',)
+
+
+

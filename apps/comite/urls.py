@@ -14,11 +14,11 @@ urlpatterns = [
 	#
 	# 
 
-    # ROLES
-    #url(r'^rol/$', ListaRol , name="lista_rol"),
-    # 
-    # 
-    # 
+    # TipoCargo
+    url(r'^tipocargo/$', ListaTipoCargo , name="lista_tipocargo"),
+    url(r'^tipocargo/agregar/$', TipoCargoAgregar , name="tipocargo-agregar"),
+    url(r'^tipocargo/eliminar/$', TipoCargoEliminar , name="tipocargo-eliminar"),
+    url(r'^tipocargo/editar/$', TipoCargoEditar , name="tipocargo-editar"),
     #
     # 
 

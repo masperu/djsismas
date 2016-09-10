@@ -16,7 +16,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def ListaNivelComite(request):
 	if(request.session.get("idusuario", False)):
 		nivelcomite = NivelComite.objects.all()
-		paginator = Paginator(nivelcomite, 15) # Show 25 contacts per page
+		paginator = Paginator(nivelcomite, 10) # Show 25 contacts per page
 
 		page = request.GET.get('page')
 		try:
@@ -134,3 +134,92 @@ def NivelComiteEliminar(request):
 
 	else:
 		return redirect('/login/')
+
+
+
+
+def ListaTipoCargo(request):
+	if(request.session.get("idusuario", False)):
+		tipocargo = TipoCargo.objects.all()
+		paginator = Paginator(tipocargo, 10)
+
+		page = request.GET.get('page')
+		try:
+			tipocargo = paginator.page(page)
+		except PageNotAnInteger:
+			tipocargo = paginator.page(1)
+		except EmptyPage:
+			tipocargo = paginator.page(paginator.num_pages)
+		return render(request, 'comite/tipocargo.html',{'tipocargo': tipocargo})
+	else:
+		return redirect('/login/')
+
+
+def TipoCargoAgregar(request):
+
+	if(request.session.get("idusuario", False)):
+		url = "/tipocargo/agregar/"
+		if request.method == 'POST':
+			form = TipoCargoForm(request.POST)
+			if form.is_valid():
+				tipocargo = form.save(commit=False)
+				tipocargo.save()
+				form.cleaned_data
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else :
+				return render(request, 'comite/tipocargo_form.html',{'form':form, 'url': url })
+		else:
+			form = TipoCargoForm()
+			return render(request, 'comite/tipocargo_form.html',{'form':form, 'url': url})
+	else:
+		return redirect('/login/')
+
+
+def TipoCargoEditar(request):
+	if(request.session.get("idusuario", False)):
+		idtipocargo = request.GET.get('idtipocargo')
+		instance = get_object_or_404(TipoCargo, id=idtipocargo)
+		url = "/tipocargo/editar/?idtipocargo=" + idtipocargo
+		form = TipoCargoForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos guardados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		else:
+			return render(request, 'comite/tipocargo_form.html',{'form':form, 'url': url})		
+		return render(request, 'comite/tipocargo_form.html',{'form':form, 'url': url})
+	else:
+		return redirect('/login/')
+
+
+def TipoCargoEliminar(request):
+	if(request.session.get("idusuario", False)):
+		idtipocargo = request.GET.get('idtipocargo')
+		if idtipocargo:
+			try:
+				tipocargo = TipoCargo.objects.get(id = idtipocargo)
+				tipocargo.delete()
+				msg = {"success" : "Datos eliminados correctamente"}
+				return HttpResponse(
+						json.dumps(msg),
+						content_type="application/json"
+					)
+			except ProtectedError as e:
+				msg = {"error" : "Error al eliminar datos"}
+				return HttpResponse(
+						json.dumps(msg),
+						content_type="application/json"
+					)
+
+	else:
+		return redirect('/login/')
+
+
+

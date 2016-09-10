@@ -4,19 +4,7 @@
 
 
 {% block maestro_estilos %}
-<style>
-	/*body {background-color: powderblue;}
-	.form-group ul {
-		list-style: none;
-		padding-left: 0;
-		font-weight: normal;
-	}
 
-	.form-group ul li label {
-		font-weight: normal;
-	}*/
-
-</style>
 {% endblock maestro_estilos %}
 
 
@@ -25,8 +13,9 @@
 <div class="col-xs-12">
 
 	<!-- Inicio Grilla -->
-	<div class="table-responsive">
 	<a id="agregarNivelComite" class="btn btn-default" href="/nivelcomite/agregar/" role="button" >Agregar</a>
+	
+	<div class="table-responsive">	
 		<table id="tableNivelComite" class="table table-bordered table-striped table-condensed table-hover">
 			<thead>
 				<tr>
@@ -94,7 +83,7 @@
 
 
 <!-- Inicio de Codigo para Modales -->
-<div id="modalNivelComite" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" >
+<div id="modalNivelComite" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"  >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -115,22 +104,6 @@
 </div><!-- /.modal -->
 <!-- Fin Codigo para modales -->
 
-
-<!-- Inicio para confirmar eliminacion -->
-<!-- <div id="confirm" class="modal fade" role="dialog" >
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-body">
-				Seguro que desea eliminar?
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="delete">Elimnar</button>
-				<button type="button" data-dismiss="modal" class="btn" id="cancel">Cancelar</button>
-			</div>
-		</div>
-	</div>	
-</div> -->
-<!-- Fin confirmar eliminacion -->
 
     
 
