@@ -1,26 +1,3 @@
-{% extends "Base_form.html" %}
-
-{% load static from staticfiles %}
-
-{% block maestro_estilos %}
-<style>
-        /*body {background-color: powderblue;}
-        .form-group ul {
-                list-style: none;
-                padding-left: 0;
-                font-weight: normal;
-        }
-
-        .form-group ul li label {
-                font-weight: normal;
-        }*/
-
-</style>
-{% endblock maestro_estilos %}
-
-
-{% block maestro_contenido %}
-
 <form class="form-horizontal" role="form" method="POST" id="formNivelComite" action="{{ url }}">
 {% csrf_token %}
 
@@ -50,12 +27,4 @@
                 </div>
         </div> -->
 </form>
-    
-
-{% endblock maestro_contenido %}
-
-
-{% block maestro_scripts %}
-<script src="{% static 'js/nivelcomite/nivelcomiteform.js' %}"></script>
-{% endblock maestro_scripts %}
 

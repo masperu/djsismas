@@ -21,6 +21,22 @@
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
 
 
+  <style>
+    #toast-container > div {
+      box-shadow: none;
+    }
+
+    #toast-container > div:hover {
+      box-shadow: none;
+    }
+
+    .toast-message {
+      font-size: 95%;
+      font-family: arial;
+    }
+  </style>
+
+
 
 
     {% block maestro_estilos %}
@@ -87,6 +103,27 @@
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/jquery.confirm.min.js' %}"></script>
+
+    <script>
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      } 
+    </script>
 
   {% block maestro_scripts %}
   {% endblock maestro_scripts %}

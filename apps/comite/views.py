@@ -108,4 +108,29 @@ def NivelComiteEditar(request):
 
 
 def NivelComiteEliminar(request):
-	pass
+	if(request.session.get("idusuario", False)):
+		idnivelcomite = request.GET.get('idnivelcomite')
+		if idnivelcomite:
+			try:
+				nivelcomite = NivelComite.objects.get(id = idnivelcomite)
+				nivelcomite.delete()
+				
+				# if nivelcomite:
+				# 	return HttpResponseRedirect('/nivelcomite/')
+				msg = {"success" : "Datos eliminados correctamente"}
+				return HttpResponse(
+						json.dumps(msg),
+						content_type="application/json"
+					)
+
+			except ProtectedError as e:
+				# return HttpResponseRedirect('/menu/')
+				msg = {"error" : "Error al eliminar datos"}
+				# response_data = {"error": "No se puede eliminar este menu porque tiene hijos"}
+				return HttpResponse(
+						json.dumps(msg),
+						content_type="application/json"
+					)
+
+	else:
+		return redirect('/login/')

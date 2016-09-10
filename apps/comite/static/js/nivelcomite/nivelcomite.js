@@ -1,28 +1,16 @@
 $( document ).ready(function() {
 
-	
-	toastr.options = {
-		  "closeButton": false,
-		  "debug": false,
-		  "newestOnTop": false,
-		  "progressBar": false,
-		  "positionClass": "toast-bottom-right",
-		  "preventDuplicates": false,
-		  "onclick": null,
-		  "showDuration": "300",
-		  "hideDuration": "1000",
-		  "timeOut": "5000",
-		  "extendedTimeOut": "1000",
-		  "showEasing": "swing",
-		  "hideEasing": "linear",
-		  "showMethod": "fadeIn",
-		  "hideMethod": "fadeOut"
-		}	
-	//toastr.options.positionClass = "toast-bottom-left";
+	//toastr.success("Datos guardados correctamente");
 
 	//alert("Hola ");
     $('#agregarNivelComite').on('click', function(e){
+
+    	// $(".th1").hide();
+    	// $(".td1").hide(); Ocultamos columnas de una tabla
+
 	  	e.preventDefault();
+
+	  	// return;
 	  	// alert("Hola ");
 	 	$('#modalNivelComite').modal('show').find('.modal-body').load($(this).attr('href'));
 	 	
@@ -34,8 +22,14 @@ $( document ).ready(function() {
 	});
 
 
-	$(".menuEditar").on('click', function(e){
+	$(".nivelComiteEditar").on('click', function(e){
+
+		// $(".td1").show();
+  		//$(".td1").show(); Mostramos columnas ocultas de la tabla
+
 		e.preventDefault();
+		// return;
+
 		$('#modalNivelComite').modal('show').find('.modal-body').load($(this).attr('href'));
 
 
@@ -44,6 +38,47 @@ $( document ).ready(function() {
 			$(".modal-title").text("Editar");
 	 		$('#id_nombre').focus();
 	 	});
+	});
+
+
+	$(".nivelComiteEliminar").confirm({
+
+	    text: "Seguro que desea eliminar el item?",
+	    //title: "Confirmación requerida",
+	    confirm: function(button) {
+
+	    	var link = $(button);
+	        $.ajax({
+	            url:  $(link).attr('href'),
+	            type: "get",
+	            //data: $("#formNivelComite").serialize(),
+
+	            success: function(d) {
+
+					if ( d["success"] ) {
+						
+						toastr.success(d['success']);
+						setTimeout(function(){
+							location.reload();
+						}, 500);
+
+					}
+					else {
+						toastr.success(d['error']);
+					}
+
+	            }
+	        });
+	    },
+	    cancel: function(button) {
+	        // nothing to do
+	    },
+	    confirmButton: "Eliminar",
+	    cancelButton: "Cancelar",
+	    post: true,
+	    confirmButtonClass: "btn-danger",
+	    cancelButtonClass: "btn-default",
+	    dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
 	});
 
 
@@ -66,15 +101,11 @@ $( document ).ready(function() {
 
 					$( ".close" ).trigger( "click" );
             		
-					toastr.success(d['msg'], 'Correcto');
+					toastr.success(d['msg']);
 
 					setTimeout(function(){
 						location.reload();
-					}, 1500);
-
-					// toastr.options.onHidden = function() { 
-					// 	alert("Cerrando mensaje de estado");
-					// }
+					}, 750);
 
 					
 				}
