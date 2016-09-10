@@ -11,12 +11,10 @@
 
 {% block maestro_contenido %}
 
-   <form class="form-horizontal" role="form" method="post" action="/menu/agregar/">
+   <form class="form-horizontal" role="form" method="post" action='{{url}}'>
    {% csrf_token %}
 
-   <input type="hidden" value="/menu/agregar/" id="urlAgregarMenua">
-   <input type="hidden" value="/menu/editar/" id="urlAgregarEditar">
-	
+
 
 	<!-- <div class="form-group">
 		<div class="col-xs-12 col-sm-4">
