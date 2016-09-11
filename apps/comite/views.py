@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+from django.db.models.deletion import ProtectedError
 import json
 from .models import *
 from .forms import *
@@ -222,4 +223,117 @@ def TipoCargoEliminar(request):
 		return redirect('/login/')
 
 
+
+def ComiteLista(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.all()
+		paginator = Paginator(comite, 10)
+
+		page = request.GET.get('page')
+		try:
+			comite = paginator.page(page)
+		except PageNotAnInteger:
+			comite = paginator.page(1)
+		except EmptyPage:
+			comite = paginator.page(paginator.num_pages)
+		return render(request, 'comite/comite.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+def ComiteAjax(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.filter(nombre__icontains = "" + request.GET.get('query') + "" )[:10]
+		total = comite.count()
+		return render(
+			request,
+			'comite/comite.json',
+			{
+				'comite': comite,
+				'total':total
+			},
+			content_type="application/json",
+		)
+		#return render(request, 'comite/comite.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+def ComiteAgregar(request):
+	if(request.session.get("idusuario", False)):
+		url = "/comite/agregar/"
+		nivelcomite = NivelComite.objects.all()
+		comitepadre = None
+
+		if request.method == 'POST':
+			form = ComiteForm(request.POST)
+			if form.is_valid():
+				comite = form.save(commit=False)
+				comite.save()
+				form.cleaned_data
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else :
+				return render(request, 'comite/comite_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre })
+		else:
+			form = ComiteForm()
+			return render(request, 'comite/comite_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre })
+	else:
+		return redirect('/login/')
+
+
+def ComiteEditar(request):
+	if(request.session.get("idusuario", False)):
+		idcomite = request.GET.get('idcomite')
+		instance = get_object_or_404(Comite, id=idcomite)
+		url = "/comite/editar/?idcomite=" + idcomite
+		form = ComiteForm(request.POST or None, instance=instance)
+		
+		#Todos lo comites para la lista
+		nivelcomite = NivelComite.objects.all()
+
+		#ComitePadre
+		try:
+			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
+		except Exception as e:
+			comitepadre = None
+
+
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos guardados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		else:
+			return render(request, 'comite/comite_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre })	
+
+		return render(request, 'comite/comite_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre })
+	else:
+		return redirect('/login/')
+
+
+def ComiteEliminar(request):
+	if(request.session.get("idusuario", False)):
+		idcomite = request.GET.get('idcomite')
+		if idcomite:
+			try:
+				comite = Comite.objects.get(id = idcomite)
+				comite.delete()
+				msg = {"success" : "Datos eliminados correctamente"}
+				return HttpResponse(
+						json.dumps(msg),
+						content_type="application/json"
+					)
+			except ProtectedError as e:
+				msg = {"error" : "Error al eliminar datos"}
+				return HttpResponse(
+						json.dumps(msg),
+						content_type="application/json"
+					)
+
+	else:
+		return redirect('/login/')
 

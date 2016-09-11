@@ -10,13 +10,17 @@
     </title>
 
     <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}" />
-
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/stylesautocomplete.css' %}">
+    
     <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.css' %}">
 
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.min.css' %}">
   
   <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/toastr.min.css' %}">
+
+  
 
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
 
@@ -77,7 +81,7 @@
           <ul class="dropdown-menu">
             <li><a href="/nivelcomite/">Nivel Comite</a></li>
             <li><a href="/tipocargo/">Tipo Cargo</a></li>
-            <li><a href="/rol/">Comites</a></li>
+            <li><a href="/comite/">Comites</a></li>
           </ul>
         </li>
       </ul>
@@ -103,6 +107,7 @@
 
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
     <script src="{% static 'js/jquery.confirm.min.js' %}"></script>
 

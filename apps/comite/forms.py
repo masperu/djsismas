@@ -1,5 +1,5 @@
 from django import forms
-from .models import NivelComite, TipoCargo
+from .models import NivelComite, TipoCargo, Comite
 
 
 class NivelComiteForm(forms.ModelForm):
@@ -53,6 +53,13 @@ class TipoCargoForm(forms.ModelForm):
 	class Meta:
 		model = TipoCargo
 		fields = ('nombre',)
+
+
+class ComiteForm(forms.ModelForm):
+	
+	class Meta:
+		model = Comite
+		fields = ('nombre', 'actaconformacion', 'direccion', 'nivelcomite', 'comitepadre')
 
 
 

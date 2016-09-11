@@ -1,0 +1,88 @@
+<form class="form-horizontal" role="form" method="POST" id="formComite" action="{{ url }}">
+        {% csrf_token %}
+        
+        {% for field in form %}
+
+        {% if field.name == 'nombre' %}
+        <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                        <label for="nombre">Nombre</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >   
+                        <div class="help-block alert-danger">
+                                {{ field.errors }}        
+                        </div>     
+                </div>
+        </div>
+        {% endif %}
+
+        
+        {% if field.name == 'actaconformacion' %}
+        <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                        <label for="actaconformacion">Acta Conformación</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                        <input type="text" name="actaconformacion" id="actaconformacion" class="form-control" placeholder="Acta Conformación" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+                        <div class="help-block alert-danger">
+                                {{ field.errors }}        
+                        </div>
+                </div>
+        </div>
+        {% endif %}
+
+        {% if field.name == 'actaconformacion' %}
+        <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                        <label for="direccion">Dirección</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                        <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección" size="200" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+                        <div class="help-block alert-danger">
+                                {{ field.errors }}        
+                        </div>
+                </div>
+        </div>
+        {% endif %}
+
+        {% if field.name == 'nivelcomite' %}
+
+        <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                        <label for="nivelcomite">Nivel</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                        <select class="form-control" id="nivelcomite" name="nivelcomite">
+                                <option value="0">Seleccionar</option>
+                        {% for item in nivelcomite %}
+                                <option {% if field.value == item.id %} selected="selected" {% endif %}  value="{{ item.id }}">{{ item.nombre }}</option>
+                        {% endfor %}
+                        </select>
+                        <input type="hidden" id="nivelcimiteid" {% if field.value != None %} value="{{ field.value }}" {% else %} value="0" {% endif %} >
+                        <div class="help-block alert-danger">
+                                {{ field.errors }}        
+                        </div>
+                </div>
+        </div>
+        {% endif %}
+
+        
+        {% if field.name == 'comitepadre' %}
+        <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                        <label for="comitepadre_text">Comité Padre</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                        <input type="text" name="comitepadre_text" id="comitepadre_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ comitepadre.nombre }}" {% endif %}>
+                        <input type="hidden" name="comitepadre" id="comitepadre" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
+                        <div class="help-block alert-danger">
+                                {{ field.errors }}        
+                        </div>
+                </div>
+        </div>
+        {% endif %}
+
+        {% endfor %}
+
+</form>

@@ -10,8 +10,7 @@ urlpatterns = [
     url(r'^nivelcomite/$', ListaNivelComite , name="lista_nivelcomite"),
     url(r'^nivelcomite/agregar/$', NivelComiteAgregar , name="nivelcomite-agregar"),
     url(r'^nivelcomite/eliminar/$', NivelComiteEliminar , name="nivelcomite-eliminar"),
-    url(r'^nivelcomite/editar/$', NivelComiteEditar , name="nivelcomite-editar"),
-	#
+    url(r'^nivelcomite/editar/$', NivelComiteEditar , name="nivelcomite-editar"),	
 	# 
 
     # TipoCargo
@@ -22,12 +21,12 @@ urlpatterns = [
     #
     # 
 
-    # ACCESOS
- 	#url(r'^acceso/$', ListaAccesos , name="lista_accesos"),
-    # 
-    # 
-    # 
-    #
+    # Comité
+    url(r'^comite/$', ComiteLista , name="lista_comite"),
+    url(r'^comite/agregar/$', ComiteAgregar , name="comite-agregar"),
+    url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
+    url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
+    url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
     # 
 
     # PERFIL
