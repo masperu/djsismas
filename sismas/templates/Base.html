@@ -10,14 +10,34 @@
     </title>
 
     <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}" />
-
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/stylesautocomplete.css' %}">
+    
     <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.css' %}">
 
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.min.css' %}">
   
-  <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/jquery.toast.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/toastr.min.css' %}">
 
+  
+
+
+
+  <style>
+    #toast-container > div {
+      box-shadow: none;
+    }
+
+    #toast-container > div:hover {
+      box-shadow: none;
+    }
+
+    .toast-message {
+      font-size: 95%;
+      font-family: arial;
+    }
+  </style>
 
 
 
@@ -59,7 +79,8 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Comites <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/nivelcomite/">Nivel Comite</a></li>
-            <li><a href="/rol/">Comites</a></li>
+            <li><a href="/tipocargo/">Tipo Cargo</a></li>
+            <li><a href="/comite/">Comites</a></li>
           </ul>
         </li>
       </ul>
@@ -85,7 +106,29 @@
 
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.toast.min.js' %}"></script>
+    <script src="{% static 'js/jquery.autocomplete.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+    <script src="{% static 'js/jquery.confirm.min.js' %}"></script>
+
+    <script>
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      } 
+    </script>
 
   {% block maestro_scripts %}
   {% endblock maestro_scripts %}

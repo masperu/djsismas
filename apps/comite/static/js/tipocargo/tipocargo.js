@@ -7,10 +7,10 @@ $( document ).ready(function() {
 		}
 	});
 
-	//toastr.success("Datos guardados correctamente");
+	$("#guardarTipoCargo").button('reset');
 
 	//alert("Hola ");
-    $('#agregarNivelComite').on('click', function(e){
+    $('#agregarTipoCargo').on('click', function(e){
 
     	// $(".th1").hide();
     	// $(".td1").hide(); Ocultamos columnas de una tabla
@@ -19,9 +19,9 @@ $( document ).ready(function() {
 
 	  	// return;
 	  	// alert("Hola ");
-	 	$('#modalNivelComite').modal('show').find('.modal-body').load($(this).attr('href'));
+	 	$('#modalTipoCargo').modal('show').find('.modal-body').load($(this).attr('href'));
 	 	
-	 	$('#modalNivelComite').on('shown.bs.modal', function(){
+	 	$('#modalTipoCargo').on('shown.bs.modal', function(){
 	 		$(".modal-title").text("Agregar");
 	 		$('#id_nombre').focus();
 	 	});
@@ -29,26 +29,20 @@ $( document ).ready(function() {
 	});
 
 
-	$(".nivelComiteEditar").on('click', function(e){
-
-		// $(".td1").show();
-  		//$(".td1").show(); Mostramos columnas ocultas de la tabla
-
+	$(".tipoCargoEditar").on('click', function(e){
 		e.preventDefault();
-		// return;
-
-		$('#modalNivelComite').modal('show').find('.modal-body').load($(this).attr('href'));
 
 
+		$('#modalTipoCargo').modal('show').find('.modal-body').load($(this).attr('href'));
 
-		$('#modalNivelComite').on('shown.bs.modal', function(){
+		$('#modalTipoCargo').on('shown.bs.modal', function(){
 			$(".modal-title").text("Editar");
 	 		$('#id_nombre').focus();
 	 	});
 	});
 
 
-	$(".nivelComiteEliminar").confirm({
+	$(".tipoCargoEliminar").confirm({
 
 	    text: "Seguro que desea eliminar el item?",
 	    //title: "Confirmación requerida",
@@ -90,15 +84,15 @@ $( document ).ready(function() {
 
 
 
-	$("#guardarNivelComite").on('click', function(e){
+	$("#guardarTipoCargo").on('click', function(e){
 
 		var $this = $(this);
 		$this.button('loading');
 
         $.ajax({
-            url:  $("#formNivelComite").attr('action'),
+            url:  $("#formTipoCargo").attr('action'),
             type: "post",
-            data: $("#formNivelComite").serialize(),
+            data: $("#formTipoCargo").serialize(),
 
             success: function(d) {
 

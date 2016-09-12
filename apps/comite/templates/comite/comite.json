@@ -1,0 +1,11 @@
+{
+    "suggestions": [
+    	{% for item in comite %}
+    		{% if forloop.counter < total %}
+	        	{ "value": "{{ item.nombre }}", "data": "{{ item.id }}" },
+	        {% else %}
+	        	{ "value": "{{ item.nombre }}", "data": "{{ item.id }}" }
+	        {% endif %}
+        {% endfor %}
+    ]
+}
