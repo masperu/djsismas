@@ -11,23 +11,8 @@
 
 {% block maestro_contenido %}
 
-   <form class="form-horizontal" role="form" method="post" action='{{url}}'>
+   <form id="formMenu" class="form-horizontal" role="form" method="post" action='{{url}}'>
    {% csrf_token %}
-
-
-
-	<!-- <div class="form-group">
-		<div class="col-xs-12 col-sm-4">
-			{{ form.descripcion.label_tag }}
-		</div>	
-		<div class="col-xs-12 col-sm-8">
-			{{ form.descripcion }}
-			<p class="help-block">
-				Ayuda de llenado del campo
-			</p>
-		</div>	
-	</div> -->
-	
 
    {% for field in form %}
 
@@ -48,11 +33,7 @@
 
 		</div>
 	{% endfor %}
-     <div class="form-group row">
-	    <div class="col-xs-offset-2 col-xs-10">
-	      <button type="submit" class="btn btn-default">Guardar</button>
-	    </div>
-	  </div>
+
 	</form>
 
 

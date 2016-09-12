@@ -46,7 +46,7 @@ def Logout(request):
 
 def ListaMenus(request):
 	if(request.session.get("idusuario", False)):
-		menu = Menu.objects.all()
+		menu = Menu.objects.all().order_by('-orden')
 		paginator = Paginator(menu, 10) # Show 25 contacts per page
 
 		page = request.GET.get('page')
@@ -69,30 +69,39 @@ def MenuAgregar(request):
 			form = MenuForm(request.POST)
 			# check whether it's valid:
 			if form.is_valid():
-
 				menu = form.save(commit=False)
 				menu.save()
 				form.cleaned_data
-				return redirect(ListaMenus)
+				# return redirect(ListaMenus)
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
 			else:
-				return render(request, 'administracion/menu_form.html',{'form':form ,'url':'/menu/agregar/', 'titulo': "Agregar"})
+				return render(request, 'administracion/menu_form.html',{'form':form ,'url':'/menu/agregar/'})
 
 			# if a GET (or any other method) we'll create a blank form
 		else:
 			form = MenuForm()
-			return render(request, 'administracion/menu_form.html',{'form':form, 'url':'/menu/agregar/', 'titulo': "Agregar"})
+			return render(request, 'administracion/menu_form.html',{'form':form, 'url':'/menu/agregar/'})
 	
 	else:
 		return redirect('/login/')
 
 def MenuEliminar(request):
 	if(request.session.get("idusuario", False)):
-		idmenu = request.GET.get('idmenu')
-		if idmenu :
+		if request.method == 'POST':
+			idmenu = request.POST['idmenu']
 			try:
 				menu = Menu.objects.get(id = idmenu)
 				menu.delete()
+				response_data = {"success": "Menu Eliminado Correctamente"}
 				if menu:
+					return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
 					return HttpResponseRedirect('/menu/')
 			except ProtectedError as e:
 				# return HttpResponseRedirect('/menu/')
@@ -101,9 +110,6 @@ def MenuEliminar(request):
 						json.dumps(response_data),
 						content_type="application/json"
 					)
-							
-			
-			
 	else:
 		return redirect('/login/')
 
@@ -116,12 +122,16 @@ def MenuEditar(request):
 		form = MenuForm(request.POST or None, instance=instance)
 		if form.is_valid():
 			form.save()
-			return redirect(ListaMenus)
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
 		return render(
 				request, 
 				'administracion/menu_form.html',
 				{
-					'form': form, 'url':'/menu/editar/?idmenu='+idmenu, 'titulo': "Editar"
+					'form': form, 'url':'/menu/editar/?idmenu='+idmenu
 				}
 			)
 	else:

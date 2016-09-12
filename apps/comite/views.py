@@ -74,9 +74,6 @@ def NivelComiteAgregar(request):
 
 def NivelComiteEditar(request):
 	if(request.session.get("idusuario", False)):
-
-		
-
 		idnivelcomite = request.GET.get('idnivelcomite')
 		instance = get_object_or_404(NivelComite, id=idnivelcomite)
 
