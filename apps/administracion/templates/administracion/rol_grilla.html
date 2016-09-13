@@ -5,7 +5,7 @@
 
 
 {% block maestro_estilos %}
-
+  <link rel="stylesheet" type="text/css" href="{% static 'css/rol/rol.css' %}">
 {% endblock maestro_estilos %}
 
 
@@ -13,39 +13,45 @@
 <div class="col-xs-12">
   <a id="agregarRol" class="btn btn-default" href="/rol/agregar/" role="button"  >Agregar</a>
   <div class="table-responsive">
-    <table class="table table-bordered table-striped table-condensed table-hover">
+    <table id="tablaRol" class="table table-bordered table-striped table-condensed table-hover" >
       <thead class="thead-inverse">
         <tr>
           <th class="text-center th1">#</th>
           <th class="text-center th2">Nombre</th>
           <th class="text-center th3">Control Total</th>       
-          <th  colspan="2" class="text-center th4">Botones</th>           
+          <th  colspan="3" class="text-center th4">Botones</th>           
         </tr>
       </thead>
       <tbody>
         {% for rol in rol %}
-    		<tr>
+    		<tr class = "tabla-row" id = "{{rol.id}}">
     			<td class="text-center td1">{{ forloop.counter }}</td>
     			<td id="rol{{rol.id}}" class="text-center td2">{{rol.nombre}} </td>
     			<td class="text-center td3">{{rol.controltotal|yesno:"Si,No" }}</td>
     			<td class="text-center td4">
-      			{% csrf_token %}
-      				<a id="editarRol" href="/rol/editar/?idrol={{rol.id}}" role="button" class= "rolEditar" >
-      					<span class="glyphicon glyphicon-pencil"></span>
-      				</a>
+              <a id="editarRol" href="/rol/editar/?idrol={{rol.id}}" role="button" class= "rolEditar" >
+                <span class="glyphicon glyphicon-pencil"></span>
+              </a>
           </td>
+          
           <td class="text-center td5">
       				<a id = "numeroeliminar" href= "#" role="button" numeroid={{rol.id}} >
       					<span class="glyphicon glyphicon-trash"></span>
       				</a>
     			</td>
+          <td class="text-center td4">
+              <a id="rolMenuEditar" href="/rol/accesomenu/?idrol={{rol.id}}" role="button" class= "rolEditarAcceso" numeroid={{rol.id}}>
+                <span class="glyphicon glyphicon-align-justify"></span>
+              </a>
+          </td>
     		</tr>
         {% endfor %}
         
       </tbody>
     </table>
+
   </div>
-  <!-- Fin Grillla -->
+  
   <nav aria-label="Page navigation">
     <ul class="pagination">
 
@@ -65,10 +71,18 @@
         {% endif %}
     </ul>
   </nav>
+  <div class = "divClassTablaMenu">
+    
+
+  </div>
 
 
 
 </div>
+
+
+
+
 
 
 <!-- Modal -->
@@ -118,7 +132,8 @@
 
 
 {% block maestro_scripts %}
-<script src="{% static 'js/rol/rol.js' %}"> </script >
+<script src="{% static 'js/rol/rol.js' %}"> </script>
+
 {% endblock maestro_scripts %}
 
 

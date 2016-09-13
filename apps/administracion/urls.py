@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^rol/agregar/$', RolAgregar , name="rol-agregar"),
     url(r'^rol/eliminar/$', RolEliminar , name="rol-eliminar"),
     url(r'^rol/editar/$', RolEditar , name="rol-editar"),
+    url(r'^rol/accesomenu/$', RolMenuAccesoEditar , name="rol-editar"),
     # 
 
     # ACCESOS

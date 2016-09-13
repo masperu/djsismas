@@ -1,0 +1,14 @@
+#id_menus li input {
+	float: left;
+	margin-right: 10px;
+}
+
+.filasSeleccionada{
+	background-color: #FFFD99 !important;
+}
+
+.selecting {
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	user-select: none;
+}

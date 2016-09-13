@@ -246,11 +246,35 @@ def RolEditar(request):
 	else:
 		return redirect('/login/')
 
+def RolMenuAccesoEditar(request):
+	if(request.session.get("idusuario", False)):
+		idrol = request.GET.get('idrol')
+		instance = get_object_or_404(Rol, id=idrol)
+		form = RolAccesoForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'administracion/rol_menu_form.html',
+				{
+					'form': form, 'url':'/rol/accesomenu/?idrol='+idrol
+				}
+			)
+	else:
+		return redirect('/login/')
+
 def ListaAccesos(request):
 
 	if(request.session.get("idusuario", False)):
-		acceso = Acceso.objects.all()
-		paginator = Paginator(acceso, 10) # Show 25 contacts per page
+		print(request.POST['idrol']);
+		idrol = request.POST['idrol']
+		acceso = Menu.objects.filter(rol__id = idrol )
+		paginator = Paginator(acceso, 100) # Show 25 contacts per page
 
 		page = request.GET.get('page')
 		try:

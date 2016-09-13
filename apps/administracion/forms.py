@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelMultipleChoiceField, CheckboxSelectMultiple,SelectMultiple
+
 from .models import Menu, Rol
 
 class MenuForm(forms.ModelForm):
@@ -49,6 +51,7 @@ class MenuForm(forms.ModelForm):
 			# widget=forms.RadioSelect(choices=choices)
 		)
 
+	
 	# menupadre = forms.ModelChoiceField(
 	# 		required=False,
 	# 		label = "Menu Padre",
@@ -87,3 +90,15 @@ class RolForm(forms.ModelForm):
 		model = Rol
 		fields = ('nombre','controltotal',)
 
+class RolAccesoForm(forms.ModelForm):
+	menus = ModelMultipleChoiceField(
+				queryset=Menu.objects.filter(estado=True),
+				widget=forms.CheckboxSelectMultiple(
+					attrs={
+						'class': 'custom-control-input',
+					}
+				),
+			)
+	class Meta:
+		model = Rol
+		fields = ('menus',)

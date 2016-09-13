@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from apps.administracion.models import Usuario, Menu, Rol, Acceso, Perfil
+from apps.administracion.models import Usuario, Menu, Rol, Perfil
 
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
@@ -20,5 +20,4 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Menu, )
 admin.site.register(Rol)
-admin.site.register(Acceso)
 admin.site.register(Perfil)

@@ -52,6 +52,23 @@ $( document ).ready(function() {
 		
 	});
 
+	$(".rolEditarAcceso").on('click', function(e){
+		x = $(this).attr('numeroid');
+		m = "#rol"+x;
+
+		e.preventDefault();
+		$('#modalRolForm').modal('show').find('.modal-body').load($(this).attr('href'));
+		$('#modalRolForm').on('shown.bs.modal', function() {
+			$('#id_menus').addClass('list-group nav nav-pills nav-stacked');
+			$('#id_menus li').addClass('list-group-item ');
+			// $('#id_menus li input').css({"float":"left","margin-right":"10px",});
+
+		});
+		$(".modal-title").text("Asignado menus al rol "+$(m).text());
+
+		
+	});
+
 	$("#guardarRol").on('click', function(e){
 
 
@@ -109,6 +126,21 @@ $( document ).ready(function() {
 
 
 	});
+
+	$("body").on('click', "#tablaRol .tabla-row", function(){
+
+		$("#tablaRol .tabla-row").removeClass("filasSeleccionada");
+		$(this).addClass("filasSeleccionada");
+	
+		// alert($(this).attr('id'));
+		$.post( "/acceso/",{idrol : $(this).attr('id'), csrfmiddlewaretoken : csrftoken}, function( data ) {
+			$( "body .divClassTablaMenu" ).html( data );
+			// $( "body .divClassTablaMenu" ).show();
+			// alert( data );
+		});
+	});
+
+	$("#tablaRol .tabla-row").addClass("selecting");
 
 });
 
