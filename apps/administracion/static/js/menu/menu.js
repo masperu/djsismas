@@ -1,5 +1,12 @@
-
+var txtMenuPadre = "";
 $( document ).ready(function() {
+
+	$(window).keydown(function(event){
+		if(event.keyCode == 13) {
+		  event.preventDefault();
+		  return false;
+		}
+	});
 
 	function getCookie(name) {
 		var cookieValue = null;
@@ -22,13 +29,23 @@ $( document ).ready(function() {
 
 	//alert("Hola ");
 	$('#agregarMenu').on('click', function(e){
-	  e.preventDefault();
-	  // alert("Hola ");
-	  $('#modalMenuForm').modal('show').find('.modal-body').load($(this).attr('href'));
-	  $('#modalMenuForm').on('shown.bs.modal', function() {
+		e.preventDefault();
+		// alert("Hola ");
+		$('#modalMenuForm').modal('show').find('.modal-body').load($(this).attr('href'));
+		$('#modalMenuForm').on('shown.bs.modal', function() {
 		  $('#id_nombre').focus();
+		  $('#menupadre_text').autocomplete({
+				serviceUrl: '/menu/ajax/',
+				onSelect: function (suggestion) {
+				    //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+				    $("#menupadre").val(suggestion.data);
+				    txtMenuPadre = suggestion.value;
+				}
+			});
 		});
-	  $(".modal-title").text("Agrando");
+		$(".modal-title").text("Agrando");
+
+		
 	});
 
 
@@ -36,12 +53,29 @@ $( document ).ready(function() {
 		e.preventDefault();
 		$('#modalMenuForm').modal('show').find('.modal-body').load($(this).attr('href'));
 		$('#modalMenuForm').on('shown.bs.modal', function() {
-		  $('#id_nombre').focus();
+			$('#id_nombre').focus();
+			$('#menupadre_text').autocomplete({
+				serviceUrl: '/menu/ajax/',
+				onSelect: function (suggestion) {
+				    // alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+				    $("#menupadre").val(suggestion.data);
+				    txtMenuPadre = suggestion.value;
+				}
+			});
 		});
 		$(".modal-title").text("Editando");
+
+		
 	});
 
 	$("#guardarMenu").on('click', function(e){
+
+
+		if ( $.trim( $("#menupadre_text").val() ).length == 0 ) {
+			$("#menupadre").val("");
+			$("#menupadre_text").val("");
+		}
+
 
 		var $this = $(this);
 		// $this.button('loading');
@@ -60,6 +94,15 @@ $( document ).ready(function() {
 				else {
 					$( ".modal-body" ).find("form").remove();
 					$( ".modal-body" ).html(d);
+					$("#menupadre_text").val(txtMenuPadre);
+					$('#menupadre_text').autocomplete({
+						serviceUrl: '/menu/ajax/',
+						onSelect: function (suggestion) {
+						    //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+						    $("#menupadre").val(suggestion.data);
+				    		txtMenuPadre = suggestion.value;
+						}
+					});
 				}
 
 			}
@@ -98,18 +141,5 @@ $( document ).ready(function() {
 
 	});
 
-
-	
-
-
-	function mostrarMesaje(msj) {
-		$.toast({
-			heading: 'Correcto',
-			text: msj,
-			showHideTransition: 'slide',
-			icon: 'success'
-		});
-		 
-	}
 });
 

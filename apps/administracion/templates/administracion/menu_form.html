@@ -1,6 +1,4 @@
 
-
-
 {% load static from staticfiles %}
 
 
@@ -16,22 +14,100 @@
 
    {% for field in form %}
 
-		<div class="form-group row">
-	        {{ field.errors }}
-	         
-			
-	         <div class="col-xs-12 col-sm-4">
-	         	{{ field.label_tag }}
-	         </div>
-	         <div class="col-xs-12 col-sm-8">
-	         	{{ field }}<br>
-			 </div>
-	        
-	        {% if field.help_text %}
-	        	<p class="help">{{ field.help_text|safe }}</p>
-	        {% endif %}
-
+		{% if field.name == 'nombre' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="nombre">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+				{{field}}
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>     
+			</div>
 		</div>
+		{% endif %}
+
+		{% if field.name == 'descripcion' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="descripcion">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+			
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>     
+			</div>
+		</div>
+		{% endif %}
+
+		{% if field.name == 'ruta' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="ruta">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+				<input type="text" name="ruta" id="ruta" class="form-control" placeholder="URL" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} > 
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+				    
+			</div>
+		</div>
+		{% endif %}
+		{% if field.name == 'orden' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="orden">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+
+			</div>
+		</div>
+		{% endif %}		
+		{% if field.name == 'estado' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="estado">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+
+			</div>
+		</div>
+		{% endif %}
+
+		{% if field.name == 'menupadre' %}
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-4">
+				        <label for="menupadre_text">Menu Padre</label>
+				</div>
+				<div class="col-xs-12 col-sm-8">
+					<input type="text" name="menupadre_text" id="menupadre_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ menupadre.nombre }}" {% endif %}>
+					<input type="hidden" name="menupadre" id="menupadre" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
+					<div class="help-block alert-danger">
+					        {{ field.errors }}        
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
 	{% endfor %}
 
 	</form>

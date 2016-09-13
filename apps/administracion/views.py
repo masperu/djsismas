@@ -113,6 +113,22 @@ def MenuEliminar(request):
 	else:
 		return redirect('/login/')
 
+def MenuAjax(request):
+	if(request.session.get("idusuario", False)):
+		menu = Menu.objects.filter(nombre__icontains = "" + request.GET.get('query') + "", estado= True)[:10]
+		total = menu.count()
+		return render(
+			request,
+			'administracion/menu.json',
+			{
+				'menu': menu,
+				'total':total
+			},
+			content_type="application/json",
+		)
+		#return render(request, 'comite/comite.html',{'comite': comite})
+	else:
+		return redirect('/login/')
 
 
 def MenuEditar(request):
@@ -140,19 +156,114 @@ def MenuEditar(request):
 
 def ListaRol(request):
 	if(request.session.get("idusuario", False)):
-		rol = Rol.objects.all()
-		return render(request, 'administracion/roles_grilla.html',{'rol': rol})
+		rol = Rol.objects.all().order_by('-id')
+		paginator = Paginator(rol, 10) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			rol = paginator.page(page)
+		except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+			rol = paginator.page(1)
+		except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+			rol = paginator.page(paginator.num_pages)
+		return render(request, 'administracion/rol_grilla.html',{'rol': rol})
+	else:
+		return redirect('/login/')
+
+def RolAgregar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			# create a form instance and populate it with data from the request:
+			form = RolForm(request.POST)
+			# check whether it's valid:
+			if form.is_valid():
+				rol = form.save(commit=False)
+				rol.save()
+				form.cleaned_data
+				# return redirect(ListaMenus)
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else:
+				return render(request, 'administracion/rol_form.html',{'form':form ,'url':'/rol/agregar/'})
+
+			# if a GET (or any other method) we'll create a blank form
+		else:
+			form = RolForm()
+			return render(request, 'administracion/rol_form.html',{'form':form, 'url':'/rol/agregar/'})
+	
+	else:
+		return redirect('/login/')
+
+def RolEliminar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			idrol = request.POST['idrol']
+			try:
+				rol = Rol.objects.get(id = idrol)
+				rol.delete()
+				response_data = {"success": "Rol Eliminado Correctamente"}
+				if rol:
+					return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+					return HttpResponseRedirect('/rol/')
+			except ProtectedError as e:
+				# return HttpResponseRedirect('/menu/')
+				response_data = {"error": "No se puede eliminar este rol porque tiene hijos"}
+				return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
 	else:
 		return redirect('/login/')
 
 
+def RolEditar(request):
+	if(request.session.get("idusuario", False)):
+		idrol = request.GET.get('idrol')
+		instance = get_object_or_404(Rol, id=idrol)
+		form = RolForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'administracion/rol_form.html',
+				{
+					'form': form, 'url':'/rol/editar/?idrol='+idrol
+				}
+			)
+	else:
+		return redirect('/login/')
+
 def ListaAccesos(request):
+
 	if(request.session.get("idusuario", False)):
 		acceso = Acceso.objects.all()
+		paginator = Paginator(acceso, 10) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			acceso = paginator.page(page)
+		except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+			acceso = paginator.page(1)
+		except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+			acceso = paginator.page(paginator.num_pages)
 		return render(request, 'administracion/acceso_grilla.html',{'acceso': acceso})
 	else:
-		return redirect('/login/')		
-
+		return redirect('/login/')
 
 def ListaPerfil(request):
 	if(request.session.get("idusuario", False)):

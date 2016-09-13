@@ -45,7 +45,7 @@ class Acceso(models.Model):
 	menu = models.ForeignKey(Menu)
 
 	def __str__(self):
-		return self.rol + ' ' +self.menu
+		return self.rol.nombre + ' ' +self.menu.nombre
 
 
 class Organizacion(models.Model):

@@ -1,0 +1,59 @@
+
+
+
+{% load static from staticfiles %}
+
+
+{% block maestro_estilos %}
+
+{% endblock maestro_estilos %}
+
+
+{% block maestro_contenido %}
+
+   <form id="formRol" class="form-horizontal" role="form" method="post" action='{{url}}'>
+   {% csrf_token %}
+
+   {% for field in form %}
+		{% if field.name == 'nombre' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="nombre">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+				{{field}}
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>     
+			</div>
+		</div>
+		{% endif %}
+
+		{% if field.name == 'controltotal' %}
+
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="controltotal">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+			
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>     
+			</div>
+		</div>
+		{% endif %}
+
+	{% endfor %}
+
+	</form>
+
+
+{% endblock maestro_contenido %}
+
+
+{% block maestro_scripts %}
+
+{% endblock maestro_scripts %}

@@ -11,15 +11,14 @@ urlpatterns = [
     url(r'^menu/agregar/$', MenuAgregar , name="menu-agregar"),
     url(r'^menu/eliminar/$', MenuEliminar , name="menu-eliminar"),
     url(r'^menu/editar/$', MenuEditar , name="menu-editar"),
-	#
+    url(r'^menu/ajax/$', MenuAjax , name="menu-ajax"),
 	# 
 
     # ROLES
     url(r'^rol/$', ListaRol , name="lista_rol"),
-    # 
-    # 
-    # 
-    #
+    url(r'^rol/agregar/$', RolAgregar , name="rol-agregar"),
+    url(r'^rol/eliminar/$', RolEliminar , name="rol-eliminar"),
+    url(r'^rol/editar/$', RolEditar , name="rol-editar"),
     # 
 
     # ACCESOS

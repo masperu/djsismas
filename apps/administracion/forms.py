@@ -1,5 +1,5 @@
 from django import forms
-from .models import Menu
+from .models import Menu, Rol
 
 class MenuForm(forms.ModelForm):
 	# YES_OR_NO = ((True, 'Yes'),(False, 'No'))
@@ -8,7 +8,8 @@ class MenuForm(forms.ModelForm):
 			max_length=50,
 			widget=forms.TextInput(
 				attrs={
-					'class': 'form-control'
+					'class': 'form-control',
+					'placeholder': 'Nombre'
 				})
 		)
 
@@ -17,7 +18,8 @@ class MenuForm(forms.ModelForm):
 			widget=forms.Textarea(
 				attrs={
 					'class': 'form-control', 
-					'rows':'2'
+					'rows':'2',
+					'placeholder': 'Descripcion'
 				})
 		)
 
@@ -25,14 +27,16 @@ class MenuForm(forms.ModelForm):
 			max_length=350,
 			widget=forms.TextInput(
 				attrs={
-					'class': 'form-control'
+					'class': 'form-control',
+					'placeholder': 'URL'
 				})
 		)
 	orden = forms.IntegerField(
 			widget=forms.TextInput(
 				attrs={
 					'class': 'form-control', 
-					'type':'number'
+					'type':'number',
+					'placeholder': 'Orden'
 				})
 		)
 
@@ -40,23 +44,46 @@ class MenuForm(forms.ModelForm):
 
 	estado = forms.BooleanField(
 			initial=True,
-			# label='Activo', 
+			label='Activo', 
 			required=False,
-			widget=forms.RadioSelect(choices=choices)
+			# widget=forms.RadioSelect(choices=choices)
 		)
 
-	menupadre = forms.ModelChoiceField(
-			required=False,
-			label = "Menu Padre",
-			queryset= Menu.objects.filter(estado=True), 
-			empty_label="(Menu Padre)",
-			widget=forms.Select(
-				attrs={
-					'class':'form-control selectpicker'
-				})
-		)
+	# menupadre = forms.ModelChoiceField(
+	# 		required=False,
+	# 		label = "Menu Padre",
+	# 		queryset= Menu.objects.filter(estado=True), 
+	# 		empty_label="(Menu Padre)",
+	# 		widget=forms.Select(
+	# 			attrs={
+	# 				'class':'form-control selectpicker'
+	# 			})
+	# 	)
 
 	class Meta:
 		model = Menu
 		fields = ('nombre','descripcion','ruta', 'orden','estado','menupadre',)
+
+class RolForm(forms.ModelForm):
+	# YES_OR_NO = ((True, 'Yes'),(False, 'No'))
+	nombre = forms.CharField(
+			label = "Nombre del rol",
+			max_length=50,
+			widget=forms.TextInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'Nombre'
+				})
+		)
+
+	controltotal = forms.BooleanField(
+			initial=True,
+			label='Control total', 
+			required=False,
+			# widget=forms.RadioSelect(choices=choices)
+		)
+
+	class Meta:
+		model = Rol
+		fields = ('nombre','controltotal',)
 

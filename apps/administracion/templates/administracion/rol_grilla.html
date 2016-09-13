@@ -11,39 +11,31 @@
 
 {% block maestro_contenido %}
 <div class="col-xs-12">
-  <a id="agregarMenu" class="btn btn-default" href="/menu/agregar/" role="button"  >Agregar</a>
+  <a id="agregarRol" class="btn btn-default" href="/rol/agregar/" role="button"  >Agregar</a>
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-condensed table-hover">
       <thead class="thead-inverse">
         <tr>
           <th class="text-center th1">#</th>
           <th class="text-center th2">Nombre</th>
-          <th class="text-center th3">Descripción</th>
-          <th class="text-center th4">Ruta</th>
-          <th class="text-center th5">Orden</th>
-          <th class="text-center th6">Estado</th>   
-          <th class="text-center th7">Menú padre</th>          
-          <th  colspan="2" class="text-center th8">Botones</th>           
+          <th class="text-center th3">Control Total</th>       
+          <th  colspan="2" class="text-center th4">Botones</th>           
         </tr>
       </thead>
       <tbody>
-        {% for menu in menu %}
+        {% for rol in rol %}
     		<tr>
     			<td class="text-center td1">{{ forloop.counter }}</td>
-    			<td id="menu{{menu.id}}" class="text-center td2">{{menu.nombre}} </td>
-    			<td class="text-center td3">{{menu.descripcion}}</td>
-    			<td class="text-center td4">{{menu.ruta}}</td>
-    			<td class="text-center td5">{{menu.orden}}</td>
-    			<td class="text-center td6">{{menu.estado|yesno:"Activo,Inactivo" }}</td>
-    			<td class="text-center td7">{{menu.menupadre|default_if_none:"Sin Padre"}}</td>
-    			<td class="text-center td8">
+    			<td id="rol{{rol.id}}" class="text-center td2">{{rol.nombre}} </td>
+    			<td class="text-center td3">{{rol.controltotal|yesno:"Si,No" }}</td>
+    			<td class="text-center td4">
       			{% csrf_token %}
-      				<a id="editarMenu" href="/menu/editar/?idmenu={{menu.id}}" role="button" class= "menuEditar" >
+      				<a id="editarRol" href="/rol/editar/?idrol={{rol.id}}" role="button" class= "rolEditar" >
       					<span class="glyphicon glyphicon-pencil"></span>
       				</a>
           </td>
-          <td class="text-center td9">
-      				<a id = "numeroeliminar" href= "#" role="button" numeroid={{menu.id}} >
+          <td class="text-center td5">
+      				<a id = "numeroeliminar" href= "#" role="button" numeroid={{rol.id}} >
       					<span class="glyphicon glyphicon-trash"></span>
       				</a>
     			</td>
@@ -57,19 +49,19 @@
   <nav aria-label="Page navigation">
     <ul class="pagination">
 
-        {% if menu.has_previous %}
-            <li><a href="?page={{ menu.previous_page_number }}">Atras</a></li>
+        {% if rol.has_previous %}
+            <li><a href="?page={{ rol.previous_page_number }}">Atras</a></li>
         {% endif %}
 
        <li>
         <span class="current">
-            Pagina {{ menu.number }} de {{ menu.paginator.num_pages }}
+            Pagina {{ rol.number }} de {{ rol.paginator.num_pages }}
         </span>
 
        </li> 
 
-        {% if menu.has_next %}
-            <li><a href="?page={{ menu.next_page_number }}">Siguiente</a></li>
+        {% if rol.has_next %}
+            <li><a href="?page={{ rol.next_page_number }}">Siguiente</a></li>
         {% endif %}
     </ul>
   </nav>
@@ -80,7 +72,7 @@
 
 
 <!-- Modal -->
-<div id="modalMenuForm" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+<div id="modalRolForm" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog" role="document">
 
     <!-- Modal content-->
@@ -94,7 +86,7 @@
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-         <button type="button" class="btn btn-primary" id="guardarMenu" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
+         <button type="button" class="btn btn-primary" id="guardarRol" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>
     </div>
 
@@ -104,7 +96,7 @@
 
 
 
-<div id="modalMenuAlert" class="modal fade" tabindex="-1" role="dialog" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+<div id="modalRolAlert" class="modal fade" tabindex="-1" role="dialog" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -116,7 +108,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button id="EliminarMenu" type="button" class="btn btn-primary">Eliminar</button>
+        <button id="EliminarRol" type="button" class="btn btn-primary">Eliminar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -126,7 +118,7 @@
 
 
 {% block maestro_scripts %}
-<script src="{% static 'js/menu/menu.js' %}"> </script >
+<script src="{% static 'js/rol/rol.js' %}"> </script >
 {% endblock maestro_scripts %}
 
 
