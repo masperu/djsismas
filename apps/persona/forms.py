@@ -30,13 +30,37 @@ class EstadoCivilForm(forms.ModelForm):
 
 
 class TipoCalleForm(forms.ModelForm):
-	nombre = forms.CharField(max_length=25, label = "Tipo de calle")
-	codigo = forms.CharField(max_length=10, label = "Codigo del tipo de calle")
-	tipo = forms.CharField(max_length=10, label = "Tipo")
+	nombre = forms.CharField(max_length=25, 
+				label = "Tipo de calle", 				
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+						'placeholder': 'Nombre'
+					})
+				)
+
+	codigo = forms.CharField(max_length=10, 
+				label = "Codigo del tipo de calle",
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+						'placeholder': 'Código'
+					})			
+				)
+	tipo = forms.CharField(max_length=10, 
+				label = "Tipo",
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+						'placeholder': 'Tipo'
+					})
+				)
 
 	class Meta:
 		model = TipoCalle
 		fields = ('nombre', 'codigo', 'tipo',)
+
+
 
 class PersonaForm(forms.ModelForm):
 

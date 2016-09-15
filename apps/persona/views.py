@@ -124,3 +124,80 @@ def ListaTipoCalle(request):
 		return render(request, 'persona/tipocalle_grilla.html',{'tipocalle': tipocalle})
 	else:
 		return redirect('/login/')
+
+
+def TipoCalleAgregar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			# create a form instance and populate it with data from the request:
+			form = TipoCalleForm(request.POST)
+			# check whether it's valid:
+			if form.is_valid():
+				tipocalle = form.save(commit=False)
+				tipocalle.save()
+				form.cleaned_data
+				# return redirect(ListaMenus)
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else:
+				return render(request, 'persona/tipocalle_form.html',{'form':form ,'url':'/persona.tipocalle/agregar/'})
+
+			# if a GET (or any other method) we'll create a blank form
+		else:
+			form = TipoCalleForm()
+			return render(request, 'persona/tipocalle_form.html',{'form':form, 'url':'/persona.tipocalle/agregar/'})
+	
+	else:
+		return redirect('/login/')
+
+def TipoCalleEliminar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			idtipocalle = request.POST['idtipocalle']
+			try:
+				tipocalle = TipoCalle.objects.get(id = idtipocalle)
+				tipocalle.delete()
+				response_data = {"success": "Tipo Calle Eliminado Correctamente"}
+				if tipocalle:
+					return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+					return HttpResponseRedirect('/persona.tipocalle/')
+			except ProtectedError as e:
+				# return HttpResponseRedirect('/menu/')
+				response_data = {"error": "No se puede eliminar este tipo de calle"}
+				return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+	else:
+		return redirect('/login/')
+
+
+
+
+def TipoCalleEditar(request):
+	if(request.session.get("idusuario", False)):
+		idtipocalle = request.GET.get('idtipocalle')
+		instance = get_object_or_404(TipoCalle, id=idtipocalle)
+		form = TipoCalleForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'persona/tipocalle_form.html',
+				{
+					'form': form, 'url':'/persona.tipocalle/editar/?idtipocalle='+idtipocalle
+				}
+			)
+	else:
+		return redirect('/login/')		
