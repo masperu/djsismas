@@ -13,8 +13,19 @@ class TipoCalle(models.Model):
 		return self.nombre
 
 class Ubigeo(models.Model):
+
+	DEPARTAMENTO = '1'
+	PROVINCIA = '2'
+	DISTRITO = '3'
+	TIPO = ((DEPARTAMENTO, 'Departamento'), (PROVINCIA, 'Provincia'),(DISTRITO, 'Distrito'),)
+
 	codigo = models.CharField(max_length=8)
 	nombre = models.CharField(max_length=50)
+	tipo = models.CharField(
+				max_length=1,
+				choices=TIPO,
+				default=DEPARTAMENTO,
+			)
 
 	def __str__(self):
 		return self.nombre

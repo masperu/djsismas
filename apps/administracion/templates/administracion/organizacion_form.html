@@ -1,4 +1,3 @@
-{% extends "Base.html" %}
 
 {% load static from staticfiles %}
 
@@ -10,41 +9,111 @@
 
 {% block maestro_contenido %}
 
-<div class="col-sm-6">
-	<form class="form-horizontal" role="form" method="post" action="/login/">
-		{% csrf_token %}
-	  <div class="form-group">
-	    <label for="ejemplo_email_3" class="col-lg-2 control-label">Email</label>
-	    <div class="col-lg-10">
-	      <input type="input" class="form-control" id="ejemplo_email_3"
-	             placeholder="Email">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <label for="ejemplo_password_3" class="col-lg-2 control-label">Contraseña</label>
-	    <div class="col-lg-10">
-	      <input type="password" class="form-control" id="ejemplo_password_3" 
-	             placeholder="Contraseña">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <div class="col-lg-offset-2 col-lg-10">
-	      <div class="checkbox">
-	        <label>
-	          <input type="checkbox"> No cerrar sesión
-	        </label>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <div class="col-lg-offset-2 col-lg-10">
-	      <button type="submit" class="btn btn-default">Entrar</button>
-	    </div>
-	  </div>
-	</form>	
-</div>
+   <form id="formOrganizacion" class="form-horizontal" role="form" method="post" action='{{url}}'>
+   {% csrf_token %}
 
-    
+   {% for field in form %}
+
+		{% if field.name == 'nombre' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="nombre">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+				{{field}}
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>     
+			</div>
+		</div>
+		{% endif %}
+
+		{% if field.name == 'ruc' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="ruc">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+			
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>     
+			</div>
+		</div>
+		{% endif %}
+
+		{% if field.name == 'telefono' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="telefono">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+			{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+				    
+			</div>
+		</div>
+		{% endif %}
+		{% if field.name == 'email' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="email">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+
+			</div>
+		</div>
+		{% endif %}		
+		{% if field.name == 'alcance' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="alcance">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+
+			</div>
+		</div>
+		{% endif %}	
+		{% if field.name == 'siglas' %}
+		<div class="form-group">
+			<div class="col-xs-12 col-sm-4">
+			        <label for="siglas">{{ field.label_tag }}</label>
+			</div>
+			<div class="col-xs-12 col-sm-8">
+
+				{{field}}
+
+				<div class="help-block alert-danger">
+					{{ field.errors }}        
+				</div>
+
+			</div>
+		</div>
+		{% endif %}
+
+
+	{% endfor %}
+
+	</form>
+
 
 {% endblock maestro_contenido %}
 
