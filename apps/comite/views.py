@@ -237,6 +237,7 @@ def ComiteLista(request):
 	else:
 		return redirect('/login/')
 
+
 def ComiteAjax(request):
 	if(request.session.get("idusuario", False)):
 		comite = Comite.objects.filter(nombre__icontains = "" + request.GET.get('query') + "" )[:10]
@@ -334,3 +335,101 @@ def ComiteEliminar(request):
 	else:
 		return redirect('/login/')
 
+
+
+def NivelCargoLista(request):
+	if(request.session.get("idusuario", False)):
+		nivelcomite = NivelComite.objects.all()
+		tipocargo = TipoCargo.objects.all()
+		return render(request, 'comite/nivelcargo.html',{'nivelcomite': nivelcomite, 'tipocargo':tipocargo})
+	else:
+		return redirect('/login/')
+
+
+def NivelCargoAgregar(request):
+	if(request.session.get("idusuario", False)):
+		
+		try:
+			idnivelcomite = request.POST["nivelcomite"]
+		except Exception as e:
+			idnivelcomite = 0
+
+		# idcomite = request.GET.get('idcomite')
+		instance = get_object_or_404(NivelComite, id=idnivelcomite)
+
+		url = "/nivelcargo/editar/?idnivelcomite=" + idnivelcomite
+		form = NivelCargoTipoForm(instance=instance)
+		
+		#Todos lo comites para la lista
+		tipocargos = TipoCargo.objects.all()
+
+		#ComitePadre
+		try:
+			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
+		except Exception as e:
+			comitepadre = None
+
+		return render(request, 'comite/nivelcargo_form2.html', {'form':form, 'url': url, 'tipocargos':tipocargos })
+	else:
+		return redirect('/login/')
+
+
+
+def NivelCargoEditar(request):
+
+	if(request.session.get("idusuario", False)):
+		try:
+			idnivelcomite = request.GET.get('idnivelcomite')
+		except Exception as e:
+			idnivelcomite = 0
+
+		url = "/nivelcargo/editar/?idnivelcomite=" + idnivelcomite
+
+		tipocargos = TipoCargo.objects.all()
+
+
+
+		instance = get_object_or_404(NivelComite, id=idnivelcomite)
+
+		print(instance)
+
+		form = NivelCargoTipoForm(request.POST or None, instance=instance)
+
+		if form.is_valid():
+			nivelcomite = form.save(commit=False)
+			nivelcomite.save()
+			
+			for tipocargo in form.cleaned_data.get('tipocargos'):
+				nivelcargo = NivelCargo(tipocargo=tipocargo, nivelcomite=nivelcomite)
+				nivelcargo.save()
+			msg = {"msg": "Guardado correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		
+		return render(request, 'comite/nivelcargo_form2.html', {'form':form, 'url': url, 'tipocargos':tipocargos })
+	else:
+		return redirect('/login/')
+
+
+
+
+def NivelCargoGuardar(request):
+	if(request.session.get("idusuario", False)):
+		idnivelcomite = request.POST["nivelcomite"]
+		nivelcargo = NivelCargo.objects.all()
+
+		#print(idnivelcomite)
+
+		for tipocargo in request.POST.getlist('tipocargo'):
+			print(tipocargo)
+
+		tipocargo = TipoCargo.objects.all()
+
+		if request.method == 'POST':
+			return render(request, 'comite/nivelcargo_form.html', {'tipocargo':tipocargo, 'nivelcargo':nivelcargo, 'idnivelcomite':idnivelcomite } )
+		else:
+			return render(request, 'comite/comite_form.html', {'tipocargo':tipocargo, 'nivelcargo':nivelcargo, 'idnivelcomite':idnivelcomite } )
+	else:
+		return redirect('/login/')

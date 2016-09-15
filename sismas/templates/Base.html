@@ -12,9 +12,6 @@
 	<link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}" />
 	
 	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/stylesautocomplete.css' %}">
-	
-	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.css' %}">
-
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.min.css' %}">
 
@@ -78,6 +75,8 @@
 		  <ul class="dropdown-menu">
 			<li><a href="/nivelcomite/">Nivel Comite</a></li>
 			<li><a href="/tipocargo/">Tipo Cargo</a></li>
+			<li><a href="/nivelcargo/">Nivel Cargo</a></li>
+			<li role="separator" class="divider"></li>
 			<li><a href="/comite/">Comites</a></li>
 		  </ul>
 		</li>
@@ -89,7 +88,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
+<div class="container-fluid">
 	<div class="row">
 		{% block maestro_contenido %}
 
