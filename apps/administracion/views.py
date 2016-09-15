@@ -64,6 +64,7 @@ def ListaMenus(request):
 
 def MenuAgregar(request):
 	if(request.session.get("idusuario", False)):
+		menupadre = None
 		if request.method == 'POST':
 			# create a form instance and populate it with data from the request:
 			form = MenuForm(request.POST)
@@ -79,12 +80,12 @@ def MenuAgregar(request):
 							content_type="application/json"
 						)
 			else:
-				return render(request, 'administracion/menu_form.html',{'form':form ,'url':'/menu/agregar/'})
+				return render(request, 'administracion/menu_form.html',{'form':form ,'url':'/menu/agregar/', 'menupadre': menupadre})
 
 			# if a GET (or any other method) we'll create a blank form
 		else:
 			form = MenuForm()
-			return render(request, 'administracion/menu_form.html',{'form':form, 'url':'/menu/agregar/'})
+			return render(request, 'administracion/menu_form.html',{'form':form, 'url':'/menu/agregar/' ,'menupadre': menupadre})
 	
 	else:
 		return redirect('/login/')
@@ -136,6 +137,12 @@ def MenuEditar(request):
 		idmenu = request.GET.get('idmenu')
 		instance = get_object_or_404(Menu, id=idmenu)
 		form = MenuForm(request.POST or None, instance=instance)
+
+		try:
+			menupadre = Menu.objects.get(id=instance.menupadre.id)
+		except Exception as e:
+			menupadre = None
+			
 		if form.is_valid():
 			form.save()
 			msg = {"msg" : "Datos editados correctamente"}
@@ -147,7 +154,7 @@ def MenuEditar(request):
 				request, 
 				'administracion/menu_form.html',
 				{
-					'form': form, 'url':'/menu/editar/?idmenu='+idmenu
+					'form': form, 'url':'/menu/editar/?idmenu='+idmenu, 'menupadre': menupadre
 				}
 			)
 	else:
@@ -296,3 +303,96 @@ def ListaPerfil(request):
 	else:
 		return redirect('/login/')	
 
+
+
+def ListaOrganizacion(request):
+	if(request.session.get("idusuario", False)):
+		organizacion = Organizacion.objects.all().order_by('-id')
+		paginator = Paginator(organizacion, 10) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			organizacion = paginator.page(page)
+		except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+			organizacion = paginator.page(1)
+		except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+			organizacion = paginator.page(paginator.num_pages)
+		return render(request, 'administracion/organizacion_grilla.html',{'organizacion': organizacion})
+	else:
+		return redirect('/login/')
+
+def OrganizacionAgregar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			# create a form instance and populate it with data from the request:
+			form = OrganizacionForm(request.POST)
+			# check whether it's valid:
+			if form.is_valid():
+				organizacion = form.save(commit=False)
+				organizacion.save()
+				form.cleaned_data
+				# return redirect(ListaMenus)
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else:
+				return render(request, 'administracion/organizacion_form.html',{'form':form ,'url':'/organizacion/agregar/'})
+
+			# if a GET (or any other method) we'll create a blank form
+		else:
+			form = OrganizacionForm()
+			return render(request, 'administracion/organizacion_form.html',{'form':form, 'url':'/organizacion/agregar/'})
+	
+	else:
+		return redirect('/login/')
+
+def OrganizacionEliminar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			idorganizacion = request.POST['idorganizacion']
+			try:
+				organizacion = Organizacion.objects.get(id = idorganizacion)
+				organizacion.delete()
+				response_data = {"success": "Organizacion Eliminado Correctamente"}
+				if organizacion:
+					return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+					return HttpResponseRedirect('/organizacion/')
+			except ProtectedError as e:
+				# return HttpResponseRedirect('/menu/')
+				response_data = {"error": "No se puede eliminar esta organizacion porque datos relacionado"}
+				return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+	else:
+		return redirect('/login/')
+
+
+def OrganizacionEditar(request):
+	if(request.session.get("idusuario", False)):
+		idorganizacion = request.GET.get('idorganizacion')
+		instance = get_object_or_404(Organizacion, id=idorganizacion)
+		form = OrganizacionForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'administracion/organizacion_form.html',
+				{
+					'form': form, 'url':'/organizacion/editar/?idorganizacion='+idorganizacion
+				}
+			)
+	else:
+		return redirect('/login/')

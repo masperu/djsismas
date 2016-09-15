@@ -46,5 +46,13 @@ urlpatterns = [
     #
     # 
 
+    # USUARIOS
+    url(r'^organizacion/$', ListaOrganizacion , name="lista_perfil"),   
+    url(r'^organizacion/agregar/$', OrganizacionAgregar , name="organizacion-agregar"),
+    url(r'^organizacion/eliminar/$', OrganizacionEliminar , name="organizacion-eliminar"),
+    url(r'^organizacion/editar/$', OrganizacionEditar , name="organizacion-editar"),
+    # 
+    # 
+
     #url(r'^usuarios.usuario/crear/$', UsuarioCrear, name='user_add'),
 ]

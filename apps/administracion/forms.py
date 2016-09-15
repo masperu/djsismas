@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelMultipleChoiceField, CheckboxSelectMultiple,SelectMultiple
 
-from .models import Menu, Rol
+from .models import Menu, Rol, Organizacion
 
 class MenuForm(forms.ModelForm):
 	# YES_OR_NO = ((True, 'Yes'),(False, 'No'))
@@ -102,3 +102,67 @@ class RolAccesoForm(forms.ModelForm):
 	class Meta:
 		model = Rol
 		fields = ('menus',)
+
+
+class OrganizacionForm(forms.ModelForm):
+	# YES_OR_NO = ((True, 'Yes'),(False, 'No'))
+	nombre = forms.CharField(
+			label = "Organizacion",
+			max_length=255,
+			widget=forms.TextInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'Nombre'
+				})
+		)
+
+	ruc = forms.CharField( 
+			max_length=11,
+			widget=forms.TextInput(
+				attrs={
+					'class': 'form-control', 
+					'rows':'2',
+					'placeholder': 'Ingrese su Ruc'
+				})
+		)
+
+	telefono = forms.CharField(
+			max_length=15,
+			widget=forms.TextInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'Ingrese el telefono'
+				})
+		)
+
+	email = forms.CharField(
+			max_length=100,
+			widget=forms.EmailInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'Ingrese el correo'
+				})
+				
+		)
+
+	alcance = forms.CharField(
+			max_length=10,
+			widget=forms.TextInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'Ingrese el alcance'
+				})
+		)
+
+	siglas = forms.CharField(
+			max_length=10,
+			widget=forms.TextInput(
+				attrs={
+					'class': 'form-control',
+					'placeholder': 'Ingrese las siglas'
+				})
+		)
+
+	class Meta:
+		model = Organizacion
+		fields = ('nombre','ruc', 'telefono','email','alcance','siglas',)

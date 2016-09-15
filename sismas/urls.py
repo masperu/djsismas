@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('apps.administracion.urls')),
     url(r'^', include('apps.comite.urls')),
+    url(r'^persona.', include('apps.persona.urls')),
     #url(r'^$', ),
     # url(r'^ficha/$', include("apps.ficha.urls", namespace='ficha')),
     # url(r'^persona/$', include("apps.persona.urls", namespace='persona')),
