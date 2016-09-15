@@ -64,10 +64,10 @@ def ListaMenus(request):
 
 def MenuAgregar(request):
 	if(request.session.get("idusuario", False)):
+		menupadre = None
 		if request.method == 'POST':
 			# create a form instance and populate it with data from the request:
 			form = MenuForm(request.POST)
-			menupadre = None
 			# check whether it's valid:
 			if form.is_valid():
 				menu = form.save(commit=False)
