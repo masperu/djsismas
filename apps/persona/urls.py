@@ -13,9 +13,9 @@ urlpatterns = [
 
     # TIPOCALLE
     url(r'^tipocalle/$', ListaTipoCalle , name="lista_tipocalle"),
-    # url(r'^estadocivil/agregar/$', EstadoCivilAgregar , name="menu-agregar"),
-    # url(r'^estadocivil/eliminar/$', EstadoCivilEliminar , name="menu-eliminar"),
-    # url(r'^estadocivil/editar/$', EstadoCivilEditar , name="menu-editar"),
+    url(r'^tipocalle/agregar/$', TipoCalleAgregar , name="tipocalle-agregar"),
+    url(r'^tipocalle/eliminar/$', TipoCalleEliminar , name="tipocalle-eliminar"),
+    url(r'^tipocalle/editar/$', TipoCalleEditar , name="tipocalle-editar"),
     # 
 
     # ACCESOS
