@@ -4,3 +4,5 @@ from apps.persona.models import *
 
 admin.site.register(Persona)
 admin.site.register(Ubigeo)
+admin.site.register(TipoCalle)
+admin.site.register(EstadoCivil)
