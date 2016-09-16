@@ -18,12 +18,11 @@ urlpatterns = [
     url(r'^tipocalle/editar/$', TipoCalleEditar , name="tipocalle-editar"),
     # 
 
-    # ACCESOS
- 
-    # 
-    # 
-    # 
-    #
+    # PERSONA
+    url(r'^persona/$', ListaPersona , name="lista_persona"),
+    url(r'^persona/agregar/$', PersonaAgregar , name="persona-agregar"),
+    url(r'^persona/eliminar/$', PersonaEliminar , name="persona-eliminar"),
+    url(r'^persona/editar/$', PersonaEditar , name="persona-editar"),
     # 
 
     # PERFIL

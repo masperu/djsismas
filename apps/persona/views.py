@@ -201,3 +201,100 @@ def TipoCalleEditar(request):
 			)
 	else:
 		return redirect('/login/')		
+
+
+def ListaPersona(request):
+	if(request.session.get("idusuario", False)):
+		persona = Persona.objects.all().order_by('-id')
+		paginator = Paginator(persona, 10) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			persona = paginator.page(page)
+		except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+			persona = paginator.page(1)
+		except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+			persona = paginator.page(paginator.num_pages)
+		return render(request, 'persona/persona_grilla.html',{'persona': persona})
+	else:
+		return redirect('/login/')
+
+
+
+def PersonaAgregar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			# create a form instance and populate it with data from the request:
+			form = PersonaForm(request.POST)
+			# check whether it's valid:
+			if form.is_valid():
+				persona = form.save(commit=False)
+				persona.save()
+				form.cleaned_data
+				# return redirect(ListaMenus)
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else:
+				return render(request, 'persona/persona_form.html',{'form':form ,'url':'/persona.persona/agregar/'})
+
+			# if a GET (or any other method) we'll create a blank form
+		else:
+			form = PersonaForm()
+			return render(request, 'persona/persona_form.html',{'form':form, 'url':'/persona.persona/agregar/'})
+	
+	else:
+		return redirect('/login/')
+
+def PersonaEliminar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			idpersona = request.POST['idpersona']
+			try:
+				persona = TipoCalle.objects.get(id = idpersona)
+				persona.delete()
+				response_data = {"success": "Persona Eliminado Correctamente"}
+				if persona:
+					return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+					return HttpResponseRedirect('/persona.persona/')
+			except ProtectedError as e:
+				# return HttpResponseRedirect('/menu/')
+				response_data = {"error": "No se puede eliminar este tipo de calle"}
+				return HttpResponse(
+						json.dumps(response_data),
+						content_type="application/json"
+					)
+	else:
+		return redirect('/login/')
+
+
+
+
+def PersonaEditar(request):
+	if(request.session.get("idusuario", False)):
+		idpersona = request.GET.get('idpersona')
+		instance = get_object_or_404(Persona, id=idpersona)
+		form = PersonaForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'persona/persona_form.html',
+				{
+					'form': form, 'url':'/persona.persona/editar/?idpersona='+idpersona
+				}
+			)
+	else:
+		return redirect('/login/')		

@@ -59,8 +59,8 @@ $( document ).ready(function() {
 		e.preventDefault();
 		$('#modalRolForm').modal('show').find('.modal-body').load($(this).attr('href'));
 		$('#modalRolForm').on('shown.bs.modal', function() {
-			$('#id_menus').addClass('list-group nav nav-pills nav-stacked');
-			$('#id_menus li').addClass('list-group-item ');
+			// $('#id_menus').addClass('list-group nav nav-pills nav-stacked');
+			// $('#id_menus li').addClass('list-group-item ');
 			// $('#id_menus li input').css({"float":"left","margin-right":"10px",});
 
 		});
