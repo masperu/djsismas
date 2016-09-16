@@ -14,8 +14,8 @@
 
 
 	// });
-	$("btnUbigeoGuardar").on('click',function(e) {
-		alert("ASasas");
-		console.log(e);
-		// $('#modalUbigeo').modal('hide');
-	});
+	// $("btnUbigeoGuardar").on('click',function(e) {
+	// 	alert("ASasas");
+	// 	console.log(e);
+	// 	// $('#modalUbigeo').modal('hide');
+	// });

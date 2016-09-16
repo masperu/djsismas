@@ -11,7 +11,8 @@
 {% block maestro_contenido %}
 
 <div class="col-xs-12">
-  <button  id="agregarPersona" class="btn btn-default" data-toggle="modal" href="/persona.persona/agregar/">Agregar</button>
+ <a id="agregarPersona" class="btn btn-default" href="/persona.persona/agregar/" role="button"  >Agregar</a>
+
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-condensed table-hover">
       <thead class="thead-inverse">
@@ -78,65 +79,28 @@
 
 
 <!-- Modal -->
+<div id="modalPersonaForm" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+         <button type="button" class="btn btn-primary" id="guardarPersona">Guardar</button>
+      </div>
+    </div>
 
 </div>
-    <div id="modalPersonaForm" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Stack One</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body…</p>
-        <p>One fine body…</p>
-        <p>One fine body…</p>
-        <input class="form-control" data-tabindex="1" type="text">
-        <input class="form-control" data-tabindex="2" type="text">
-        <button class="btn btn-default" data-toggle="modal" href="#stack2">Launch modal</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-        <button type="button" class="btn btn-primary">Ok</button>
-      </div>
-    </div>
-     
-    <div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Stack Two</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body…</p>
-        <p>One fine body…</p>
-        <input class="form-control" data-tabindex="1" type="text">
-        <input class="form-control" data-tabindex="2" type="text">
-        <button class="btn btn-default" data-toggle="modal" href="#stack3">Launch modal</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-        <button type="button" class="btn btn-primary">Ok</button>
-      </div>
-    </div>
-     
-    <div id="stack3" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Stack Three</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body…</p>
-        <input class="form-control" data-tabindex="1" type="text">
-        <input class="form-control" data-tabindex="2" type="text">
-      </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-        <button type="button" class="btn btn-primary">Ok</button>
-      </div>
-    </div>
 
 
 
-<div id="modalPersonaAlert" class="modal fade" tabindex="-1" role="dialog" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+<div id="modalPersonaAlert" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -153,9 +117,11 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
 {% endblock maestro_contenido %}
 
 
 {% block maestro_scripts %}
-  <script src="{% static 'js/persona/persona.js' %}"> </script >
+  <script src="{% static 'js/persona/persona.js' %}"></script >
 {% endblock maestro_scripts %}

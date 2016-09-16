@@ -46,9 +46,7 @@ $( document ).ready(function() {
 		$('#modalPersonaForm').on('shown.bs.modal', function() {
 			$('#id_nombre').focus();
 		});
-		$(".modal-title").text("Editando");
-
-		
+		$(".modal-title").text("Editando");		
 	});
 
 	

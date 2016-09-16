@@ -1,5 +1,5 @@
 
-{% load static%}
+{% load static from staticfiles %}
 
 
 {% block maestro_estilos %}
@@ -65,13 +65,13 @@
 			{% if field.name == 'ubigeonacimiento' %}
 				
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Ubigeo" value="Cajamarca/Cajamarca/Cajamarca">
+					<input type="text" class="form-control" placeholder="Ubigeo">
 					<span class="input-group-btn">
-						<button id="idubigeonacimiento" class="btn btn-default " type="button" data-toggle="modal" href="#modalUbigeo">
-							
+						<button style="	float: right;" class="btn btn-default " type="button">
 
 					   		 	<span class="glyphicon glyphicon-search"></span>
 
+							
 						</button>
 					</span>
 				</div>
@@ -102,28 +102,8 @@
 
 	{% endfor %}
 
-
-<div id="modalUbigeo" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 class="modal-title">Stack Two</h4>
-  </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <input class="form-control" data-tabindex="1" type="text">
-    <input class="form-control" data-tabindex="2" type="text">
-    <button class="btn btn-default" data-toggle="modal" href="#stack3">Launch modal</button>
-  </div>
-  <div class="modal-footer">
-    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-    <button type="button" class="btn btn-primary">Ok</button>
-  </div>
-</div>
-
-
-
 		</form>
+
 
 
 {% endblock maestro_contenido %}
@@ -132,7 +112,6 @@
 {% block maestro_scripts %}
 
 
-  <script src="{% static 'js/persona/persona_form.js' %}"> 
-  </script >
+  <script src="{% static 'js/persona/persona_form.js' %}"> </script>
 
 {% endblock maestro_scripts %}
