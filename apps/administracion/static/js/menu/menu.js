@@ -137,12 +137,6 @@ $( document ).ready(function() {
 
 		});
 			
-	    post: true,
-	    confirmButtonClass: "btn-danger",
-	    cancelButtonClass: "btn-default",
-	    //dialogClass: "modal-dialog modal-lg" // Bootstrap classes for large modal
-	    dialogClass: "modal-dialog"
-
 	});
 
 });
