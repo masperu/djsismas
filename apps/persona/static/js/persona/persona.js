@@ -102,8 +102,13 @@ $( document ).ready(function() {
 			});
 
 		});
-			
-
+		// $('#modalUbigeo').modal('show').find('.modal-body').load($(this).attr('href'));
+		$('#modalUbigeo').on('shown.bs.modal', function() {
+			  $('#btnAgregarUbigeo').on('click', function(){
+				alert("asas");
+			});
+		});
+		
 
 	});
 
