@@ -63,7 +63,75 @@ class TipoCalleForm(forms.ModelForm):
 
 
 class PersonaForm(forms.ModelForm):
+	nombre = forms.CharField(max_length=25, 				
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})
+				)
 
+	paterno = forms.CharField(
+				max_length=10, 
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})			
+				)
+	materno = forms.CharField(
+				max_length=10, 
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})
+				)	
+	dni = forms.CharField(
+				max_length=8, 
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})
+				)	
+	# sexo = forms.CharField(
+	# 			max_length=10, 
+	# 			widget=forms.TextInput(
+	# 				attrs={
+	# 					'class': 'form-control',
+	# 				})
+	# 			)	
+
+	correos = forms.EmailField(
+				required=False,
+				max_length=45, 
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})
+				)	
+
+	clave = forms.CharField(
+				required=False,
+				max_length=10, 
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})
+			)	
+
+	fnacimiento = forms.DateField(widget=forms.DateInput(attrs={
+						'class': 'form-control',
+
+					})
+				)
+
+
+	direccion = forms.CharField(
+				required=False,
+				max_length=10, 
+				widget=forms.TextInput(
+					attrs={
+						'class': 'form-control',
+					})
+				)
 
 	class Meta:
 		model = Persona
@@ -71,3 +139,14 @@ class PersonaForm(forms.ModelForm):
 					'dni', 'sexo','correos', 'clave','fnacimiento', 
 					'estadocivil','tipocalle','direccion',
 					'ubigeonacimiento','ubigeoresidencia',)
+
+	def __init__(self, *args, **kwargs):
+		super(PersonaForm, self).__init__(*args, **kwargs)
+		self.fields["sexo"].widget.attrs['class'] = 'form-control selectpicker'
+		self.fields["sexo"].widget.attrs['data-live-search'] = 'true'		
+
+		self.fields["estadocivil"].widget.attrs['class'] = 'form-control selectpicker'
+		self.fields["estadocivil"].widget.attrs['data-live-search'] = 'true'		
+
+		self.fields["tipocalle"].widget.attrs['class'] = 'form-control selectpicker'
+		self.fields["tipocalle"].widget.attrs['data-live-search'] = 'true'

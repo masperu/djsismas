@@ -16,8 +16,12 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.min.css' %}">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/toastr.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select/bootstrap-select.css' %}">
 
-  
+	<!--link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-modal.css' %}">
+
+  	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-modal-patch.css' %}"-->
 
 
 
@@ -118,6 +122,11 @@
 	<script src="{% static 'js/jquery.autocomplete.js' %}"></script>
 	<script src="{% static 'js/toastr.min.js' %}"></script>
 	<script src="{% static 'js/jquery.confirm.min.js' %}"></script>
+	<script src="{% static 'js/moment.js' %}"></script>
+	<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+	<script src="{% static 'js/bootstrap-select/bootstrap-select.js' %}"></script>
+	
+
 
 	<script>
 	  toastr.options = {
@@ -137,7 +146,10 @@
 		"showMethod": "fadeIn",
 		"hideMethod": "fadeOut"
 	  } 
+
 	</script>
+
+
 
   {% block maestro_scripts %}
   {% endblock maestro_scripts %}

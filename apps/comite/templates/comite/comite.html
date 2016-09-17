@@ -2,11 +2,9 @@
 
 {% load static from staticfiles %}
 
-
 {% block maestro_estilos %}
-
+  {# <link rel="stylesheet" type="text/css" href="{% static 'css/comite/comite.css' %}"> #}
 {% endblock maestro_estilos %}
-
 
 {% block maestro_contenido %}
 
@@ -86,7 +84,7 @@
 
 <!-- Inicio de Codigo para Modales -->
 <div id="modalComite" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"  >
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document"> 
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -102,7 +100,7 @@
         <button type="button" class="btn btn-primary" id="guardarComite" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>
     </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+  </div>
 </div><!-- /.modal -->
 <!-- Fin Codigo para modales -->
 
