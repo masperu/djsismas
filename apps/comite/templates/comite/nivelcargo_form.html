@@ -1,27 +1,20 @@
-<form class="col-xs-12" role="form" method="POST" id="formNivelTipoCargo" action="/nivelcargo/guardar/">
+<form class="col-xs-12" role="form" method="POST" id="formNivelTipoCargo" action="{{ url }}">
 {% csrf_token %}
 
 <input type="hidden" id="totalTipoCargo" value="{{ tipocargo.count }}">
-<input type="hidden" id="nivelcomite" value="{{ idnivelcomite }}" name="nivelcomite" >
+<input type="hidden" id="idnivelcomite" value="{{ idnivelcomite }}" name="idnivelcomite" >
 
-{% for item in tipocargo %}
+{% for item in tipocargos %}
     <div class="col-xs-12 col-sm-6 col-md-4">
         <label class="checkbox-inline">
+        	{% if item.id in tiposactuales %}
+            <input type="checkbox" id="checkbox" checked="checked" name="tipocargo" value="{{ item.id }}"> {{ item.nombre }}
+            {% else %}
             <input type="checkbox" id="checkbox" name="tipocargo" value="{{ item.id }}"> {{ item.nombre }}
+        	{% endif %}
         </label>
     </div>
 {% endfor %}
-
-
-
-<ul>
-
-    {% for item in nivelcargo %}
-        <li>{{ item.tipocargo }}</li>
-    {% endfor %}
-
-    {{ nivelcargo.count }}
-</ul>
 </form>
 
 

@@ -11,14 +11,14 @@ $( document ).ready(function() {
 
 	$("#nivelcomite").val(0);
 
-	// if ($("#totalTipoCargo").val() == 0) {
-	// 	$("#guardarNivelCargo").hide();
-	// }
+	if ($("#totalTipoCargo").val() == 0) {
+		$("#guardarNivelCargo").hide();
+	}
 
 
 	$('#nivelcomite').on('change', function() {
 		//alert( this.value + " traemos datos" );
-		// $("#guardarNivelCargo").hide();
+		$("#guardarNivelCargo").hide();
 
 		if ( this.value == 0) {
 			$( "#contentTipoCargo" ).find("form").remove();
@@ -39,10 +39,12 @@ $( document ).ready(function() {
 				$( "#contentTipoCargo" ).find("form").remove();
 				$("#contentTipoCargo").html(d);
 
-				//TotalTipoCargo
-				if ($("#totalTipoCargo").val() > 0) {
-					$("#guardarNivelCargo").show();
-				}
+				$("#guardarNivelCargo").show();
+
+				// //TotalTipoCargo
+				// if ($("#totalTipoCargo").val() > 0) {
+				// 	$("#guardarNivelCargo").show();
+				// }
 
             }
         });
@@ -69,22 +71,14 @@ $( document ).ready(function() {
 
             success: function(d) {
 
-				if ( d["msg"] ) {
-					
+				if ( d["succes"] ) {					
 					$this.button('reset');
-
-					$( ".close" ).trigger( "click" );
-            		
-					toastr.success(d['msg']);
-
-					setTimeout(function(){
-						location.reload();
-					}, 750);
-
+					$( "#nivelcomite" ).trigger( "change" );            		
+					toastr.success(d['succes']);
 				}
 				else {
 					$this.button('reset');
-					toastr.error("Aun no guarda");
+					toastr.error("Error al guardar los datos");
 				}
 
             }

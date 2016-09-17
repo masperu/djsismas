@@ -355,21 +355,51 @@ def NivelCargoAgregar(request):
 			idnivelcomite = 0
 
 		# idcomite = request.GET.get('idcomite')
-		instance = get_object_or_404(NivelComite, id=idnivelcomite)
+		nivelcomite = get_object_or_404(NivelComite, id=idnivelcomite)
 
-		url = "/nivelcargo/editar/?idnivelcomite=" + idnivelcomite
-		form = NivelCargoTipoForm(instance=instance)
+		url = "/nivelcargo/guardar/"
+		# form = NivelCargoTipoForm(instance=instance)
 		
 		#Todos lo comites para la lista
 		tipocargos = TipoCargo.objects.all()
+		tiposactuales = NivelCargo.objects.filter(estado=True, nivelcomite=nivelcomite).values_list('tipocargo_id', flat=True)
 
-		#ComitePadre
-		try:
-			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
-		except Exception as e:
-			comitepadre = None
+		print(tiposactuales)
 
-		return render(request, 'comite/nivelcargo_form2.html', {'form':form, 'url': url, 'tipocargos':tipocargos })
+		return render(request, 'comite/nivelcargo_form.html', {'url': url, 'tipocargos':tipocargos, 'idnivelcomite':idnivelcomite, 'tiposactuales':tiposactuales })
+	else:
+		return redirect('/login/')
+
+
+
+def NivelCargoGuardar(request):
+	if(request.session.get("idusuario", False)):
+		idnivelcomite = request.POST["idnivelcomite"]
+		tipocargos = TipoCargo.objects.all()
+
+		#Creando la relacion entre TipoCargo y NivelComite
+		for tipocargo in tipocargos:
+			p, created = NivelCargo.objects.get_or_create(nivelcomite_id=idnivelcomite, tipocargo_id=tipocargo.id)
+
+		#Desarbilito todas las relaciones
+		nivelcargos = NivelCargo.objects.filter(nivelcomite_id=idnivelcomite).update(estado=False)
+
+		#Activando las relaciones marcadas actualmente
+		nivelcargos = NivelCargo.objects.filter(nivelcomite_id=idnivelcomite, tipocargo_id__in=request.POST.getlist('tipocargo')).update(estado=True)
+
+		tipocargo = TipoCargo.objects.all()
+
+		msg = {"succes" : "Datos guardados correctamente"}
+
+		return HttpResponse(
+				json.dumps(msg),
+				content_type="application/json"
+			)
+
+		# if request.method == 'POST':
+		# 	return render(request, 'comite/nivelcargo_form.html', {'tipocargo':tipocargo, 'idnivelcomite':idnivelcomite } )
+		# else:
+		# 	return render(request, 'comite/comite_form.html', {'tipocargo':tipocargo, 'idnivelcomite':idnivelcomite } )
 	else:
 		return redirect('/login/')
 
@@ -408,28 +438,6 @@ def NivelCargoEditar(request):
 					content_type="application/json"
 				)
 		
-		return render(request, 'comite/nivelcargo_form2.html', {'form':form, 'url': url, 'tipocargos':tipocargos })
-	else:
-		return redirect('/login/')
-
-
-
-
-def NivelCargoGuardar(request):
-	if(request.session.get("idusuario", False)):
-		idnivelcomite = request.POST["nivelcomite"]
-		nivelcargo = NivelCargo.objects.all()
-
-		#print(idnivelcomite)
-
-		for tipocargo in request.POST.getlist('tipocargo'):
-			print(tipocargo)
-
-		tipocargo = TipoCargo.objects.all()
-
-		if request.method == 'POST':
-			return render(request, 'comite/nivelcargo_form.html', {'tipocargo':tipocargo, 'nivelcargo':nivelcargo, 'idnivelcomite':idnivelcomite } )
-		else:
-			return render(request, 'comite/comite_form.html', {'tipocargo':tipocargo, 'nivelcargo':nivelcargo, 'idnivelcomite':idnivelcomite } )
+		return render(request, 'comite/nivelcargo_form.html', {'form':form, 'url': url, 'tipocargos':tipocargos, 'tiposactuales': tiposactuales})
 	else:
 		return redirect('/login/')
