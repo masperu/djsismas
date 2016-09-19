@@ -61,19 +61,19 @@
 	<nav aria-label="Page navigation">
 		<ul class="pagination">
 
-		    {% if nivelcomite.has_previous %}
-		        <li><a href="?page={{ nivelcomite.previous_page_number }}">Atras</a></li>
+		    {% if comite.has_previous %}
+		        <li><a href="?page={{ comite.previous_page_number }}">Atras</a></li>
 		    {% endif %}
 
 		   <li>
 		   	<span class="current">
-		        Pagina {{ nivelcomite.number }} de {{ nivelcomite.paginator.num_pages }}
+		        Pagina {{ comite.number }} de {{ comite.paginator.num_pages }}
 		    </span>
 
 		   </li> 
 
-		    {% if nivelcomite.has_next %}
-		        <li><a href="?page={{ nivelcomite.next_page_number }}">Siguiente</a></li>
+		    {% if comite.has_next %}
+		        <li><a href="?page={{ comite.next_page_number }}">Siguiente</a></li>
 		    {% endif %}
 		</ul>
 	</nav>
@@ -95,7 +95,7 @@
       </div>
       <div class="modal-footer">
       <!-- <input type="text" id="micajatexto2" class="nuevo"> -->
-        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <!-- <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button> -->
         <button type="button" class="btn btn-primary" id="guardarComite" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>

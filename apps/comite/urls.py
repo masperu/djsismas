@@ -29,13 +29,12 @@ urlpatterns = [
     url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
     # 
 
-    # PERFIL
- 	#url(r'^perfil/$', ListaPerfil , name="lista_perfil"),    
-    # 
-    # 
-    # 
-    #
-    # 
+    # Nivel Cargo
+    url(r'^nivelcargo/$', NivelCargoLista , name="lista_nivelcargo"),
+    url(r'^nivelcargo/agregar/$', NivelCargoAgregar , name="nivelcargo-agregar"),
+    url(r'^nivelcargo/eliminar/$', ComiteEliminar , name="comite-eliminar"),
+    url(r'^nivelcargo/guardar/$', NivelCargoGuardar , name="nivelcargo-guardar"),
+    url(r'^nivelcargo/editar/$', NivelCargoEditar , name="nivelcargo-editar"),
 
     # USUARIOS
     # 

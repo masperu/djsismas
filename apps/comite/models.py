@@ -13,6 +13,7 @@ class NivelComite(models.Model):
 	nombre = models.CharField(max_length = 50)
 	codigo = models.CharField(max_length = 15)
 	permiteafiliacion = models.BooleanField(default = False)
+	tipocargos = models.ManyToManyField(TipoCargo, through='NivelCargo', through_fields=('nivelcomite', 'tipocargo'), )
 
 	def __str__(self):
 		return self.nombre
@@ -21,6 +22,7 @@ class NivelComite(models.Model):
 class NivelCargo(models.Model):
 	tipocargo = models.ForeignKey(TipoCargo, on_delete=models.PROTECT)
 	nivelcomite = models.ForeignKey(NivelComite, on_delete=models.PROTECT)
+	estado = models.BooleanField(default = False)
 
 	def __str__(self):
 		return self.nivelcomite.nombre + ' ' + self.tipocargo.nombre
