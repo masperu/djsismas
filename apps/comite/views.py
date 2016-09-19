@@ -354,17 +354,12 @@ def NivelCargoAgregar(request):
 		except Exception as e:
 			idnivelcomite = 0
 
-		# idcomite = request.GET.get('idcomite')
 		nivelcomite = get_object_or_404(NivelComite, id=idnivelcomite)
-
 		url = "/nivelcargo/guardar/"
-		# form = NivelCargoTipoForm(instance=instance)
 		
 		#Todos lo comites para la lista
 		tipocargos = TipoCargo.objects.all()
 		tiposactuales = NivelCargo.objects.filter(estado=True, nivelcomite=nivelcomite).values_list('tipocargo_id', flat=True)
-
-		print(tiposactuales)
 
 		return render(request, 'comite/nivelcargo_form.html', {'url': url, 'tipocargos':tipocargos, 'idnivelcomite':idnivelcomite, 'tiposactuales':tiposactuales })
 	else:
@@ -396,10 +391,6 @@ def NivelCargoGuardar(request):
 				content_type="application/json"
 			)
 
-		# if request.method == 'POST':
-		# 	return render(request, 'comite/nivelcargo_form.html', {'tipocargo':tipocargo, 'idnivelcomite':idnivelcomite } )
-		# else:
-		# 	return render(request, 'comite/comite_form.html', {'tipocargo':tipocargo, 'idnivelcomite':idnivelcomite } )
 	else:
 		return redirect('/login/')
 

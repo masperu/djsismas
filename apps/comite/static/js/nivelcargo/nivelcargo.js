@@ -31,30 +31,17 @@ $( document ).ready(function() {
             url: $("#formNivelCargo").attr('action'),
             type: "post",
             data: $("#formNivelCargo").serialize(),
-            // data: {
-            // 		'idnivelcomite':this.value,
-            // 		'csrfmiddlewaretoken': $( "input[name=csrfmiddlewaretoken]" ).val(),
-            // 		},
             success: function(d) {
 				$( "#contentTipoCargo" ).find("form").remove();
 				$("#contentTipoCargo").html(d);
 
 				$("#guardarNivelCargo").show();
 
-				// //TotalTipoCargo
-				// if ($("#totalTipoCargo").val() > 0) {
-				// 	$("#guardarNivelCargo").show();
-				// }
-
             }
         });
 
 	});
 
-	//Variables para autocomplete
-	
-
-	//toastr.success("Datos guardados correctamente");
 
 
 	$("#guardarNivelCargo").on('click', function(e){
