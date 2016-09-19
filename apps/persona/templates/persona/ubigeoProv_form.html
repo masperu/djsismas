@@ -1,0 +1,28 @@
+ <label>Provincia</label>
+ <select id="selectProvincia" name = 'provincia' class = 'form-control selectpicker' data-live-search = 'true'>
+	{% for ubigeo in ubigeo %}
+		
+		<option value="{{ubigeo.codprov}}">{{ubigeo.nombreubigeo}}</option>
+	{% endfor %}
+</select>
+
+
+<script type="text/javascript">
+	$(function(){
+		$('.selectpicker').selectpicker({
+			size: 5
+		});
+		
+		// $('#selectProvincia').selectpicker('refresh');
+		$('#selectProvincia').on('hidden.bs.select', function (e) {
+			var dep = $('#selectDepartamento').val();
+			$('#divDis').load("/persona.ubigeonacimiento/listar/"+dep+"/"+$(this).val()+"/");
+
+		});
+		$('#selectProvincia').on('loaded.bs.select', function (e) {
+			var dep = $('#selectDepartamento').val();
+			$('#divDis').load("/persona.ubigeonacimiento/listar/"+dep+"/"+$(this).val()+"/");
+
+		});
+	})
+</script>

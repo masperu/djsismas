@@ -119,6 +119,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
 <div id="modalUbigeo" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -127,11 +128,13 @@
         <h4 class="modal-title">Modal title</h4>
       </div>
       <div class="modal-body">
-        <p></p>
+        <div id="divDep"></div>
+        <div id="divProv"></div>
+        <div id="divDis"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button id="btnAgregarUbigeo" type="button" class="btn btn-primary">Agregar</button>
+        <button id="btnGuardarUbigeo" type="button" class="btn btn-primary">Agregar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -140,11 +143,10 @@
 
 
 
-
-
 {% endblock maestro_contenido %}
 
 
 {% block maestro_scripts %}
-  <script src="{% static 'js/persona/persona.js' %}"></script >
+  <script src="{% static 'js/persona/persona.js' %}"></script>
+
 {% endblock maestro_scripts %}

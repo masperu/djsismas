@@ -67,8 +67,10 @@ $( document ).ready(function() {
 					location.reload();	
 				}
 				else {
-					$( ".modal-body" ).find("form").remove();
-					$( ".modal-body" ).html(d);
+					$('#modalPersonaForm').modal('show').find('form').remove();
+					$('#modalPersonaForm').modal('show').find( ".modal-body" ).html(d);
+				// 	$( ".modal-body" ).find("form").remove();
+				// 	$( ".modal-body" ).html(d);
 				}
 
 			}
@@ -102,13 +104,7 @@ $( document ).ready(function() {
 			});
 
 		});
-		// $('#modalUbigeo').modal('show').find('.modal-body').load($(this).attr('href'));
-		$('#modalUbigeo').on('shown.bs.modal', function() {
-			  $('#btnAgregarUbigeo').on('click', function(){
-				alert("asas");
-			});
-		});
-		
+
 
 	});
 

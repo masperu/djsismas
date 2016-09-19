@@ -23,6 +23,10 @@ urlpatterns = [
     url(r'^persona/agregar/$', PersonaAgregar , name="persona-agregar"),
     url(r'^persona/eliminar/$', PersonaEliminar , name="persona-eliminar"),
     url(r'^persona/editar/$', PersonaEditar , name="persona-editar"),
+    url(r'^ubigeonacimiento/listar/$', UbigeoNacimientoDepListar),
+    url(r'^ubigeonacimiento/listar/(?P<dep>[0-9]{2})/$', UbigeoNacimientoProvListar),
+    url(r'^ubigeonacimiento/listar/(?P<dep>[0-9]{2})/(?P<prov>[0-9]{2})/$', UbigeoNacimientoDistListar),
+    # url(r'^persona/editar/$', PersonaEditar , name="persona-editar"),
     # 
 
     # PERFIL

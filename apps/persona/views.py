@@ -7,7 +7,7 @@ from .models import *
 from .forms import *
 import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.db.models import Q
 from django.db.models.deletion import ProtectedError
 # Create your views here.
 
@@ -298,3 +298,33 @@ def PersonaEditar(request):
 			)
 	else:
 		return redirect('/login/')		
+
+def UbigeoNacimientoDepListar(request):
+	if(request.session.get("idusuario", False)):
+
+		# estado = request.GET.get('departamento')
+
+		ubigeo = Ubigeo.objects.filter(codprov='00').order_by('id')
+		return render(request, 'persona/ubigeoDep_form.html',{'ubigeo': ubigeo})
+	else:
+		return redirect('/login/')
+
+def UbigeoNacimientoProvListar(request, dep):
+	if(request.session.get("idusuario", False)):
+
+		# estado = request.GET.get('departamento')
+
+		ubigeo = Ubigeo.objects.filter(~Q(codprov = '00'),coddep=dep, coddist = '00').order_by('id')
+		return render(request, 'persona/ubigeoProv_form.html',{'ubigeo': ubigeo})
+	else:
+		return redirect('/login/')
+
+def UbigeoNacimientoDistListar(request, dep, prov):
+	if(request.session.get("idusuario", False)):
+
+		# estado = request.GET.get('departamento')
+
+		ubigeo = Ubigeo.objects.filter(~Q(coddist = '00'),coddep=dep, codprov=prov).order_by('id')
+		return render(request, 'persona/ubigeoDist_form.html',{'ubigeo': ubigeo})
+	else:
+		return redirect('/login/')

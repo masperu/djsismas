@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelMultipleChoiceField, CheckboxSelectMultiple,SelectMultiple
 
-from .models import EstadoCivil,TipoCalle,Persona
+from .models import EstadoCivil,TipoCalle,Persona,Ubigeo
 
 class EstadoCivilForm(forms.ModelForm):
 	# YES_OR_NO = ((True, 'Yes'),(False, 'No'))
@@ -132,6 +132,8 @@ class PersonaForm(forms.ModelForm):
 						'class': 'form-control',
 					})
 				)
+	
+
 
 	class Meta:
 		model = Persona
@@ -149,4 +151,11 @@ class PersonaForm(forms.ModelForm):
 		self.fields["estadocivil"].widget.attrs['data-live-search'] = 'true'		
 
 		self.fields["tipocalle"].widget.attrs['class'] = 'form-control selectpicker'
-		self.fields["tipocalle"].widget.attrs['data-live-search'] = 'true'
+		self.fields["tipocalle"].widget.attrs['data-live-search'] = 'true'		
+
+		# self.fields["ubigeonacimiento"].widget.attrs['class'] = 'form-control'
+		# self.fields["ubigeonacimiento"].widget.attrs['data-live-search'] = 'true'
+		self.fields['ubigeonacimiento'].widget = forms.HiddenInput()
+		self.fields['ubigeonacimiento'].label = "Nacimiento"
+		self.fields['ubigeoresidencia'].widget = forms.HiddenInput()
+		self.fields['ubigeoresidencia'].label = "Residencia"
