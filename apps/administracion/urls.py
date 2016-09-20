@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^menu/eliminar/$', MenuEliminar , name="menu-eliminar"),
     url(r'^menu/editar/$', MenuEditar , name="menu-editar"),
     url(r'^menu/ajax/$', MenuAjax , name="menu-ajax"),
-	# 
+	url(r'^menu/listar/$', MenuListar , name="menu-listar"),
 
     # ROLES
     url(r'^rol/$', ListaRol , name="lista_rol"),

@@ -160,6 +160,14 @@ def MenuEditar(request):
 	else:
 		return redirect('/login/')
 
+def MenuListar(request):
+	menu = Menu.objects.filter(rol__id= 6)
+	menus = []
+	for menu in menu:
+		menus.append({"nombre":menu.nombre, "ruta":menu.ruta, "menupadre":menu.menupadre.nombre if menu.menupadre else None })
+
+	return render(request, 'administracion/perfil_grilla.html',{'menu':menus})
+
 
 def ListaRol(request):
 	if(request.session.get("idusuario", False)):

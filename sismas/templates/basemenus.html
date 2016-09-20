@@ -1,0 +1,92 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>
+		{% block maestro_titulo %}
+		{% endblock maestro_titulo %}
+	</title>
+
+	<link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}" />
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/stylesautocomplete.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/bootstrap.min.css' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/boostrap/css/toastr.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datetimepicker.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select/bootstrap-select.css' %}">
+
+	<!--link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-modal.css' %}">
+
+  	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-modal-patch.css' %}"-->
+
+
+
+  <style>
+	#toast-container > div {
+	  box-shadow: none;
+	}
+
+	#toast-container > div:hover {
+	  box-shadow: none;
+	}
+
+	.toast-message {
+	  font-size: 95%;
+	  font-family: arial;
+	}
+  </style>
+
+
+
+
+	{% block maestro_menus %}
+	{% endblock maestro_menus %}
+
+	{% block maestro_estilos %}
+	{% endblock maestro_estilos %}
+</head>
+<body>
+
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.autocomplete.js' %}"></script>
+	<script src="{% static 'js/toastr.min.js' %}"></script>
+	<script src="{% static 'js/jquery.confirm.min.js' %}"></script>
+	<script src="{% static 'js/moment.js' %}"></script>
+	<script src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+	<script src="{% static 'js/bootstrap-select/bootstrap-select.js' %}"></script>
+	
+
+
+	<script>
+	  toastr.options = {
+		"closeButton": false,
+		"debug": false,
+		"newestOnTop": false,
+		"progressBar": false,
+		"positionClass": "toast-bottom-right",
+		"preventDuplicates": false,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "1000",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	  } 
+
+	</script>
+
+
+
+  {% block maestro_scripts %}
+  {% endblock maestro_scripts %}
+</body>
+</html>
+</html>

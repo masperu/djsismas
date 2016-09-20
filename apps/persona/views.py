@@ -352,7 +352,7 @@ def UbigeoListar(request):
 		
 		# estado = request.GET.get('departamento')
 		ubigeo = Ubigeo.objects.get(id=int(iddistrito))
-		print(ubigeo, "Distrito AAAAAAAAAAAA")
+		# print(ubigeo, "Distrito AAAAAAAAAAAA")
 
 		msg = {"coddep" : ubigeo.coddep,"codprov" : ubigeo.codprov, "coddist" : ubigeo.coddist}
 		return HttpResponse(
