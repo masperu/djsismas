@@ -64,9 +64,8 @@
 				{{field}}
 			{% endif%}
 			{% if field.name == 'ubigeonacimiento' %}
-				
 				<div class="input-group">
-					<input id= "txtubigeonacimiento" type="text" class="form-control" placeholder="Ubigeo">
+					<input id= "txtubigeonacimiento" type="text" class="form-control" placeholder="Ubigeo" value={%if ubigeonacimiento != None %}"{{ubigeonacimiento}}"{%endif%}>
 					<span class="input-group-btn">
 					<a id="btnAgregarUbigeoN" href="/persona.ubigeonacimiento/listar/" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search"></span></a>
 				</div>
@@ -75,9 +74,10 @@
 			{% if field.name == 'ubigeoresidencia' %}
 
 				<div class="input-group">
-					<input id= "txtubigeoresidencia" type="text" class="form-control" placeholder="Ubigeo">
+					<input id= "txtubigeoresidencia" type="text" class="form-control" placeholder="Ubigeo" value={%if ubigeoresidencia != None %}"{{ubigeoresidencia}}"{%endif%}>
 					<span class="input-group-btn">
 					<a id="btnAgregarUbigeoR" href="/persona.ubigeonacimiento/listar/" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search"></span></a>
+
 				</div>
 				{{field}}
 			{% endif%}

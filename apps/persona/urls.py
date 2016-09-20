@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^ubigeonacimiento/listar/$', UbigeoNacimientoDepListar),
     url(r'^ubigeonacimiento/listar/(?P<dep>[0-9]{2})/$', UbigeoNacimientoProvListar),
     url(r'^ubigeonacimiento/listar/(?P<dep>[0-9]{2})/(?P<prov>[0-9]{2})/$', UbigeoNacimientoDistListar),
+    url(r'^ubigeo/listar/$', UbigeoListar),
     # url(r'^persona/editar/$', PersonaEditar , name="persona-editar"),
     # 
 

@@ -23,6 +23,8 @@
           <th class="text-center th5">Sexo</th>          
           <th class="text-center th6">Edad</th>          
           <th class="text-center th7">Direccion</th>          
+          <th class="text-center th7">Nacimiento</th>          
+          <th class="text-center th7">Residencia</th>          
           <th  colspan="2" class="text-center th8">Botones</th>           
         </tr>
       </thead>
@@ -34,9 +36,10 @@
     			<td class="text-center td4">{{persona.dni}}</td>
     			<td class="text-center td3">{{persona.sexo}}</td>
     			<td class="text-center td5">{{persona.fnacimiento}}</td>
-    			<td class="text-center td6">{{persona.direccion}}</td>
+          <td class="text-center td6">{{persona.direccion}}</td>
+          <td class="text-center td6">{{persona.nacimiento}}</td>
+    			<td class="text-center td6">{{persona.residencia}}</td>
     			<td class="text-center td8">
-      			{% csrf_token %}
       				<a id="editarPersona" href="/persona.persona/editar/?idpersona={{persona.id}}" role="button" class= "personaEditar" >
       					<span class="glyphicon glyphicon-pencil"></span>
       				</a>

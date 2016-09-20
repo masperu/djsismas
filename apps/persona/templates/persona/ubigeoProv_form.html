@@ -24,5 +24,17 @@
 			$('#divDis').load("/persona.ubigeonacimiento/listar/"+dep+"/"+$(this).val()+"/");
 
 		});
+		if(tipoubigeo=='N'){
+			if(provN){
+				$('#selectProvincia').val(provN);
+				$('#selectProvincia').selectpicker('refresh');	
+			}
+		}
+		else if(tipoubigeo=='R'){
+			if(provR){
+				$('#selectProvincia').val(provR);
+				$('#selectProvincia').selectpicker('refresh');	
+			}
+		}
 	})
 </script>

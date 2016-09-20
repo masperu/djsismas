@@ -206,7 +206,7 @@ def TipoCalleEditar(request):
 def ListaPersona(request):
 	if(request.session.get("idusuario", False)):
 		persona = Persona.objects.all().order_by('-id')
-		paginator = Paginator(persona, 10) # Show 25 contacts per page
+		paginator = Paginator(persona, 5) # Show 25 contacts per page
 
 		page = request.GET.get('page')
 		try:
@@ -225,6 +225,8 @@ def ListaPersona(request):
 
 def PersonaAgregar(request):
 	if(request.session.get("idusuario", False)):
+		ubigeonacimiento = None
+		ubigeoresidencia = None
 		if request.method == 'POST':
 			# create a form instance and populate it with data from the request:
 			form = PersonaForm(request.POST)
@@ -240,12 +242,12 @@ def PersonaAgregar(request):
 							content_type="application/json"
 						)
 			else:
-				return render(request, 'persona/persona_form.html',{'form':form ,'url':'/persona.persona/agregar/'})
+				return render(request, 'persona/persona_form.html',{'form':form ,'url':'/persona.persona/agregar/', 'ubigeonacimiento':ubigeonacimiento, 'ubigeoresidencia':ubigeoresidencia})
 
 			# if a GET (or any other method) we'll create a blank form
 		else:
 			form = PersonaForm()
-			return render(request, 'persona/persona_form.html',{'form':form, 'url':'/persona.persona/agregar/'})
+			return render(request, 'persona/persona_form.html',{'form':form, 'url':'/persona.persona/agregar/', 'ubigeonacimiento':ubigeonacimiento, 'ubigeoresidencia':ubigeoresidencia})
 	
 	else:
 		return redirect('/login/')
@@ -282,6 +284,21 @@ def PersonaEditar(request):
 		idpersona = request.GET.get('idpersona')
 		instance = get_object_or_404(Persona, id=idpersona)
 		form = PersonaForm(request.POST or None, instance=instance)
+
+		try:
+
+			ubigeonacimiento = Ubigeo.objects.get(id=instance.ubigeonacimiento.id)
+			Depnacimiento = Ubigeo.objects.get(coddep=ubigeonacimiento.coddep,coddist = '00',codprov='00' )
+			Provnacimiento = Ubigeo.objects.get(coddep=ubigeonacimiento.coddep,coddist = '00',codprov=ubigeonacimiento.codprov)
+			ubigeonacimiento = Depnacimiento.nombreubigeo+"/"+Provnacimiento.nombreubigeo+"/"+ubigeonacimiento.nombreubigeo
+			
+			ubigeoresidencia = Ubigeo.objects.get(id=instance.ubigeoresidencia.id)
+			Depresidencia = Ubigeo.objects.get(coddep=ubigeoresidencia.coddep,coddist = '00',codprov='00' )
+			Provresidencia = Ubigeo.objects.get(coddep=ubigeoresidencia.coddep,coddist = '00',codprov=ubigeoresidencia.codprov)
+			ubigeoresidencia = Depresidencia.nombreubigeo+"/"+Provresidencia.nombreubigeo+"/"+ubigeoresidencia.nombreubigeo
+		except Exception as e:
+			ubigeos = None
+
 		if form.is_valid():
 			form.save()
 			msg = {"msg" : "Datos editados correctamente"}
@@ -293,7 +310,7 @@ def PersonaEditar(request):
 				request, 
 				'persona/persona_form.html',
 				{
-					'form': form, 'url':'/persona.persona/editar/?idpersona='+idpersona
+					'form': form, 'url':'/persona.persona/editar/?idpersona='+idpersona, 'ubigeonacimiento':ubigeonacimiento, 'ubigeoresidencia':ubigeoresidencia
 				}
 			)
 	else:
@@ -326,5 +343,21 @@ def UbigeoNacimientoDistListar(request, dep, prov):
 
 		ubigeo = Ubigeo.objects.filter(~Q(coddist = '00'),coddep=dep, codprov=prov).order_by('id')
 		return render(request, 'persona/ubigeoDist_form.html',{'ubigeo': ubigeo})
+	else:
+		return redirect('/login/')
+
+def UbigeoListar(request):
+	if(request.session.get("idusuario", False)):
+		iddistrito = request.POST['iddistrito']
+		
+		# estado = request.GET.get('departamento')
+		ubigeo = Ubigeo.objects.get(id=int(iddistrito))
+		print(ubigeo, "Distrito AAAAAAAAAAAA")
+
+		msg = {"coddep" : ubigeo.coddep,"codprov" : ubigeo.codprov, "coddist" : ubigeo.coddist}
+		return HttpResponse(
+				json.dumps( msg ), 
+				content_type="application/json"
+			)
 	else:
 		return redirect('/login/')

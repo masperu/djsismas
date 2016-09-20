@@ -53,3 +53,13 @@ class Persona(models.Model):
 	
 	def __str__(self):
 		return self.nombre
+
+	def nacimiento(self):
+		Depnacimiento = Ubigeo.objects.get(coddep=self.ubigeonacimiento.coddep,coddist = '00',codprov='00' )
+		Provnacimiento = Ubigeo.objects.get(coddep=self.ubigeonacimiento.coddep,coddist = '00',codprov=self.ubigeonacimiento.codprov)
+		return Depnacimiento.nombreubigeo+"/"+Provnacimiento.nombreubigeo+"/"+self.ubigeonacimiento.nombreubigeo
+
+	def residencia(self):
+		Depnacimiento = Ubigeo.objects.get(coddep=self.ubigeoresidencia.coddep,coddist = '00',codprov='00' )
+		Provnacimiento = Ubigeo.objects.get(coddep=self.ubigeoresidencia.coddep,coddist = '00',codprov=self.ubigeoresidencia.codprov)
+		return Depnacimiento.nombreubigeo+"/"+Provnacimiento.nombreubigeo+"/"+self.ubigeoresidencia.nombreubigeo

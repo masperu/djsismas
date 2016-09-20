@@ -9,5 +9,17 @@
 		$('.selectpicker').selectpicker({
 			size: 5,
 		});
+		if(tipoubigeo=='N'){
+			if(disN){
+				$('#selectDistrito').val(disN);
+				$('#selectDistrito').selectpicker('refresh');
+			}	
+		}
+		else if(tipoubigeo=='R'){
+			if(disR){
+				$('#selectDistrito').val(disR);
+				$('#selectDistrito').selectpicker('refresh');
+			}
+		}
 	});
 </script>
