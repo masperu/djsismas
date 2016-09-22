@@ -1,5 +1,6 @@
 from django.db import models
 
+from apps.persona.models import Ubigeo
 # Create your models here.
 
 class TipoCargo(models.Model):
@@ -34,6 +35,7 @@ class Comite(models.Model):
 	direccion = models.CharField(max_length = 200)
 	nivelcomite = models.ForeignKey(NivelComite, on_delete=models.PROTECT)
 	comitepadre = models.ForeignKey('self', null=True, blank=True)
+	ubigeo = models.ForeignKey(Ubigeo)
 
 	def __str__(self):
 		return self.nombre
