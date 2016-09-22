@@ -25,7 +25,6 @@ $( document ).ready(function() {
 
 	var csrftoken = getCookie('csrftoken');
 
-
 	//alert("Hola ");
 	$('#agregarPersona').on('click', function(e){
 		e.preventDefault();
