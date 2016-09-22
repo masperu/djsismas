@@ -14,7 +14,7 @@
    <form id="formRol" class="form-horizontal" role="form" method="post" action='{{url}}'>
    {% csrf_token %}
 
-   {% for field in form %}
+	{% for field in form %}
 
 		{% if field.name == 'nombre' %}
 			{{field}}
@@ -28,18 +28,14 @@
 				<div class="col-xs-12">
 	       				{{field}}
 						{{field.query}}
-       				<div class="help-block alert-danger">
+	   				<div class="help-block alert-danger">
 						{{ field.errors }}        
 					</div>   
 	   			</div>
 	   		</div>
 		{% endif %}
-
 	{% endfor %}
-
-
 	</form>
-
 
 {% endblock maestro_contenido %}
 

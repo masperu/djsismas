@@ -507,14 +507,17 @@ def ListaPerfilRoles(request):
 
 
 	if(request.session.get("idusuario", False)):
-
+		# idusuario = request.POST['idusuario']
 		rol = Rol.objects.all()
 
-		idrol = rol
-		instance = get_object_or_404(Rol, id=idrol)
+		iduser = request.GET.get('iduser')
+		user = User.objects.get(id=iduser)
+		idusuario = user.usuario.id
+		instance = get_object_or_404(Usuario, id=idusuario)
 		form = PerfilForm(request.POST or None, instance=instance)
 		if form.is_valid():
-			form.save()
+			# form.save()
+			print(form)
 			msg = {"msg" : "Datos editados correctamente"}
 			return HttpResponse(
 					json.dumps( msg ), 
@@ -524,7 +527,7 @@ def ListaPerfilRoles(request):
 				request, 
 				'administracion/perfilrol.html',
 				{
-					'form': form, 'url':'/perfilroles/listar/', 'rol':rol
+					'form': form, 'url':'/perfilroles/listar/?idusuario='+str(idusuario), 'rol':rol
 				}
 			)
 	else:

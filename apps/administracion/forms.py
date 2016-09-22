@@ -216,7 +216,7 @@ class UsuarioForm(forms.ModelForm):
 		self.fields["persona"].widget.attrs['data-live-search'] = 'true'		
 
 
-class PerfilForm(forms.Form):
+class PerfilForm(forms.ModelForm):
 	roles = ModelMultipleChoiceField(
 				queryset=Rol.objects.all(),
 				widget=forms.CheckboxSelectMultiple(

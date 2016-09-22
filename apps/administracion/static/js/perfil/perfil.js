@@ -25,17 +25,45 @@ $( document ).ready(function() {
 
 	var csrftoken = getCookie('csrftoken');
 
+	// $("#usuarioSelecPerfil").on('hidden.bs.select', function (e) {
+
+	// 	$.get( "/perfilroles/listar/?iduser="+$(this).val(), function( data ) {
+	// 		$("#cargarRolePerfil").html(data);
+	// 	});
+
+	// });
 	$("#usuarioSelecPerfil").on('hidden.bs.select', function (e) {
 
-		$.post( "/perfilroles/listar/", 
-			{ 
-				idusuario: $(this).val(), 
-			  	csrfmiddlewaretoken : csrftoken
+		$.get( "/perfilroles/listar/?iduser="+$(this).val(), function( data ) {
+			$("#cargarRolePerfil").html(data);
+		});
 
-			} ).done(function( data ) {
-				$("#cargarRolePerfil").html(data);
-			});
+	});
+	$("#usuarioSelecPerfil").on('loaded.bs.select', function (e) {
 
+		$.get( "/perfilroles/listar/?iduser="+$(this).val(), function( data ) {
+			$("#cargarRolePerfil").html(data);
+		});
+
+	});
+	$("#usuarioSelecPerfil").on('rendered.bs.select', function (e) {
+
+		$.get( "/perfilroles/listar/?iduser="+$(this).val(), function( data ) {
+			$("#cargarRolePerfil").html(data);
+		});
+
+	});	
+	$("#usuarioSelecPerfil").on('refreshed.bs.select', function (e) {
+
+		$.get( "/perfilroles/listar/?iduser="+$(this).val(), function( data ) {
+			$("#cargarRolePerfil").html(data);
+		});
+
+	});
+
+	$("#btnGuardarPerfilRol").on('click', function(data){
+
+		alert("asasasa");
 	});
 
 });
