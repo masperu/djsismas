@@ -9,7 +9,7 @@ from .models import *
 from .forms import *
 import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.deletion import ProtectedError
 
 # Create your views here.
@@ -30,7 +30,10 @@ def Login(request):
 			user = authenticate(username= p['usuario'], password=p['password'])
 			if user is not None:
 				request.session['idusuario'] = user.id
-				request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno
+				try:
+					request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno if user.usuario == None else ""
+				except ObjectDoesNotExist :
+					request.session['persona'] = "Anonimo"
 				return redirect('/')
 			else:
 				return render( request, 'administracion/login.html', {'msj' : "Usuario o contraseña son incorrectas"})
