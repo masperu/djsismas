@@ -159,3 +159,4 @@ class PersonaForm(forms.ModelForm):
 		self.fields['ubigeonacimiento'].label = "Nacimiento"
 		self.fields['ubigeoresidencia'].widget = forms.HiddenInput()
 		self.fields['ubigeoresidencia'].label = "Residencia"
+
