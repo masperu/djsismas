@@ -32,17 +32,17 @@ urlpatterns = [
 
     # PERFIL
  	url(r'^perfil/$', ListaPerfil , name="lista_perfil"),    
-    # 
+    url(r'^perfilroles/listar/$', ListaPerfilRoles , name="lista_perfilrol"),  
     # 
     # 
     #
     # 
 
     # USUARIOS
-    # 
-    # 
-    # 
-    # 
+    url(r'^usuario/$', ListaUsuarios , name="lista-usuario"),
+    url(r'^usuario/agregar/$', UsuarioAgregar , name="agregar-usuario"),
+    url(r'^usuario/editar/$', UsuarioEditar , name="editar-usuario"),
+    url(r'^usuario/eliminar/$', UsuarioEliminar , name="eliminar-usuario"),
     #
     # 
 

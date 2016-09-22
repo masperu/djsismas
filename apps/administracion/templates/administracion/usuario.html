@@ -1,0 +1,126 @@
+{% extends "Base.html" %}
+
+{% load static from staticfiles %}
+
+
+
+{% block maestro_estilos %}
+
+{% endblock maestro_estilos %}
+
+
+{% block maestro_contenido %}
+
+<div class="col-xs-12">
+  <a id="agregarUsuario" class="btn btn-default" href="/usuario/agregar/" role="button"  >Agregar</a>
+  <div class="table-responsive">
+    <table id="tablaUsuario" class="table table-bordered table-striped table-condensed table-hover" >
+      <thead class="thead-inverse">
+        <tr>
+          <th class="text-center th1">#</th>
+          <th class="text-center th2">Usuario</th>
+          <th class="text-center th3">Password</th>
+          <th class="text-center th4">Responsable</th>      
+          <th  colspan="2" class="text-center th5">Botones</th>           
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in usuario %}
+    		<tr class = "tabla-row" id = "{{usuario.id}}">
+    			<td class="text-center td1">{{ forloop.counter }}</td>
+    			<td id="usuario{{usuario.id}}" class="text-center td2">{{usuario.username}} </td>
+          <td class="text-center td3">{{usuario.password}}</td>
+    			<td class="text-center td3">{{usuario.usuario.persona.nombre}} {{usuario.usuario.persona.paterno}} {{usuario.usuario.persona.materno}}</td>
+    			<td class="text-center td4">
+              <a id="editarUsuario" href="/usuario/editar/?idusuario={{usuario.id}}" role="button" class= "usuarioEditar" >
+                <span class="glyphicon glyphicon-pencil"></span>
+              </a>
+          </td>
+          
+          <td class="text-center td5">
+      				<a id = "numeroeliminar" href= "#" role="button" numeroid={{usuario.id}} >
+      					<span class="glyphicon glyphicon-trash"></span>
+      				</a>
+    			</td>
+    		</tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+
+  </div>
+  
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+
+        {% if usuario.has_previous %}
+            <li><a href="?page={{ usuario.previous_page_number }}">Atras</a></li>
+        {% endif %}
+
+       <li>
+        <span class="current">
+            Pagina {{ usuario.number }} de {{ usuario.paginator.num_pages }}
+        </span>
+
+       </li> 
+
+        {% if usuario.has_next %}
+            <li><a href="?page={{ usuario.next_page_number }}">Siguiente</a></li>
+        {% endif %}
+    </ul>
+  </nav>
+</div>
+
+
+<!-- Modal -->
+<div id="modalUsuarioForm" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+         <button type="button" class="btn btn-primary" id="guardarUsuario" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="modalUsuarioAlert" class="modal fade" tabindex="-1" role="dialog" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button id="EliminarUsuario" type="button" class="btn btn-primary">Eliminar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div><!-- /.modal -->
+
+{% endblock maestro_contenido %}
+
+
+{% block maestro_scripts %}
+
+<script src="{% static 'js/usuario/usuario.js' %}"> </script>
+{% endblock maestro_scripts %}
+
+
+
+

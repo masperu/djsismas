@@ -30,6 +30,7 @@ def Login(request):
 			user = authenticate(username= p['usuario'], password=p['password'])
 			if user is not None:
 				request.session['idusuario'] = user.id
+				request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno
 				return redirect('/')
 			else:
 				return render( request, 'administracion/login.html', {'msj' : "Usuario o contraseña son incorrectas"})
@@ -39,6 +40,7 @@ def Login(request):
 def Logout(request):
 	try:
 		del request.session['idusuario']
+		del request.session['persona']
 	except KeyError:
 		pass
 	logout(request)
@@ -166,7 +168,7 @@ def MenuListar(request):
 	for menu in menu:
 		menus.append({"nombre":menu.nombre, "ruta":menu.ruta, "menupadre":menu.menupadre.nombre if menu.menupadre else None })
 
-	return render(request, 'administracion/perfil_grilla.html',{'menu':menus})
+	return render(request, 'administracion/menu_usuario.html',{'menu':menus})
 
 
 def ListaRol(request):
@@ -304,14 +306,6 @@ def ListaAccesos(request):
 	else:
 		return redirect('/login/')
 
-def ListaPerfil(request):
-	if(request.session.get("idusuario", False)):
-		perfil = Perfil.objects.all()
-		return render(request, 'administracion/perfil_grilla.html',{'perfil': perfil})
-	else:
-		return redirect('/login/')	
-
-
 
 def ListaOrganizacion(request):
 	if(request.session.get("idusuario", False)):
@@ -400,6 +394,137 @@ def OrganizacionEditar(request):
 				'administracion/organizacion_form.html',
 				{
 					'form': form, 'url':'/organizacion/editar/?idorganizacion='+idorganizacion
+				}
+			)
+	else:
+		return redirect('/login/')
+
+def ListaUsuarios(request):
+
+	if(request.session.get("idusuario", False)):
+
+		usuario = User.objects.all()
+		paginator = Paginator(usuario, 10) # Show 25 contacts per page
+
+		page = request.GET.get('page')
+		try:
+			usuario = paginator.page(page)
+		except PageNotAnInteger:
+		# If usuario is not an integer, deliver first page.
+			acceso = paginator.page(1)
+		except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+			usuario = paginator.page(paginator.num_pages)
+		return render(request, 'administracion/usuario.html',{'usuario': usuario})
+	else:
+		return redirect('/login/')
+
+def UsuarioAgregar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			# create a form instance and populate it with data from the request:
+			form = UsuarioForm(request.POST)
+			formuser = UserForm(request.POST)
+			# check whether it's valid:
+			if form.is_valid() and formuser.is_valid():
+				user = formuser.save()
+				usuario = form.save(commit=False)
+				usuario.user = user
+				usuario.save()
+				form.cleaned_data
+				formuser.cleaned_data
+				# return redirect(ListaUsuarios)
+				msg = {"msg" : "Datos guardados correctamente"}
+
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else:
+				return render(request, 'administracion/usuario_form.html',{'form':form ,'formuser': formuser, 'url':'/usuario/agregar/'})
+
+			# if a GET (or any other method) we'll create a blank form
+		else:
+			form = UsuarioForm()
+			formuser = UserForm(request.POST)
+			return render(request, 'administracion/usuario_form.html',{'form':form, 'formuser': formuser, 'url':'/usuario/agregar/'})
+	
+	else:
+		return redirect('/login/')
+
+
+def UsuarioEditar(request):
+	if(request.session.get("idusuario", False)):
+		iduser = request.GET.get('idusuario')
+		instance = get_object_or_404(User, id=iduser)
+		instance1 = get_object_or_404(Usuario, id=instance.usuario.id)
+		formusuario = UsuarioForm(request.POST or None, instance=instance1)
+		formuser = UserForm(request.POST or None, instance=instance)
+		if formusuario.is_valid() and formuser.is_valid():
+			formuser.save()
+			formusuario.save()			
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'administracion/usuario_form.html',
+				{
+					'form': formusuario,'formuser': formuser, 'url':'/usuario/editar/?idusuario='+iduser
+				}
+			)
+	else:
+		return redirect('/login/')
+
+def UsuarioEliminar(request):
+	if(request.session.get("idusuario", False)):
+		if request.method == 'POST':
+			idusuario = request.POST['idusuario']
+			user = User.objects.get(id = idusuario)
+			user.delete()
+			response_data = {"success": "Usuario Eliminado Correctamente"}
+			if user:
+				return HttpResponse(
+					json.dumps(response_data),
+					content_type="application/json"
+				)
+				return HttpResponseRedirect('/usuario/')
+	else:
+		return redirect('/login/')
+
+
+def ListaPerfil(request):
+	if(request.session.get("idusuario", False)):
+		user = User.objects.all()
+		return render(request, 'administracion/perfil_grilla.html',{'usuario': user})
+	else:
+		return redirect('/login/')	
+
+
+def ListaPerfilRoles(request):
+
+
+	if(request.session.get("idusuario", False)):
+
+		rol = Rol.objects.all()
+
+		idrol = rol
+		instance = get_object_or_404(Rol, id=idrol)
+		form = PerfilForm(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos editados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		return render(
+				request, 
+				'administracion/perfilrol.html',
+				{
+					'form': form, 'url':'/perfilroles/listar/', 'rol':rol
 				}
 			)
 	else:

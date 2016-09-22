@@ -52,7 +52,7 @@ class Persona(models.Model):
 	ubigeoresidencia = models.ForeignKey(Ubigeo,related_name='residencia')
 	
 	def __str__(self):
-		return self.nombre
+		return self.nombre+" "+self.paterno+" "+self.materno
 
 	def nacimiento(self):
 		Depnacimiento = Ubigeo.objects.get(coddep=self.ubigeonacimiento.coddep,coddist = '00',codprov='00' )

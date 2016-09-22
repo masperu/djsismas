@@ -29,12 +29,13 @@ class Usuario(models.Model):
 	roles = models.ManyToManyField(Rol, through='Perfil', through_fields=('usuario', 'rol'),)
 
 	def __str__(self):
-		return self.usuario
+		return self.persona.nombre
 
 
 class Perfil(models.Model):
 	usuario = models.ForeignKey(Usuario)
 	rol = models.ForeignKey(Rol)
+	estado = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.usuario+' '+self.rol

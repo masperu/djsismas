@@ -58,20 +58,24 @@
 		<span class="icon-bar"></span>
 	  </button>
 	  <a class="navbar-brand" href="/">Sistema 1.0</a>
+	  
 	</div>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	  <ul class="nav navbar-nav">
 		<li class="dropdown">
+
 		  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administracion <span class="caret"></span></a>
 		  <ul class="dropdown-menu">
 			<li><a href="/menu/">Menu</a></li>
 			<li role="separator" class="divider"></li>
 			<li><a href="/rol/">Rol</a></li>
-			<li><a href="/perfil/">Perfil</a></li>
 			<li role="separator" class="divider"></li>
 			<li><a href="/organizacion/">Organizacion</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="/usuario/">Usuarios</a></li>
+			<li><a href="/perfil/">Perfil</a></li>
 		  </ul>
 		</li>
 	  </ul>
@@ -98,6 +102,7 @@
 		</li>
 	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
+		<li><a >{{ request.session.persona }} <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
 		<li><a href="/logout/">Cerrar Sessión</a></li>
 	  </ul>
 	</div><!-- /.navbar-collapse -->
