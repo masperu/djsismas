@@ -13,6 +13,9 @@ $( document ).ready(function() {
 		}
 	});
 
+
+
+
 	//Variables para autocomplete
 	
 
@@ -38,6 +41,10 @@ $( document ).ready(function() {
 	 		//Seteamos el valor del formulario en caso de envio erroneo
 	 		$("#nivelcimiteid").val($("#nivelcomite").val());
 	 		//$("#nivelcomite").val($("#nivelcimiteid").val());
+
+	 		$('.selectpicker').selectpicker({
+				size: 5
+			});
 
 	 	});
 

@@ -6,6 +6,7 @@ from django.db.models.deletion import ProtectedError
 import json
 from .models import *
 from .forms import *
+from django.db.models import Q
 from apps.persona.models import Ubigeo
 
 import time
@@ -515,7 +516,7 @@ def ComiteNacionalEditar(request):
 
 def ComiteRegionalLista(request):
 	if(request.session.get("idusuario", False)):
-		comite = Comite.objects.filter(nivelcomite__codigo = 'NC')
+		comite = Comite.objects.filter(nivelcomite__codigo = 'RG')
 		paginator = Paginator(comite, 10)
 
 		page = request.GET.get('page')
@@ -530,12 +531,14 @@ def ComiteRegionalLista(request):
 		return redirect('/login/')
 
 
-def ComiteNacionalAgregar(request):
+def ComiteRegionalAgregar(request):
 	if(request.session.get("idusuario", False)):
 		url = "/comite/nacional/agregar/"
-		nivelcomite = NivelComite.objects.filter(codigo = 'NC')
+		nivelcomite = NivelComite.objects.filter(codigo = 'RG')
 		comitepadre = None
-		ubigeopais = Ubigeo.objects.filter(coddep = 'PE')
+		ubigeoregion = Ubigeo.objects.filter(~Q(coddep__in = ('PE', '00')), codprov = '00', coddist = '00')
+
+		print(ubigeoregion)
 
 		if request.method == 'POST':
 			form = ComiteForm(request.POST)
@@ -549,10 +552,10 @@ def ComiteNacionalAgregar(request):
 							content_type="application/json"
 						)
 			else :
-				return render(request, 'comite/comitenacional_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeopais':ubigeopais })
+				return render(request, 'comite/comitenacional_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
 		else:
 			form = ComiteForm()
-			return render(request, 'comite/comitenacional_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeopais':ubigeopais })
+			return render(request, 'comite/comitenacional_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
 	else:
 		return redirect('/login/')
 

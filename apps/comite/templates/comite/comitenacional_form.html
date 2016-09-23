@@ -48,7 +48,7 @@
 
         {% if field.name == 'nivelcomite' %}
 
-        <div class="form-group hidden">
+        <div class="form-group">
                 <div class="col-xs-12 col-sm-4">
                         <label for="nivelcomite">Nivel</label>
                 </div>
@@ -70,7 +70,7 @@
 
         
         {% if field.name == 'comitepadre' %}
-        <div class="form-group hidden">
+        <div class="form-group">
                 <div class="col-xs-12 col-sm-4">
                         <label for="comitepadre_text">Comité Padre</label>
                 </div>
@@ -92,11 +92,22 @@
                 </div>
                 <div class="col-xs-12 col-sm-8">
 
-                        {% for upais in ubigeopais %}
-                        <input type="text" name="ubigeo_text" id="ubigeo_text" class="form-control" value="{{ upais.nombreubigeo }}" readonly="readonly" >
-                        <input type="hidden" name="ubigeo" id="ubigeo" value="{{ upais.id }}" >
+
+                        <select class="selectpicker" data-live-search="true">
                         
-                        {% endfor %}
+                        {% for upais in ubigeoregion %}
+                                <option value="{{ upais.item }}">{{ upais.nombreubigeo }}</option>
+                        {% endfor %} 
+
+                                
+                        </select>
+
+                        {% for upais in ubigeoregion %}
+                                <input type="text" name="ubigeo_text" id="ubigeo_text" class="form-control" value="{{ upais.nombreubigeo }}" >
+                                <input type="hidden" name="ubigeo" id="ubigeo" value="{{ upais.id }}" >
+                                
+                                {% endfor %} 
+
                         <div class="help-block alert-danger">
                                 {{ field.errors }}        
                         </div>

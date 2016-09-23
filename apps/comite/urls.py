@@ -44,7 +44,7 @@ urlpatterns = [
 
 
     url(r'^comite/regional/$', ComiteRegionalLista , name="lista_comiteregional"),
-    # url(r'^comite/agregar/$', ComiteAgregar , name="comite-agregar"),
+    url(r'^comite/regional/agregar/$', ComiteRegionalAgregar , name="comiteregional-agregar"),
     # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
     # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
     # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
@@ -205,5 +205,5 @@ urlpatterns = [
     # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
     # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
     # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
-    
+
 ]
