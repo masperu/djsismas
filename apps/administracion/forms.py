@@ -218,7 +218,7 @@ class UsuarioForm(forms.ModelForm):
 
 class PerfilForm(forms.ModelForm):
 	roles = ModelMultipleChoiceField(
-				queryset=Rol.objects.all(),
+				queryset = None,
 				widget=forms.CheckboxSelectMultiple(
 					attrs={
 						'class': 'custom-control-input',
@@ -229,5 +229,6 @@ class PerfilForm(forms.ModelForm):
 		model = Usuario
 		fields = ('roles',)
 
-	def __init__(self, *args, **kwargs):
+	def __init__(self, lista,*args, **kwargs):
 		super(PerfilForm, self).__init__(*args, **kwargs)
+		self.fields["roles"].queryset = Rol.objects.filter(id__in = lista)

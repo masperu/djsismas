@@ -516,12 +516,14 @@ def ListaPerfilRoles(request):
 		iduser = request.GET.get('iduser')
 		user = User.objects.get(id=iduser)
 		idusuario = user.usuario.id
-		rol = Perfil.objects.filter(usuario_id=idusuario)
+		lista = []
+		rol = Perfil.objects.filter(usuario_id=idusuario, estado = True).values_list('rol__id')
+		rol1 = Rol.objects.exclude(id__in= rol)
 		instance = get_object_or_404(Usuario, id=idusuario)
-		form = PerfilForm(request.POST or None, instance=instance)
+		form = PerfilForm(rol,request.POST or None, instance=instance)
 
 
-		if form.is_valid():
+		if request.method == "POST":
 			post = request.POST
 			roles = post.getlist('roles')
 			Perfil.objects.filter(usuario_id = idusuario).update(estado="False")
@@ -543,7 +545,7 @@ def ListaPerfilRoles(request):
 				request, 
 				'administracion/perfilrol.html',
 				{
-					'form': form, 'url':'/perfilroles/listar/?iduser='+str(idusuario), 'rol':rol
+					'form': form, 'url':'/perfilroles/listar/?iduser='+str(idusuario), 'rol':rol1
 				}
 			)
 	else:
