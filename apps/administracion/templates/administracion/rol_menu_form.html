@@ -20,20 +20,26 @@
 			{{field}}
 		{% endif %}			
 		{% if field.name == 'menus' %}
+
 			<div class="form-group">
 				<div class="col-xs-12">
 	       			<label for="roles">Menus</label>
-
 				</div>
-				<div class="col-xs-12">
-	       				{{field}}
-						{{field.query}}
-	   				<div class="help-block alert-danger">
-						{{ field.errors }}        
-					</div>   
+				<div class="col-xs-12 list-group">
+						
+						
+					{% for list in field %}
+					<div id="id_menus" class="col-md-6">
+						<li class="list-group-item">.{{list}}</li>	
+					</div>
+					{%  endfor %}
+
 	   			</div>
 	   		</div>
 		{% endif %}
+		<div class="help-block alert-danger">
+						{{ field.errors }}        
+		</div>   
 	{% endfor %}
 	</form>
 

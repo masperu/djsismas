@@ -31,7 +31,7 @@ def Login(request):
 			if user is not None:
 				request.session['idusuario'] = user.id
 				try:
-					request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno if user.usuario == None else ""
+					request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno
 				except ObjectDoesNotExist :
 					request.session['persona'] = "Anonimo"
 				return redirect('/')
@@ -121,7 +121,7 @@ def MenuEliminar(request):
 
 def MenuAjax(request):
 	if(request.session.get("idusuario", False)):
-		menu = Menu.objects.filter(nombre__icontains = "" + request.GET.get('query') + "", estado= True)[:10]
+		menu = Menu.objects.filter(nombre__icontains = "" + request.GET.get('query') + "", estado= True, menupadre=None)[:10]
 		total = menu.count()
 		return render(
 			request,
@@ -511,16 +511,29 @@ def ListaPerfilRoles(request):
 
 	if(request.session.get("idusuario", False)):
 		# idusuario = request.POST['idusuario']
-		rol = Rol.objects.all()
+	
 
 		iduser = request.GET.get('iduser')
 		user = User.objects.get(id=iduser)
 		idusuario = user.usuario.id
+		rol = Perfil.objects.filter(usuario_id=idusuario)
 		instance = get_object_or_404(Usuario, id=idusuario)
 		form = PerfilForm(request.POST or None, instance=instance)
+
+
 		if form.is_valid():
+			post = request.POST
+			roles = post.getlist('roles')
+			Perfil.objects.filter(usuario_id = idusuario).update(estado="False")
+			for roles in roles:
+				rol, created = Perfil.objects.get_or_create(usuario_id = idusuario, rol_id= roles, defaults={'estado': True})
+				if rol:
+					rol.estado = True
+					rol.save()
+
 			# form.save()
-			print(form)
+			# print(form)
+			
 			msg = {"msg" : "Datos editados correctamente"}
 			return HttpResponse(
 					json.dumps( msg ), 
@@ -530,7 +543,7 @@ def ListaPerfilRoles(request):
 				request, 
 				'administracion/perfilrol.html',
 				{
-					'form': form, 'url':'/perfilroles/listar/?idusuario='+str(idusuario), 'rol':rol
+					'form': form, 'url':'/perfilroles/listar/?iduser='+str(idusuario), 'rol':rol
 				}
 			)
 	else:

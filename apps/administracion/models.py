@@ -38,7 +38,7 @@ class Perfil(models.Model):
 	estado = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.usuario+' '+self.rol
+		return self.usuario.user.username+' '+self.rol.nombre
 
 class UbigeoPerfil(models.Model):
 	perfil = models.ForeignKey(Perfil)
