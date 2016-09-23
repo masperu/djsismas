@@ -6,6 +6,7 @@ from django.db.models.deletion import ProtectedError
 import json
 from .models import *
 from .forms import *
+from apps.persona.models import Ubigeo
 
 import time
 
@@ -432,3 +433,160 @@ def NivelCargoEditar(request):
 		return render(request, 'comite/nivelcargo_form.html', {'form':form, 'url': url, 'tipocargos':tipocargos, 'tiposactuales': tiposactuales})
 	else:
 		return redirect('/login/')
+
+
+def ComiteNacionalLista(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.filter(nivelcomite__codigo = 'NC')
+		paginator = Paginator(comite, 10)
+
+		page = request.GET.get('page')
+		try:
+			comite = paginator.page(page)
+		except PageNotAnInteger:
+			comite = paginator.page(1)
+		except EmptyPage:
+			comite = paginator.page(paginator.num_pages)
+		return render(request, 'comite/comitenacional.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+
+def ComiteNacionalAgregar(request):
+	if(request.session.get("idusuario", False)):
+		url = "/comite/nacional/agregar/"
+		nivelcomite = NivelComite.objects.filter(codigo = 'NC')
+		comitepadre = None
+		ubigeopais = Ubigeo.objects.filter(coddep = 'PE')
+
+		if request.method == 'POST':
+			form = ComiteForm(request.POST)
+			if form.is_valid():
+				comite = form.save(commit=False)
+				comite.save()
+				form.cleaned_data
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else :
+				return render(request, 'comite/comitenacional_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeopais':ubigeopais })
+		else:
+			form = ComiteForm()
+			return render(request, 'comite/comitenacional_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeopais':ubigeopais })
+	else:
+		return redirect('/login/')
+
+
+def ComiteNacionalEditar(request):
+	if(request.session.get("idusuario", False)):
+		idcomite = request.GET.get('idcomite')
+		instance = get_object_or_404(Comite, id=idcomite)
+		url = "/comite/nacional/editar/?idcomite=" + idcomite
+		form = ComiteForm(request.POST or None, instance=instance)
+		
+		#Todos lo comites para la lista
+		nivelcomite = NivelComite.objects.filter(codigo = 'NC')
+		ubigeopais = Ubigeo.objects.filter(coddep = 'PE')
+
+		#ComitePadre
+		try:
+			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
+		except Exception as e:
+			comitepadre = None
+
+
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos guardados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		else:
+			return render(request, 'comite/comitenacional_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre, 'ubigeopais':ubigeopais })	
+
+		return render(request, 'comite/comitenacional_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre, 'ubigeopais':ubigeopais })
+	else:
+		return redirect('/login/')
+
+
+
+def ComiteRegionalLista(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.filter(nivelcomite__codigo = 'NC')
+		paginator = Paginator(comite, 10)
+
+		page = request.GET.get('page')
+		try:
+			comite = paginator.page(page)
+		except PageNotAnInteger:
+			comite = paginator.page(1)
+		except EmptyPage:
+			comite = paginator.page(paginator.num_pages)
+		return render(request, 'comite/comiteregional.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+
+def ComiteNacionalAgregar(request):
+	if(request.session.get("idusuario", False)):
+		url = "/comite/nacional/agregar/"
+		nivelcomite = NivelComite.objects.filter(codigo = 'NC')
+		comitepadre = None
+		ubigeopais = Ubigeo.objects.filter(coddep = 'PE')
+
+		if request.method == 'POST':
+			form = ComiteForm(request.POST)
+			if form.is_valid():
+				comite = form.save(commit=False)
+				comite.save()
+				form.cleaned_data
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else :
+				return render(request, 'comite/comitenacional_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeopais':ubigeopais })
+		else:
+			form = ComiteForm()
+			return render(request, 'comite/comitenacional_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeopais':ubigeopais })
+	else:
+		return redirect('/login/')
+
+
+def ComiteNacionalEditar(request):
+	if(request.session.get("idusuario", False)):
+		idcomite = request.GET.get('idcomite')
+		instance = get_object_or_404(Comite, id=idcomite)
+		url = "/comite/nacional/editar/?idcomite=" + idcomite
+		form = ComiteForm(request.POST or None, instance=instance)
+		
+		#Todos lo comites para la lista
+		nivelcomite = NivelComite.objects.filter(codigo = 'NC')
+		ubigeopais = Ubigeo.objects.filter(coddep = 'PE')
+
+		#ComitePadre
+		try:
+			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
+		except Exception as e:
+			comitepadre = None
+
+
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos guardados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		else:
+			return render(request, 'comite/comitenacional_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre, 'ubigeopais':ubigeopais })	
+
+		return render(request, 'comite/comitenacional_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre, 'ubigeopais':ubigeopais })
+	else:
+		return redirect('/login/')
+
+

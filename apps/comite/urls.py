@@ -36,11 +36,16 @@ urlpatterns = [
     url(r'^nivelcargo/guardar/$', NivelCargoGuardar , name="nivelcargo-guardar"),
     url(r'^nivelcargo/editar/$', NivelCargoEditar , name="nivelcargo-editar"),
 
-    # USUARIOS
-    # 
-    # 
-    # 
-    # 
-    #
-    # 
+    url(r'^comite/nacional/$', ComiteNacionalLista , name="lista_comitenacional"),
+    url(r'^comite/nacional/agregar/$', ComiteNacionalAgregar , name="comitenacional-agregar"),
+    # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
+    url(r'^comite/nacional/editar/$', ComiteNacionalEditar , name="comitenacional-editar"),
+    # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
+
+
+    url(r'^comite/regional/$', ComiteRegionalLista , name="lista_comiteregional"),
+    # url(r'^comite/agregar/$', ComiteAgregar , name="comite-agregar"),
+    # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
+    # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
+    # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
 ]

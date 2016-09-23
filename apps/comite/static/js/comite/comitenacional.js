@@ -7,6 +7,10 @@ $( document ).ready(function() {
 		  event.preventDefault();
 		  return false;
 		}
+		if(event.keyCode == 27) {
+		  event.preventDefault();
+		  $( ".close" ).trigger( "click" );
+		}
 	});
 
 	//Variables para autocomplete
@@ -32,18 +36,8 @@ $( document ).ready(function() {
 
 	 		//alert($("#nivelcimiteid").val());
 	 		//Seteamos el valor del formulario en caso de envio erroneo
-	 		$("#nivelcomite").val($("#nivelcimiteid").val());
-
-			$('#comitepadre_text').autocomplete({
-				serviceUrl: '/comite/ajax/',
-				onSelect: function (suggestion) {
-				    //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-				    $("#comitepadre").val(suggestion.data);
-				    txtComitePadre = suggestion.value;
-				}
-			});
-
-
+	 		$("#nivelcimiteid").val($("#nivelcomite").val());
+	 		//$("#nivelcomite").val($("#nivelcimiteid").val());
 
 	 	});
 
@@ -80,16 +74,7 @@ $( document ).ready(function() {
 			$(".modal-title").text("Editar comite nacional");
 	 		$('#id_nombre').focus();
 
-	 		$("#nivelcomite").val($("#nivelcimiteid").val());
-
-			$('#comitepadre_text').autocomplete({
-				serviceUrl: '/comite/ajax/',
-				onSelect: function (suggestion) {
-				    //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-				    $("#comitepadre").val(suggestion.data);
-				    txtComitePadre = suggestion.value;
-				}
-			});
+	 		$("#nivelcomite").val($("#nivelcomiteid").val());
 
 	 	});
 	});
@@ -179,7 +164,7 @@ $( document ).ready(function() {
 					$( ".modal-body" ).find("form").remove();
 					$( ".modal-body" ).html(d);
 					
-					$("#nivelcomite").val($("#nivelcimiteid").val());
+					$("#nivelcomite").val($("#nivelcomiteid").val());
 
 					$("#comitepadre_text").val(txtComitePadre);
 
