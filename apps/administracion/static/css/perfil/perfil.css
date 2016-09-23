@@ -12,3 +12,9 @@
 	-webkit-user-select: none;
 	user-select: none;
 }
+#cargarRolePerfil{
+	margin-top: 8px;
+}
+#id_roles{
+	margin-top: 5px;
+}
