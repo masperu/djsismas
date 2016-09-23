@@ -1,0 +1,118 @@
+{% extends "Base.html" %}
+
+{% load static from staticfiles %}
+
+{% block maestro_estilos %}
+  {# <link rel="stylesheet" type="text/css" href="{% static 'css/comite/comite.css' %}"> #}
+{% endblock maestro_estilos %}
+
+{% block maestro_contenido %}
+
+<div class="col-xs-12">
+
+	
+	<!-- Inicio Grilla -->
+	{% if comite|length == 0 %}
+		<a id="agregarComite" class="btn btn-default" href="/comite/nacional/agregar/" role="button" >Agregar</a>
+	{% endif %}
+	
+	<div class="table-responsive">	
+		<table id="tableNivelComite" class="table table-bordered table-striped table-condensed table-hover">
+			<thead>
+				<tr>
+					<th class="text-center th1">Nro</th>
+					<th class="text-center th2">Nombre</th>
+					<th class="text-center th3">Dirección</th>
+					<th class="text-center th3">Acta conformación</th>
+					<th class="text-center th3">Nivel</th>
+					<th colspan="2" class="text-center th5">Operaciones</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for  item in comite %}
+				<tr>
+					<td class="text-center td1">
+					{% if comite.number > 1 %}
+						{{ comite.number }}
+					{% else %}
+						{{ forloop.counter }}	
+					{% endif %} 
+					
+					</td>
+					<td class="td2">{{ item.nombre }}</td>
+					<td class="td3">{{ item.direccion }}</td>
+					<td class="td3">{{ item.actaconformacion }}</td>
+					<td class="td3">{{ item.nivelcomite.nombre }}</td>
+					<td class="text-center td5">
+						<a href="/comite/nacional/editar/?idcomite={{ item.id }}" class="comiteEditar" role="button">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+					</td>
+					<td class="text-center td5">
+						<!-- <form class="formEliminar" action ="/menu/eliminar/?idmenu={{menu.id}}" method="POST"> -->
+						<a href= "/comite/eliminar/?idcomite={{item.id}}" class="comiteEliminar" role="button"><span class="glyphicon glyphicon-trash"></span>
+						<!-- </form> -->
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<!-- Fin Grillla -->
+
+	<!-- Inicio del Paginador -->
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+
+		    {% if comite.has_previous %}
+		        <li><a href="?page={{ comite.previous_page_number }}">Atras</a></li>
+		    {% endif %}
+
+		   <li>
+		   	<span class="current">
+		        Pagina {{ comite.number }} de {{ comite.paginator.num_pages }}
+		    </span>
+
+		   </li> 
+
+		    {% if comite.has_next %}
+		        <li><a href="?page={{ comite.next_page_number }}">Siguiente</a></li>
+		    {% endif %}
+		</ul>
+	</nav>
+	<!-- Fin del Paginador -->
+
+</div>
+
+
+<!-- Inicio de Codigo para Modales -->
+<div id="modalComite" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"  >
+  <div class="modal-dialog" role="document"> 
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Agregar comité nacional</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+      <!-- <input type="text" id="micajatexto2" class="nuevo"> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <!-- <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button> -->
+        <button type="button" class="btn btn-primary" id="guardarComite" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div><!-- /.modal -->
+<!-- Fin Codigo para modales -->
+
+
+    
+
+{% endblock maestro_contenido %}
+
+
+{% block maestro_scripts %}
+<script src="{% static 'js/comite/comiteregional.js' %}"></script>
+{% endblock maestro_scripts %}
