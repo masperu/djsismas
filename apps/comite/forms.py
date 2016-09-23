@@ -60,7 +60,7 @@ class ComiteForm(forms.ModelForm):
 	
 	class Meta:
 		model = Comite
-		fields = ('nombre', 'actaconformacion', 'direccion', 'nivelcomite', 'comitepadre')
+		fields = ('nombre', 'actaconformacion', 'direccion', 'nivelcomite', 'comitepadre', 'ubigeo' )
 
 
 class NivelCargoTipoForm(forms.ModelForm):

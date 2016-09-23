@@ -54,11 +54,9 @@
 		}
 
 		$('#modalUbigeo').modal('show').find('#divDep').load("/persona.ubigeonacimiento/listar/");
+
 		$('#modalUbigeo').on('shown.bs.modal', function(e) {
 			// $('#selectDepartamento').selectpicker('render');
-
-
-			
 
 			$('#selectDepartamento').on('hide.bs.select', function (e) {
 				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");

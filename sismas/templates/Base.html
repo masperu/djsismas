@@ -23,7 +23,8 @@
 
   	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-modal-patch.css' %}"-->
 
-
+{% block maestro_estilos %}
+	{% endblock maestro_estilos %}
 
   <style>
 	#toast-container > div {
@@ -38,15 +39,24 @@
 	  font-size: 95%;
 	  font-family: arial;
 	}
+
+	.form-group {
+		margin-bottom: 2px !important;
+	}
+
+	.form-group label {
+		margin-bottom: 1px;
+	}
+	
   </style>
 
 
 
 
-	{% block maestro_estilos %}
-	{% endblock maestro_estilos %}
+	
 </head>
 <body>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
 	<!-- Brand and toggle get grouped for better mobile display -->

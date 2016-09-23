@@ -41,7 +41,7 @@
 					</td>
 					<td class="td2">{{ item.nombre }}</td>
 					<td class="td3">{{ item.codigo }}</td>
-					<td class="text-center td4">{{ item.permiteafiliacion }}</td>
+					<td class="text-center td4">{{ item.permiteafiliacion|yesno:"Si,No" }}</td>
 					<td class="text-center td5">
 						<a href="/nivelcomite/editar/?idnivelcomite={{ item.id }}" class="nivelComiteEditar" role="button">
 							<span class="glyphicon glyphicon-pencil"></span>

@@ -83,6 +83,31 @@
         </div>
         {% endif %}
 
+
+        {% if field.name == 'ubigeo' %}
+        <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                        <label for="comitepadre_text">Ubigeo</label>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+
+                        <div class="input-group">
+                                <input id= "txtubigeonacimiento" type="text" class="form-control" placeholder="Ubigeo" value={%if ubigeonacimiento != None %}"{{ubigeonacimiento}}"{%endif%}>
+                                <span class="input-group-btn">
+                                <a id="btnAgregarUbigeoN" href="/persona.ubigeonacimiento/listar/" class="btn btn-info" role="button"><span class="glyphicon glyphicon-search"></span></a>
+                        </div>
+                                
+                        <input type="text" name="comitepadre_text" id="comitepadre_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ comitepadre.nombre }}" {% endif %}>
+                        <input type="hidden" name="comitepadre" id="comitepadre" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
+
+                        {{ field }}
+                        <div class="help-block alert-danger">
+                                {{ field.errors }}
+                        </div>
+                </div>
+        </div>
+        {% endif %}
+
         {% endfor %}
 
 </form>

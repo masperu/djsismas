@@ -166,7 +166,7 @@ def MenuEditar(request):
 		return redirect('/login/')
 
 def MenuListar(request):
-	menu = Menu.objects.filter(rol__id= 6)
+	menu = Menu.objects.all()
 	menus = []
 	for menu in menu:
 		menus.append({"nombre":menu.nombre, "ruta":menu.ruta, "menupadre":menu.menupadre.nombre if menu.menupadre else None })
