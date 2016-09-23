@@ -1,18 +1,14 @@
-#id_menus label{
+#id_roles li input {
 	float: left;
-	display: flex;
 	margin-right: 10px;
 }
-#id_menus input{
-	margin: 4px 12px 0;
+
+.filasSeleccionada{
+	background-color: #FFFD99 !important;
 }
 
-/*.filasSeleccionada{
-	background-color: #FFFD99 !important;
-}*/
-
-/*.selecting {
+.selecting {
 	-moz-user-select: -moz-none;
 	-webkit-user-select: none;
 	user-select: none;
-}*/
+}

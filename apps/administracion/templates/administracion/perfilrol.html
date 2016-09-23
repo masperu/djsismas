@@ -16,14 +16,34 @@
 {% for field in form %}
 
 	{% if field.name == 'roles' %}
-	<div class="form-group">
 		<div class="col-xs-12">
-			{{field}}
+			<div class="form-group">	
+			{% for rol in rol %}
+				<div id="id_roles" class="col-md-4">
+					<li class="list-group-item">
+					{{rol.rol}}
+
+
+					</li>
+				</div>
+			{% endfor %}
+				{% for list in field %}
+						<div id="id_roles" class="col-md-4">
+							<li class="list-group-item">{{list}}</li>
+								
+								{{list.attrs.id}}
+						</div>
+				{%  endfor %}
+		{% for list in field %}
+			<label for="{{list.attrs.id}}">
+				<input id="{{list.attrs.id}}" class="{{list.attrs.id}}" name="roles" value="2" type="checkbox">
+			</label>
+		{%  endfor %}
+			</div>
 			<div class="help-block alert-danger">
 				{{ field.errors }}
 			</div>     
 		</div>
-	</div>
 	{% endif %}
 
 {% endfor %}

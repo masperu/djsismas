@@ -63,7 +63,27 @@ $( document ).ready(function() {
 
 	$("#btnGuardarPerfilRol").on('click', function(data){
 
-		alert("asasasa");
+		// alert("asasasa");
+
+		var $this = $(this);
+		// $this.button('loading');
+		$.ajax({
+			url:  $("#formPerfilRol").attr('action'),
+			type: "post",
+			data: $("#formPerfilRol").serialize(),
+			success: function(d) {
+
+				if ( d["msg"] ) {
+					alert(d.msg)
+					location.reload();	
+				}
+				else {
+					$("#cargarRolePerfil").find("form").remove();
+					$("#cargarRolePerfil").html(d);
+				}
+
+			}
+		});
 	});
 
 });
