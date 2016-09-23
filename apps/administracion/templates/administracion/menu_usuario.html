@@ -1,13 +1,3 @@
-{% extends "basemenus.html" %}
-
-{% load static from staticfiles %}
-
-
-
-{% block maestro_estilos %}
-
-{% endblock maestro_estilos %}
-{% block maestro_menus %}
 {% regroup menu by menupadre as menu_list %}
 <nav class="navbar navbar-default">
   <ul class="nav navbar-nav">
@@ -31,16 +21,3 @@
 {% endfor %}
 
 </nav>
-
-{% endblock maestro_menus %}
-
-{% block maestro_contenido %}
-
-
-
-{% endblock maestro_contenido %}
-
-
-{% block maestro_scripts %}
-
-{% endblock maestro_scripts %}

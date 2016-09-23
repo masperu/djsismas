@@ -32,6 +32,13 @@ def Login(request):
 				request.session['idusuario'] = user.id
 				try:
 					request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno
+					
+					menu = Menu.objects.all()
+					menus = []
+					for menu in menu:
+						menus.append({"nombre":menu.nombre, "ruta":menu.ruta, "menupadre":menu.menupadre.nombre if menu.menupadre else None })
+					request.session['menu'] = menus
+
 				except ObjectDoesNotExist :
 					request.session['persona'] = "Anonimo"
 				return redirect('/')
