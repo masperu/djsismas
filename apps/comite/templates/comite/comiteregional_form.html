@@ -70,7 +70,7 @@
 
         
         {% if field.name == 'comitepadre' %}
-        <div class="form-group hidden">
+        <div class="form-group">
                 <div class="col-xs-12 col-sm-4">
                         <label for="comitepadre_text">Comité Padre</label>
                 </div>
@@ -86,18 +86,13 @@
 
 
         {% if field.name == 'ubigeo' %}
-        <div class="form-group hidden">
+        <div class="form-group">
                 <div class="col-xs-12 col-sm-4">
-                        <label for="ubigeo_text">Ubigeo</label>
+                        <label for="ubigeo_text">Región</label>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-
-                        {% for upais in ubigeopais %}
-                                <input type="text" name="ubigeo_text" id="ubigeo_text" class="form-control" value="{{ upais.nombreubigeo }}" >
-                                <input type="hidden" name="ubigeo" id="ubigeo" value="{{ upais.id }}" >
-                                
-                                {% endfor %} 
-
+                        <input type="text" name="ubigeo_text" id="ubigeo_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ ubigeoregion.nombreubigeo }}" {% endif %}>
+                        <input type="hidden" name="ubigeo" id="ubigeo" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
                         <div class="help-block alert-danger">
                                 {{ field.errors }}        
                         </div>

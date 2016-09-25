@@ -1,0 +1,11 @@
+{
+    "suggestions": [
+    	{% for item in ubigeo %}
+    		{% if forloop.counter < total %}
+	        	{ "value": "{{ item.nombreubigeo }}", "data": "{{ item.id }}" },
+	        {% else %}
+	        	{ "value": "{{ item.nombreubigeo }}", "data": "{{ item.id }}" }
+	        {% endif %}
+        {% endfor %}
+    ]
+}

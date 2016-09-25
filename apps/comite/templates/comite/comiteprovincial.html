@@ -4,16 +4,28 @@
 
 {% block maestro_estilos %}
   {# <link rel="stylesheet" type="text/css" href="{% static 'css/comite/comite.css' %}"> #}
+	
+	<style>
+		.enabledautocomplete, .enabledautocompleteubigeo {
+		    color: #aaa;
+		    display: block;
+		    position: absolute;
+		    right: 17px;
+		    top: 9px;
+		    /*display: none;*/
+		}
+	</style>
+
 {% endblock maestro_estilos %}
 
 {% block maestro_contenido %}
 
 <div class="col-xs-12">
 
-	
+	<h3>Comités Provinciales</h3>
 	<!-- Inicio Grilla -->
 	
-		<a id="agregarComite" class="btn btn-default" href="/comite/regional/agregar/" role="button" >Agregar</a>
+		<a id="agregarComite" class="btn btn-default" href="/comite/provincial/agregar/" role="button" >Agregar</a>
 
 	
 	<div class="table-responsive">	
@@ -108,11 +120,13 @@
 <!-- Fin Codigo para modales -->
 
 
+<input type="hidden" id="regionselected" value="idregionaasd asd as d">
+
     
 
 {% endblock maestro_contenido %}
 
 
 {% block maestro_scripts %}
-<script src="{% static 'js/comite/comiteregional.js' %}"></script>
+<script src="{% static 'js/comite/comiteprovincial.js' %}"></script>
 {% endblock maestro_scripts %}

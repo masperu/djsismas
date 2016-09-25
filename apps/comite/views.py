@@ -257,6 +257,28 @@ def ComiteAjax(request):
 	else:
 		return redirect('/login/')
 
+def ComiteNacionalAjax(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.filter(
+					nombre__icontains = "" + request.GET.get('query') + "", 
+					nivelcomite__codigo = 'NC' 
+				)[:10]
+
+		total = comite.count()
+		return render(
+			request,
+			'comite/comite.json',
+			{
+				'comite': comite,
+				'total':total
+			},
+			content_type="application/json",
+		)
+		#return render(request, 'comite/comite.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+
 def ComiteAgregar(request):
 	if(request.session.get("idusuario", False)):
 		url = "/comite/agregar/"
@@ -533,7 +555,7 @@ def ComiteRegionalLista(request):
 
 def ComiteRegionalAgregar(request):
 	if(request.session.get("idusuario", False)):
-		url = "/comite/nacional/agregar/"
+		url = "/comite/regional/agregar/"
 		nivelcomite = NivelComite.objects.filter(codigo = 'RG')
 		comitepadre = None
 		ubigeoregion = Ubigeo.objects.filter(~Q(coddep__in = ('PE', '00')), codprov = '00', coddist = '00')
@@ -552,30 +574,54 @@ def ComiteRegionalAgregar(request):
 							content_type="application/json"
 						)
 			else :
-				return render(request, 'comite/comitenacional_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
+				return render(request, 'comite/comiteregional_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
 		else:
 			form = ComiteForm()
-			return render(request, 'comite/comitenacional_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
+			return render(request, 'comite/comiteregional_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
 	else:
 		return redirect('/login/')
 
 
-def ComiteNacionalEditar(request):
+def ListaRegionesAjax(request):
+	if(request.session.get("idusuario", False)):
+		ubigeo = Ubigeo.objects.filter(
+							~Q(coddep__in = ('PE', '00')), 
+							codprov = '00', 
+							coddist = '00', 
+							nombreubigeo__icontains = "" + request.GET.get('query') + "" 
+						)[:10]
+
+		total = ubigeo.count()
+		return render(
+			request,
+			'comite/ubigeocomite.json',
+			{
+				'ubigeo': ubigeo,
+				'total':total
+			},
+			content_type="application/json",
+		)
+	else:
+		return redirect('/login/')
+
+def ComiteRegionalEditar(request):
 	if(request.session.get("idusuario", False)):
 		idcomite = request.GET.get('idcomite')
 		instance = get_object_or_404(Comite, id=idcomite)
-		url = "/comite/nacional/editar/?idcomite=" + idcomite
+		url = "/comite/regional/editar/?idcomite=" + idcomite
 		form = ComiteForm(request.POST or None, instance=instance)
 		
 		#Todos lo comites para la lista
-		nivelcomite = NivelComite.objects.filter(codigo = 'NC')
-		ubigeopais = Ubigeo.objects.filter(coddep = 'PE')
+		nivelcomite = NivelComite.objects.filter(codigo = 'RG')
+		#ubigeoregion = Ubigeo.objects.filter(~Q(coddep__in = ('PE', '00')), codprov = '00', coddist = '00')
 
 		#ComitePadre
 		try:
 			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
+			ubigeoregion = Ubigeo.objects.get(id=instance.ubigeo.id)
 		except Exception as e:
 			comitepadre = None
+			ubigeoregion = None
 
 
 		if form.is_valid():
@@ -586,12 +632,109 @@ def ComiteNacionalEditar(request):
 					content_type="application/json"
 				)
 		else:
-			return render(request, 'comite/comitenacional_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre, 'ubigeopais':ubigeopais })	
+			return render(
+						request, 
+						'comite/comiteregional_form.html', 
+						{ 
+							'url': url, 
+							'form':form, 
+							'nivelcomite':nivelcomite, 
+							'comitepadre':comitepadre, 
+							'ubigeoregion':ubigeoregion 
+						}
+					)
 
-		return render(request, 'comite/comitenacional_form.html',{'form':form, 'url': url, 'nivelcomite':nivelcomite, 'comitepadre': comitepadre, 'ubigeopais':ubigeopais })
+		return render(
+					request, 
+					'comite/comiteregional_form.html', 
+					{ 
+						'url': url, 
+						'form':form, 
+						'nivelcomite':nivelcomite, 
+						'comitepadre':comitepadre, 
+						'ubigeoregion':ubigeoregion 
+					}
+				)
 	else:
 		return redirect('/login/')
 
+
+
+def ComiteProvincialLista(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.filter(nivelcomite__codigo = 'PR')
+		paginator = Paginator(comite, 10)
+
+		page = request.GET.get('page')
+		try:
+			comite = paginator.page(page)
+		except PageNotAnInteger:
+			comite = paginator.page(1)
+		except EmptyPage:
+			comite = paginator.page(paginator.num_pages)
+		return render(request, 'comite/comiteprovincial.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+
+def ComiteProvincialAgregar(request):
+	if(request.session.get("idusuario", False)):
+		url = "/comite/provincial/agregar/"
+		nivelcomite = NivelComite.objects.filter(codigo = 'PR')
+		comitepadre = None
+		ubigeoregion = Ubigeo.objects.filter(~Q(coddep__in = ('PE', '00')), codprov = '00', coddist = '00')
+
+		print(ubigeoregion)
+
+		if request.method == 'POST':
+			form = ComiteForm(request.POST)
+			if form.is_valid():
+				comite = form.save(commit=False)
+				comite.save()
+				form.cleaned_data
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else :
+				return render(request, 'comite/comiteprovincial_form.html', {'url': url, 'form':form, 'nivelcomite':nivelcomite, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
+		else:
+			form = ComiteForm()
+			return render(request, 'comite/comiteprovincial_form.html',{'url': url, 'nivelcomite':nivelcomite, 'form':form, 'comitepadre':comitepadre, 'ubigeoregion':ubigeoregion })
+	else:
+		return redirect('/login/')
+
+
+def ListaProvinciasAjax(request):
+	if(request.session.get("idusuario", False)):
+
+		try:
+			region = Ubigeo.objects.get(id = request.GET.get('regionid') )
+			ubigeo = Ubigeo.objects.filter(
+							~Q(codprov = '00'), 
+							coddep = region.coddep,
+							coddist = '00', 
+							nombreubigeo__icontains = "" + request.GET.get('query') + "" 
+						)[:10]
+		except Exception as e:
+			region = None
+			ubigeo =None
+
+		
+
+		total = ubigeo.count()
+		return render(
+			request,
+			'comite/ubigeocomite.json',
+			{
+				'ubigeo': ubigeo,
+				'total':total
+			},
+			content_type="application/json",
+		)
+	else:
+		return redirect('/login/')
 
 #
 #

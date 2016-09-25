@@ -1,6 +1,7 @@
 var txtComitePadre = "";
 var txtUbigeo = "";
-
+var txtRegion = "";
+var idregion = 0;
 $( document ).ready(function() {
 
 	$(window).keydown(function(event){
@@ -14,15 +15,10 @@ $( document ).ready(function() {
 		}
 	});
 
-
-
-
 	//Variables para autocomplete
 	
 
 	//toastr.success("Datos guardados correctamente");
-
-	//alert("Hola ");
     $('#agregarComite').on('click', function(e){
 
     	// $(".th1").hide();
@@ -35,7 +31,7 @@ $( document ).ready(function() {
 	 	$('#modalComite').modal('show').find('.modal-body').load($(this).attr('href'));
 	 	
 	 	$('#modalComite').on('shown.bs.modal', function(){
-	 		$(".modal-title").text("Agregar comite regional");
+	 		$(".modal-title").text("Agregar comite provincial");
 	 		$('#nombre').focus();
 
 	 		$("#nivelcomiteid").val($("#nivelcomite").val());
@@ -49,17 +45,61 @@ $( document ).ready(function() {
 			});
 
 			
-			$('#ubigeo_text').autocomplete({
+			$('#region_text').autocomplete({
 				serviceUrl: '/comite/ubigeo/regiones/ajax/',
+				onSelect: function (suggestion) {
+				    $("#regionid").val(suggestion.data);
+				    $("#regionselected").val(suggestion.data);
+				    txtRegion = suggestion.value;
+
+				    $(this).prop('disabled', true);
+				    $(".enabledautocomplete").show();
+
+				    $("#ubigeo_text").val("").prop('disabled', false).focus();
+					$("#ubigeo").val("0");
+				}
+			});
+
+
+			$('#ubigeo_text').autocomplete({
+				noCache:true,
+				serviceUrl: '/comite/ubigeo/provincias/ajax/',
+			    onSearchStart: function (){
+			    	
+			    	if ( $.trim( $("#region_text").val() ).length == 0 ) {
+						$("#regionselected").val("00");
+						$("#ubigeo_text").val("");
+						txtRegion = "";
+						txtUbigeo = "";
+					}
+
+
+			        $(this).autocomplete('setOptions', { params: { 'regionid' : $("#regionselected").val(), } });
+			    },
 				onSelect: function (suggestion) {
 				    $("#ubigeo").val(suggestion.data);
 				    txtUbigeo = suggestion.value;
 				}
 			});
 
+
+			$('.enabledautocomplete').on('click', function(){
+				$(this).hide();
+				$("#region_text").prop('disabled', false);
+				$("#region_text").val("").focus();
+				$("#regionid").val("0");
+				$("#ubigeo_text").val("").prop('disabled', true);
+				$("#ubigeo").val("0");
+				//$(".enabledautocomplete").show();
+			});
+
+			
+
 	 	});
 
 	});
+
+
 
 
 
@@ -74,7 +114,7 @@ $( document ).ready(function() {
 		$('#modalComite').modal('show').find('.modal-body').load($(this).attr('href'));
 
 		$('#modalComite').on('shown.bs.modal', function(){
-			$(".modal-title").text("Editar comite regional");
+			$(".modal-title").text("Editar comite provincial");
 	 		$('#nombre').focus();
 
 	 		$("#nivelcomite").val($("#nivelcomiteid").val());

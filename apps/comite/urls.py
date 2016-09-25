@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
     url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
     url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
-    # 
+    url(r'^comite/nacional/ajax/$', ComiteNacionalAjax , name="nivelcomite-ajax"),
 
     # Nivel Cargo
     url(r'^nivelcargo/$', NivelCargoLista , name="lista_nivelcargo"),
@@ -46,14 +46,14 @@ urlpatterns = [
     url(r'^comite/regional/$', ComiteRegionalLista , name="lista_comiteregional"),
     url(r'^comite/regional/agregar/$', ComiteRegionalAgregar , name="comiteregional-agregar"),
     # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
-    # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
-    # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
+    url(r'^comite/regional/editar/$', ComiteRegionalEditar , name="comiteregional-editar"),
+    url(r'^comite/ubigeo/regiones/ajax/$', ListaRegionesAjax , name="listaregiones-ajax"),
 
-    # url(r'^comite/agregar/$', ComiteAgregar , name="comite-agregar"),
+    url(r'^comite/provincial/$', ComiteProvincialLista , name="lista_comiteprovincial"),
+    url(r'^comite/provincial/agregar/$', ComiteProvincialAgregar , name="comiteprovincial-agregar"),
     # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
-    # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
-    # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
-
+    url(r'^comite/regional/editar/$', ComiteRegionalEditar , name="comiteregional-editar"),
+    url(r'^comite/ubigeo/provincias/ajax/$', ListaProvinciasAjax , name="listaregiones-ajax"),
     # url(r'^comite/agregar/$', ComiteAgregar , name="comite-agregar"),
     # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
     # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
