@@ -73,7 +73,12 @@
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	  
+		
+		{% regroup request.session.menu by menupadre as menu_list %}
+
 	  <ul class="nav navbar-nav">
+<<<<<<< HEAD
 		<li class="dropdown">
 
 		  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
@@ -118,9 +123,45 @@
 		<li><a >{{ request.session.persona }} <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
 		<li><a href="/logout/">Cerrar Sesión</a></li>
 	  </ul>
+=======
+
+	    <a class="navbar-brand" href="#">Inicio</a>
+	  {% for menupadre in menu_list %}
+
+	    {% if menupadre.grouper %}
+	       <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	       {{ menupadre.grouper }} 
+	       <span class="caret"></span></a>
+	    	 <ul class="dropdown-menu">
+		        {% for item in menupadre.list %}
+		          <li><a href="{{ item.ruta }}">{{ item.nombre }}</a></li>
+		        {% endfor %}
+	    	</ul>
+	     </li>
+
+	    {% endif %}	
+
+
+	  {% endfor %}
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a >{{ request.session.persona }} <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
+			<li><a href="/logout/">Cerrar Sessión</a></li>
+		</ul>
+
+
+
+>>>>>>> fcf679df15dc1ba613f49934c125bb6ca6abba1e
 	</div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+
+
+
+
+
+
 
 <div class="container-fluid">
 	<div class="row">
