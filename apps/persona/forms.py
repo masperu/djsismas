@@ -108,14 +108,14 @@ class PersonaForm(forms.ModelForm):
 					})
 				)	
 
-	clave = forms.CharField(
-				required=False,
-				max_length=10, 
-				widget=forms.TextInput(
-					attrs={
-						'class': 'form-control',
-					})
-			)	
+	# clave = forms.CharField(
+	# 			required=False,
+	# 			max_length=10, 
+	# 			widget=forms.TextInput(
+	# 				attrs={
+	# 					'class': 'form-control',
+	# 				})
+	# 		)	
 
 	fnacimiento = forms.DateField(widget=forms.DateInput(attrs={
 						'class': 'form-control',
@@ -126,7 +126,7 @@ class PersonaForm(forms.ModelForm):
 
 	direccion = forms.CharField(
 				required=False,
-				max_length=10, 
+				max_length=40, 
 				widget=forms.TextInput(
 					attrs={
 						'class': 'form-control',
@@ -138,7 +138,7 @@ class PersonaForm(forms.ModelForm):
 	class Meta:
 		model = Persona
 		fields = ('nombre', 'paterno', 'materno',
-					'dni', 'sexo','correos', 'clave','fnacimiento', 
+					'dni', 'sexo','correos','fnacimiento', 
 					'estadocivil','tipocalle','direccion',
 					'ubigeonacimiento','ubigeoresidencia',)
 

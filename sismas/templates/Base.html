@@ -78,8 +78,50 @@
 		{% regroup request.session.menu by menupadre as menu_list %}
 
 	  <ul class="nav navbar-nav">
+		<li class="dropdown">
 
-	    <a class="navbar-brand" href="#">Inicio</a>
+		  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
+		  <ul class="dropdown-menu">
+			<li><a href="/menu/">Menu</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="/rol/">Rol</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="/organizacion/">Organizacion</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="/usuario/">Usuarios</a></li>
+			<li><a href="/perfil/">Perfil</a></li>
+		  </ul>
+		</li>
+	  </ul>
+	  <ul class="nav navbar-nav">
+		<li class="dropdown">
+		  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Comités <span class="caret"></span></a>
+		  <ul class="dropdown-menu">
+			<li><a href="/nivelcomite/">Nivel Comite</a></li>
+			<li><a href="/tipocargo/">Tipo Cargo</a></li>
+			<li><a href="/nivelcargo/">Nivel Cargo</a></li>
+			<li><a href="/directiva/">Directiva</a></li>
+			<li role="separator" class="divider"></li>
+			<li><a href="/comite/">Comites</a></li>
+			<li><a href="/comite/nacional/">Comite ejecutivo nacional</a></li>
+			<li><a href="/comite/regional/">Comites regionales</a></li>
+		  </ul>
+		</li>
+	  </ul>
+	   <ul class="nav navbar-nav">
+		<li class="dropdown">
+		  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Personas <span class="caret"></span></a>
+		  <ul class="dropdown-menu">
+			<li><a href="/persona.estadocivil/">Estado Civil</a></li>
+			<li><a href="/persona.tipocalle/">Tipo Calle</a></li>
+			<li><a href="/persona.persona/">Persona</a></li>
+		  </ul>
+		</li>
+	  </ul>
+	  <ul class="nav navbar-nav navbar-right">
+		<li><a >{{ request.session.persona }} <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
+		<li><a href="/logout/">Cerrar Sesión</a></li>
+	  </ul>
 	  {% for menupadre in menu_list %}
 
 	    {% if menupadre.grouper %}
@@ -98,13 +140,6 @@
 
 	  {% endfor %}
 		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a >{{ request.session.persona }} <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
-			<li><a href="/logout/">Cerrar Sessión</a></li>
-		</ul>
-
-
-
 	</div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

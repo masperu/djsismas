@@ -1643,8 +1643,28 @@ def ListaProvinciasAjax(request):
 #
 #
 #
-#
-#
+def DirectivaAgregar(request):
+	if(request.session.get("idusuario", False)):
+		url = "/directiva/agregar/"
+
+		if request.method == 'POST':
+			form = DirectivaForm(request.POST)
+			if form.is_valid():
+				directiva = form.save(commit=False)
+				directiva.save()
+				form.cleaned_data
+				msg = {"msg" : "Datos guardados correctamente"}
+				return HttpResponse(
+							json.dumps( msg ), 
+							content_type="application/json"
+						)
+			else :
+				return render(request, 'comite/directiva_form.html',{'form':form, 'url': url })
+		else:
+			form = TipoCargoForm()
+			return render(request, 'comite/directiva_form.html',{'form':form, 'url': url })
+	else:
+		return redirect('/login/')
 #
 #
 #

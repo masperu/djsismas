@@ -1,0 +1,59 @@
+{% extends "Base.html" %}
+
+{% load static from staticfiles %}
+
+
+{% block maestro_estilos %}
+
+{% endblock maestro_estilos %}
+
+
+{% block maestro_contenido %}
+
+<div class="col-xs-12">
+
+	<form class="col-xs-12" role="form" method="POST" id="formDirectiva" action="/directiva/agregar/">
+        {% csrf_token %}
+
+        <div class="form-group">
+	      <label for="directiva" class="col-xs-12 control-label">Seleccionar</label>
+	      <div class="col-xs-12 col-sm-6">
+	        <select id="directiva" class="form-control" name="directiva">
+	          <option value="0">Seleccionar</option>
+	          {% for item in directiva %}
+                    <option value="{{ item.id }}">{{ item.nombre }}</option>
+            {% endfor %}
+	        </select>
+	      </div>
+	    </div>
+	</form>
+
+	<p>
+	<div id="contentTipoCargo" class="col-xs-12">
+		<form class="col-xs-12" role="form" method="POST" id="formNivelTipoCargo" action="/nivelcargo/guardar/">
+		{% csrf_token %}
+		<input type="hidden" id="totalTipoCargo" value="0">
+		</form>
+	</div>
+	<div class="col-xs-12 text-center">
+		<p>
+			<button type="button" class="btn btn-primary" id="guardarNivelCargo" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>		
+		</p>
+		
+	</div>
+	
+	</p>
+
+</div>
+
+
+
+
+    
+
+{% endblock maestro_contenido %}
+
+
+{% block maestro_scripts %}
+<script src="{% static 'js/nivelcargo/nivelcargo.js' %}"></script>
+{% endblock maestro_scripts %}
