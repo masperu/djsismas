@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelMultipleChoiceField, CheckboxSelectMultiple,SelectMultiple
-from .models import NivelComite, TipoCargo, Comite, NivelCargo
+from .models import NivelComite, TipoCargo, Comite, NivelCargo, Directiva
 
 
 class NivelComiteForm(forms.ModelForm):
@@ -85,4 +85,8 @@ class NivelCargoForm(forms.ModelForm):
 		fields = ('tipocargo', 'nivelcomite', )
 
 
+class DirectivaForm(forms.ModelForm):
+	class Meta:
+		model = Directiva
+		fields = ('persona', 'nivelcargo', 'comite')
 
