@@ -36,7 +36,7 @@
 					<th class="text-center th2">Nombre</th>
 					<th class="text-center th3">Dirección</th>
 					<th class="text-center th3">Acta conformación</th>
-					<th class="text-center th3">Region</th>
+					<th class="text-center th3">Provincia</th>
 					<th colspan="2" class="text-center th5">Operaciones</th>
 				</tr>
 			</thead>
@@ -56,7 +56,7 @@
 					<td class="td3">{{ item.actaconformacion }}</td>
 					<td class="td3">{{ item.ubigeo.nombreubigeo }}</td>
 					<td class="text-center td5">
-						<a href="/comite/regional/editar/?idcomite={{ item.id }}" class="comiteEditar" role="button">
+						<a href="/comite/provincial/editar/?idcomite={{ item.id }}" class="comiteEditar" role="button">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</a>
 					</td>

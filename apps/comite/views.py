@@ -279,6 +279,29 @@ def ComiteNacionalAjax(request):
 		return redirect('/login/')
 
 
+
+def ComiteRegionalAjax(request):
+	if(request.session.get("idusuario", False)):
+		comite = Comite.objects.filter(
+					nombre__icontains = "" + request.GET.get('query') + "", 
+					nivelcomite__codigo = 'RG' 
+				)[:10]
+
+		total = comite.count()
+		return render(
+			request,
+			'comite/comite.json',
+			{
+				'comite': comite,
+				'total':total
+			},
+			content_type="application/json",
+		)
+		#return render(request, 'comite/comite.html',{'comite': comite})
+	else:
+		return redirect('/login/')
+
+
 def ComiteAgregar(request):
 	if(request.session.get("idusuario", False)):
 		url = "/comite/agregar/"
@@ -604,6 +627,7 @@ def ListaRegionesAjax(request):
 	else:
 		return redirect('/login/')
 
+
 def ComiteRegionalEditar(request):
 	if(request.session.get("idusuario", False)):
 		idcomite = request.GET.get('idcomite')
@@ -736,31 +760,66 @@ def ListaProvinciasAjax(request):
 	else:
 		return redirect('/login/')
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+
+
+def ComiteProvincialEditar(request):
+	if(request.session.get("idusuario", False)):
+		idcomite = request.GET.get('idcomite')
+		instance = get_object_or_404(Comite, id=idcomite)
+		url = "/comite/regional/editar/?idcomite=" + idcomite
+		form = ComiteForm(request.POST or None, instance=instance)
+		
+		#Todos lo comites para la lista
+		nivelcomite = NivelComite.objects.filter(codigo = 'PR')
+		#ubigeoregion = Ubigeo.objects.filter(~Q(coddep__in = ('PE', '00')), codprov = '00', coddist = '00')
+
+		#ComitePadre
+		try:
+			comitepadre = Comite.objects.get(id=instance.comitepadre.id)
+			ubigeo = Ubigeo.objects.get(id=instance.ubigeo.id)
+			region = Ubigeo.objects.get(coddep=ubigeo.coddep, codprov = '00', coddist = '00')
+
+		except Exception as e:
+			comitepadre = None
+			region = None
+			ubigeo = None
+
+
+		if form.is_valid():
+			form.save()
+			msg = {"msg" : "Datos guardados correctamente"}
+			return HttpResponse(
+					json.dumps( msg ), 
+					content_type="application/json"
+				)
+		else:
+			return render(
+						request, 
+						'comite/comiteprovincial_form.html', 
+						{ 
+							'url': url, 
+							'form':form, 
+							'nivelcomite':nivelcomite, 
+							'comitepadre':comitepadre, 
+							'ubigeo':ubigeo,
+							'region':region 
+						}
+					)
+
+		return render(
+					request, 
+					'comite/comiteprovincial_form.html', 
+					{ 
+						'url': url, 
+						'form':form, 
+						'nivelcomite':nivelcomite, 
+						'comitepadre':comitepadre, 
+						'ubigeo':ubigeo,
+						'region':region 
+					}
+				)
+	else:
+		return redirect('/login/')
 #
 #
 #

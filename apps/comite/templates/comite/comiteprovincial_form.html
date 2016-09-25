@@ -48,7 +48,7 @@
 
         {% if field.name == 'nivelcomite' %}
 
-        <div class="form-group hidden">
+        <div class="form-group ">
                 <div class="col-xs-12 col-sm-4">
                         <label for="nivelcomite">Nivel</label>
                 </div>
@@ -92,7 +92,7 @@
                         <label for="region__text">Región</label>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-                        <input type="text" name="region_text" id="region_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ ubigeoregion.nombreubigeo }}" {% endif %} disabled="disabled" > <span class="glyphicon glyphicon-remove enabledautocomplete"></span>
+                        <input type="text" name="region_text" id="region_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ region.nombreubigeo }}" {% endif %} disabled="disabled" > <span class="glyphicon glyphicon-remove enabledautocomplete"></span>
                         <input type="hidden" name="regionid" id="regionid" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
                         <div class="help-block alert-danger">
                                 {{ field.errors }}        
@@ -105,7 +105,7 @@
                         <label for="ubigeo_text">Provincia</label>
                 </div>
                 <div class="col-xs-12 col-sm-8">
-                        <input type="text" name="ubigeo_text" id="ubigeo_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ ubigeoregion.nombreubigeo }}" {% endif %} disabled="disabled"> <span class="glyphicon glyphicon-remove enabledautocompleteubigeo"></span>
+                        <input type="text" name="ubigeo_text" id="ubigeo_text" class="form-control" placeholder="Escriba para buscar" size="200" {% if field.value != None %} value="{{ ubigeo.nombreubigeo }}" {% endif %} disabled="disabled"> <span class="glyphicon glyphicon-remove enabledautocompleteubigeo"></span>
                         <input type="hidden" name="ubigeo" id="ubigeo" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
                         <div class="help-block alert-danger">
                                 {{ field.errors }}        
@@ -117,5 +117,3 @@
         {% endfor %}
 
 </form>
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt iure quod ducimus officiis ipsum, libero quasi et vitae repellendus neque, eaque eos ab delectus numquam voluptatem aliquid, dolores debitis aut.

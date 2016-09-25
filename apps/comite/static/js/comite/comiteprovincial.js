@@ -2,6 +2,13 @@ var txtComitePadre = "";
 var txtUbigeo = "";
 var txtRegion = "";
 var idregion = 0;
+var ubigeo = 0;
+
+
+var tecla = jQuery.Event("keydown");
+tecla.which = 8; // # Codigo del eliminar
+
+
 $( document ).ready(function() {
 
 	$(window).keydown(function(event){
@@ -37,7 +44,7 @@ $( document ).ready(function() {
 	 		$("#nivelcomiteid").val($("#nivelcomite").val());
 
 	 		$('#comitepadre_text').autocomplete({
-				serviceUrl: '/comite/nacional/ajax/',
+				serviceUrl: '/comite/regional/ajax/',
 				onSelect: function (suggestion) {
 				    $("#comitepadre").val(suggestion.data);
 				    txtComitePadre = suggestion.value;
@@ -55,30 +62,27 @@ $( document ).ready(function() {
 				    $(this).prop('disabled', true);
 				    $(".enabledautocomplete").show();
 
-				    $("#ubigeo_text").val("").prop('disabled', false).focus();
-					$("#ubigeo").val("0");
+
+				    $(".enabledautocompleteubigeo").trigger('click');
+				    //Desencademos el evento eliminar
+				    
 				}
 			});
 
 
 			$('#ubigeo_text').autocomplete({
-				noCache:true,
 				serviceUrl: '/comite/ubigeo/provincias/ajax/',
 			    onSearchStart: function (){
-			    	
-			    	if ( $.trim( $("#region_text").val() ).length == 0 ) {
-						$("#regionselected").val("00");
-						$("#ubigeo_text").val("");
-						txtRegion = "";
-						txtUbigeo = "";
-					}
-
 
 			        $(this).autocomplete('setOptions', { params: { 'regionid' : $("#regionselected").val(), } });
 			    },
 				onSelect: function (suggestion) {
 				    $("#ubigeo").val(suggestion.data);
 				    txtUbigeo = suggestion.value;
+
+				    $(this).prop('disabled', true);
+				    $(".enabledautocompleteubigeo").show();
+
 				}
 			});
 
@@ -90,6 +94,18 @@ $( document ).ready(function() {
 				$("#regionid").val("0");
 				$("#ubigeo_text").val("").prop('disabled', true);
 				$("#ubigeo").val("0");
+				//$(".enabledautocomplete").show();
+			});
+
+
+			$('.enabledautocompleteubigeo').on('click', function(){
+				$(this).hide();
+				$("#ubigeo_text").prop('disabled', false);
+				$("#ubigeo_text").val("").focus();
+				$("#ubigeo").val("0");
+
+				$("#ubigeo_text").val("Escriba para buscar").select();;
+				
 				//$(".enabledautocomplete").show();
 			});
 
@@ -120,7 +136,7 @@ $( document ).ready(function() {
 	 		$("#nivelcomite").val($("#nivelcomiteid").val());
 
 	 		$('#comitepadre_text').autocomplete({
-				serviceUrl: '/comite/nacional/ajax/',
+				serviceUrl: '/comite/regional/ajax/',
 				onSelect: function (suggestion) {
 				    $("#comitepadre").val(suggestion.data);
 				    txtComitePadre = suggestion.value;
@@ -128,13 +144,64 @@ $( document ).ready(function() {
 			});
 
 			
-			$('#ubigeo_text').autocomplete({
+			$('#region_text').autocomplete({
 				serviceUrl: '/comite/ubigeo/regiones/ajax/',
+				onSelect: function (suggestion) {
+				    $("#regionid").val(suggestion.data);
+				    $("#regionselected").val(suggestion.data);
+				    txtRegion = suggestion.value;
+
+				    $(this).prop('disabled', true);
+				    $(".enabledautocomplete").show();
+
+
+				    $(".enabledautocompleteubigeo").trigger('click');
+				    //Desencademos el evento eliminar
+				    
+				}
+			});
+
+
+			$('#ubigeo_text').autocomplete({
+				serviceUrl: '/comite/ubigeo/provincias/ajax/',
+			    onSearchStart: function (){
+
+			        $(this).autocomplete('setOptions', { params: { 'regionid' : $("#regionselected").val(), } });
+			    },
 				onSelect: function (suggestion) {
 				    $("#ubigeo").val(suggestion.data);
 				    txtUbigeo = suggestion.value;
+
+				    $(this).prop('disabled', true);
+				    $(".enabledautocompleteubigeo").show();
+
 				}
 			});
+
+
+			$('.enabledautocomplete').on('click', function(){
+				$(this).hide();
+				$("#region_text").prop('disabled', false);
+				$("#region_text").val("").focus();
+				$("#regionid").val("0");
+				$("#ubigeo_text").val("").prop('disabled', true);
+				$("#ubigeo").val("0");
+				//$(".enabledautocomplete").show();
+			});
+
+
+			$('.enabledautocompleteubigeo').on('click', function(){
+				$(this).hide();
+				$("#ubigeo_text").prop('disabled', false);
+				$("#ubigeo_text").val("").focus();
+				$("#ubigeo").val("0");
+
+				$("#ubigeo_text").val("Escriba para buscar").select();;
+				
+				//$(".enabledautocomplete").show();
+			});
+
+
 
 	 	});
 	});
@@ -189,15 +256,16 @@ $( document ).ready(function() {
 	$("#guardarComite").on('click', function(e){
 
 		if ( $.trim( $("#comitepadre_text").val() ).length == 0 ) {
-			$("#comitepadre").val("");
-			$("#comitepadre_text").val("");
-			txtComitePadre = "";
+			toastr.error("Seleccione el comite padre");
+			$("#comitepadre_text").focus();
+			return;
 		}
 
 		if ( $.trim( $("#ubigeo_text").val() ).length == 0 ) {
 			$("#ubigeo").val("");
 			$("#ubigeo_text").val("");
 			txtUbigeo = "";
+			ubigeo = 0;
 		}
 
 		//return;
@@ -235,24 +303,80 @@ $( document ).ready(function() {
 
 					//Seteamos textos
 					$("#comitepadre_text").val(txtComitePadre);
+					$("#region_text").val(txtRegion);
 					$("#ubigeo_text").val(txtUbigeo);
 
-					$('#comitepadre_text').autocomplete({
-						serviceUrl: '/comite/ajax/',
+					$("#nivelcomiteid").val($("#nivelcomite").val());
+
+			 		
+
+					//Funciones de autocompletar
+			 		$('#comitepadre_text').autocomplete({
+						serviceUrl: '/comite/regional/ajax/',
 						onSelect: function (suggestion) {
-						    //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
 						    $("#comitepadre").val(suggestion.data);
-				    		txtComitePadre = suggestion.value;
+						    txtComitePadre = suggestion.value;
 						}
 					});
 
-					$('#ubigeo_text').autocomplete({
+					
+					$('#region_text').autocomplete({
 						serviceUrl: '/comite/ubigeo/regiones/ajax/',
+						onSelect: function (suggestion) {
+						    $("#regionid").val(suggestion.data);
+						    $("#regionselected").val(suggestion.data);
+						    txtRegion = suggestion.value;
+
+						    $(this).prop('disabled', true);
+						    $(".enabledautocomplete").show();
+
+
+						    $(".enabledautocompleteubigeo").trigger('click');
+						    //Desencademos el evento eliminar
+						    
+						}
+					});
+
+
+					$('#ubigeo_text').autocomplete({
+						serviceUrl: '/comite/ubigeo/provincias/ajax/',
+					    onSearchStart: function (){
+
+					        $(this).autocomplete('setOptions', { params: { 'regionid' : $("#regionselected").val(), } });
+					    },
 						onSelect: function (suggestion) {
 						    $("#ubigeo").val(suggestion.data);
 						    txtUbigeo = suggestion.value;
+
+						    $(this).prop('disabled', true);
+						    $(".enabledautocompleteubigeo").show();
+
 						}
 					});
+
+
+					$('.enabledautocomplete').on('click', function(){
+						$(this).hide();
+						$("#region_text").prop('disabled', false);
+						$("#region_text").val("").focus();
+						$("#regionid").val("0");
+						$("#ubigeo_text").val("").prop('disabled', true);
+						$("#ubigeo").val("0");
+						//$(".enabledautocomplete").show();
+					});
+
+
+					$('.enabledautocompleteubigeo').on('click', function(){
+						$(this).hide();
+						$("#ubigeo_text").prop('disabled', false);
+						$("#ubigeo_text").val("").focus();
+						$("#ubigeo").val("0");
+
+						$("#ubigeo_text").val("Escriba para buscar").select();;
+						
+						//$(".enabledautocomplete").show();
+					});
+
 
 				}
 
