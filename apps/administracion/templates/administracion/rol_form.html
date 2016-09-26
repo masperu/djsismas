@@ -46,6 +46,26 @@
 		</div>
 
 		{% endif %}
+		{% if field.name == 'menus' %}
+
+			<div class="form-group">
+				<div class="col-xs-12">
+	       			<label for="roles">Menus</label>
+				</div>
+				<div class="col-xs-12 list-group">
+						
+					{% for list in field %}
+					<div id="id_menus" class="col-md-6">
+						<li class="list-group-item">.{{list}}</li>	
+					</div>
+					{%  endfor %}
+
+	   			</div>
+	   		</div>
+	   		<div class="help-block alert-danger">
+				{{ field.errors }}        
+			</div>     
+		{% endif %}
 
 	{% endfor %}
 

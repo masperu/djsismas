@@ -18,23 +18,24 @@
 	{% if field.name == 'roles' %}
 		<div class="col-xs-12">
 			<div class="form-group">	
-			{% for rol in rol %}
+			
+				{% for list in field %}
+						<div id="id_roles" class="col-md-4 col-sm-6">
+							<li class="list-group-item">{{list}}</li>
+						</div>
+				{%  endfor %}
+				{% for rol in rol %}
 
 				<div id="id_roles" class="col-md-4 col-sm-6">
 					<li class="list-group-item">
-					<label for="id_roles_{{forloop.counter}}">
-						<input id="id_roles_{{forloop.counter}}" class="custom-control-input" name="roles" value="{{rol.id}}" type="checkbox">
+					<label >
+						<input class="custom-control-input" name="roles" value="{{rol.id}}" type="checkbox">
 						{{rol.nombre}}
 					</label>
 
 					</li>
 				</div>
 			{% endfor %}
-				{% for list in field %}
-						<div id="id_roles" class="col-md-4 col-sm-6">
-							<li class="list-group-item">{{list}}</li>
-						</div>
-				{%  endfor %}
 			</div>
 			<div class="help-block alert-danger">
 				{{ field.errors }}

@@ -13,7 +13,6 @@
 			size: 5
 		});
 		
-		// $('#selectProvincia').selectpicker('refresh');
 		$('#selectProvincia').on('hidden.bs.select', function (e) {
 			var dep = $('#selectDepartamento').val();
 			$('#divDis').load("/persona.ubigeonacimiento/listar/"+dep+"/"+$(this).val()+"/");

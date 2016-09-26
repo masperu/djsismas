@@ -87,10 +87,18 @@ class RolForm(forms.ModelForm):
 			required=False,
 			# widget=forms.RadioSelect(choices=choices)
 		)
-
+	
+	menus = ModelMultipleChoiceField(
+			queryset=Menu.objects.filter(estado=True),
+			widget=forms.CheckboxSelectMultiple(
+				attrs={
+					'class': 'custom-control-input',
+				}
+			),
+		)
 	class Meta:
 		model = Rol
-		fields = ('nombre','controltotal',)
+		fields = ('nombre','controltotal','menus',)
 
 class RolAccesoForm(forms.ModelForm):
 	menus = ModelMultipleChoiceField(

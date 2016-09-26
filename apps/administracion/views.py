@@ -33,7 +33,7 @@ def Login(request):
 				try:
 					request.session['persona'] = user.usuario.persona.nombre+" "+user.usuario.persona.paterno+" "+user.usuario.persona.materno
 					
-					menu = Menu.objects.all()
+					menu = Menu.objects.all().order_by('menupadre', 'orden')
 					menus = []
 					for menu in menu:
 						menus.append({"nombre":menu.nombre, "ruta":menu.ruta, "menupadre":menu.menupadre.nombre if menu.menupadre else None })
@@ -51,6 +51,7 @@ def Logout(request):
 	try:
 		del request.session['idusuario']
 		del request.session['persona']
+		del request.session['menu']
 	except KeyError:
 		pass
 	logout(request)
@@ -173,7 +174,7 @@ def MenuEditar(request):
 		return redirect('/login/')
 
 def MenuListar(request):
-	menu = Menu.objects.all()
+	menu = Menu.objects.all().order_by('menupadre')
 	menus = []
 	for menu in menu:
 		menus.append({"nombre":menu.nombre, "ruta":menu.ruta, "menupadre":menu.menupadre.nombre if menu.menupadre else None })
@@ -205,9 +206,13 @@ def RolAgregar(request):
 			# create a form instance and populate it with data from the request:
 			form = RolForm(request.POST)
 			# check whether it's valid:
+			post = request.POST
+			menus = post.getlist('menus')
 			if form.is_valid():
 				rol = form.save(commit=False)
 				rol.save()
+				for menu in menus:
+					rol.menus.add(menu)
 				form.cleaned_data
 				# return redirect(ListaMenus)
 				msg = {"msg" : "Datos guardados correctamente"}

@@ -50,7 +50,10 @@
 					depaN = data.coddep;
 					provN = data.codprov;
 				});
+			}else{	
+				$('#selectDepartamento').selectpicker('render');
 			}
+			
 		}
 
 		$('#modalUbigeo').modal('show').find('#divDep').load("/persona.ubigeonacimiento/listar/");
@@ -58,31 +61,30 @@
 		$('#modalUbigeo').on('shown.bs.modal', function(e) {
 			// $('#selectDepartamento').selectpicker('render');
 
-			$('#selectDepartamento').on('hide.bs.select', function (e) {
+			$('#selectDepartamento').selectpicker('refresh');
+
+			$('#selectDepartamento').on('hiden.bs.select', function (e) {
 				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
 			});
 			$('#selectDepartamento').on('rendered.bs.select', function (e) {
 				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
 			});
-			$('#selectDepartamento').on('refreshed.bs.select', function (e) {
-				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
-			});
+			// $('#selectDepartamento').on('refreshed.bs.select', function (e) {
+			// 	$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
+			// });
 			$('#selectDepartamento').on('loaded.bs.select', function (e) {
-				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
-			});
-			$('#selectDepartamento').on('rendered.bs.select', function (e) {
 				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
 			});
 
 			if(tipoubigeo=="N"){
 				if(depaN){
-
+					$('#selectDepartamento').selectpicker('render');
+					// $('#selectProvincia').selectpicker('render');
 					$('#selectDepartamento').val(depaN);
 					$('#selectDepartamento').selectpicker('refresh');
+					
 				}
 			}
-			// $('#selectProvincia').selectpicker('render');
-			// alert($('#selectProvincia').val());
 
 	
 		
@@ -116,6 +118,8 @@
 					depaR = data.coddep;
 					provR = data.codprov;
 				});
+			}else{	
+				$('#selectDepartamento').selectpicker('render');
 			}
 		}
 
@@ -123,23 +127,24 @@
 		$('#modalUbigeo').on('shown.bs.modal', function(e) {
 			
 			// $('#selectDepartamento').val("06");
-			// $('#selectDepartamento').selectpicker('refresh');
+			$('#selectDepartamento').selectpicker('refresh');
 			// var modal = $(this);
-			$('#selectDepartamento').on('hide.bs.select', function (e) {
+			$('#selectDepartamento').on('hiden.bs.select', function (e) {
 				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
 			});
 			$('#selectDepartamento').on('rendered.bs.select', function (e) {
 				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
 			});
-			$('#selectDepartamento').on('refreshed.bs.select', function (e) {
-				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
-			});
-			$('#selectDepartamento').on('loaded.bs.select', function (e) {
-				$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
-			});
+			// $('#selectDepartamento').on('refreshed.bs.select', function (e) {
+			// 	$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
+			// });
+			// $('#selectDepartamento').on('loaded.bs.select', function (e) {
+			// 	$('#divProv').load("/persona.ubigeonacimiento/listar/"+$(this).val()+"/");
+			// });
 			if(tipoubigeo=="R"){
 				if(depaR){
-
+					$('#selectDepartamento').selectpicker('render');
+					// $('#selectProvincia').selectpicker('render');
 					$('#selectDepartamento').val(depaR);
 					$('#selectDepartamento').selectpicker('refresh');
 				}
@@ -151,13 +156,6 @@
 	});
 
 	$('#btnGuardarUbigeo').click(function(){
-		// console.log($('#selectDistrito').val());
-		// console.log($('#selectDistrito option[value='+$('#selectDistrito').val()+']').text());
-		// console.log($('#selectProvincia').val());
-		// console.log($('#selectProvincia option[value='+$('#selectProvincia').val()+']').text());
-		// console.log($('#selectDepartamento').val());
-		// console.log($('#selectDepartamento option[value='+$('#selectDepartamento').val()+']').text());
-
 		if(tipoubigeo=='N'){
 			$("#txtubigeonacimiento").val($('#selectDepartamento option[value='+$('#selectDepartamento').val()+']').text()+"/"
 				+$('#selectProvincia option[value='+$('#selectProvincia').val()+']').text()+"/"

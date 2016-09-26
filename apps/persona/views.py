@@ -228,6 +228,18 @@ def PersonaAgregar(request):
 		ubigeonacimiento = None
 		ubigeoresidencia = None
 		if request.method == 'POST':
+			if(request.POST['ubigeoresidencia']):
+
+				ubigeoresidencia = Ubigeo.objects.get(id=request.POST['ubigeoresidencia'])
+				Depresidencia = Ubigeo.objects.get(coddep=ubigeoresidencia.coddep,coddist = '00',codprov='00' )
+				Provresidencia = Ubigeo.objects.get(coddep=ubigeoresidencia.coddep,coddist = '00',codprov=ubigeoresidencia.codprov)
+				ubigeoresidencia = Depresidencia.nombreubigeo+"/"+Provresidencia.nombreubigeo+"/"+ubigeoresidencia.nombreubigeo
+			if(request.POST['ubigeonacimiento']):
+				ubigeonacimiento = Ubigeo.objects.get(id=request.POST['ubigeonacimiento'])
+				Depnacimiento = Ubigeo.objects.get(coddep=ubigeonacimiento.coddep,coddist = '00',codprov='00' )
+				Provnacimiento = Ubigeo.objects.get(coddep=ubigeonacimiento.coddep,coddist = '00',codprov=ubigeonacimiento.codprov)
+				ubigeonacimiento = Depnacimiento.nombreubigeo+"/"+Provnacimiento.nombreubigeo+"/"+ubigeonacimiento.nombreubigeo
+
 			# create a form instance and populate it with data from the request:
 			form = PersonaForm(request.POST)
 			# check whether it's valid:
