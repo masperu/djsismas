@@ -528,7 +528,6 @@ def ListaPerfilRoles(request):
 		iduser = request.GET.get('iduser')
 		user = User.objects.get(id=iduser)
 		idusuario = user.usuario.id
-		lista = []
 		rol = Perfil.objects.filter(usuario_id=idusuario, estado = True).values_list('rol__id')
 		rol1 = Rol.objects.exclude(id__in= rol)
 		instance = get_object_or_404(Usuario, id=idusuario)

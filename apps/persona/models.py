@@ -1,5 +1,5 @@
 from django.db import models
-# from apps.administracion.models import 
+# from apps.administracion.models import Perfil
 # from multi_email_field.forms import MultiEmailField
 # Create your models here.
 
@@ -18,6 +18,7 @@ class Ubigeo(models.Model):
 	coddist = models.CharField(max_length=2)
 	nombreubigeo = models.CharField(max_length=50)
 	nombrecapital = models.CharField(max_length=50)
+	# perfiles = models.ManyToManyField(Perfil)
 
 	def __str__(self):
 		return self.nombreubigeo
