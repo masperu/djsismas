@@ -60,7 +60,7 @@ urlpatterns = [
     #url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
     # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),
 
-    # url(r'^comite/agregar/$', ComiteAgregar , name="comite-agregar"),
+    # url(r'^fichas/$', ComiteAgregar , name="comite-agregar"),
     # url(r'^comite/eliminar/$', ComiteEliminar , name="comite-eliminar"),
     # url(r'^comite/editar/$', ComiteEditar , name="comite-editar"),
     # url(r'^comite/ajax/$', ComiteAjax , name="nivelcomite-ajax"),

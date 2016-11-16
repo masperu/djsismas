@@ -11,6 +11,16 @@
 {% block maestro_contenido %}
 
 <div class="col-xs-12">
+	<h4 class="title">
+		Nivel Cargo
+	</h4>
+</div>
+
+<div class="col-xs-12">
+	<br>
+</div>
+
+<div class="col-xs-12">
 
 	<form class="col-xs-12" role="form" method="POST" id="formNivelCargo" action="/nivelcargo/agregar/">
         {% csrf_token %}
@@ -29,12 +39,20 @@
 	</form>
 
 	<p>
+	<div class="col-xs-12 text-center">
+		<br>
+	</div>
 	<div id="contentTipoCargo" class="col-xs-12">
 		<form class="col-xs-12" role="form" method="POST" id="formNivelTipoCargo" action="/nivelcargo/guardar/">
 		{% csrf_token %}
 		<input type="hidden" id="totalTipoCargo" value="0">
 		</form>
 	</div>
+
+	<div class="col-xs-12 text-center">
+		<br>
+	</div>
+
 	<div class="col-xs-12 text-center">
 		<p>
 			<button type="button" class="btn btn-primary" id="guardarNivelCargo" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>		

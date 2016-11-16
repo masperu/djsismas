@@ -1,0 +1,18 @@
+{
+	"success": true,
+	"message": "OK",
+	"totalCount": {{ total }},
+	"data": [
+		{% for areadato in areasdatos %}
+			{
+				"id": {{ areadato.id }},
+				"nombre":"{{ areadato.area_dato_catalogo_configuracion }}",
+				"area_dato_catalogo_configuracion_id":{{ areadato.area_dato_catalogo_configuracion.id }},
+				"area_id":{{ areadato.area_id }},
+				"valor":"{{ areadato.valor }}",
+				"inicio":"{{ areadato.inicio|date:'m/d/Y' }}",
+				"fin":"{{ areadato.fin|date:'m/d/Y' }}",
+			},
+		{% endfor %}
+	]
+}

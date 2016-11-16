@@ -10,41 +10,49 @@
 
 
 {% block maestro_contenido %}
+
 <div class="col-xs-12">
-  <a id="agregarFicha" class="btn btn-default" href="/ficha.ficha/agregar/" role="button"  >Agregar</a>
+  <h4 class="title">
+    Fichas
+  </h4>
+</div>
+
+<div class="col-xs-12 text-right">
+  <a id="agregarFicha" href="/fichas/agregar/" role="button"  ><span class="glyphicon glyphicon-plus"></span>Agregar</a>
+</div>
+
+<div class="col-xs-12">
+  <br>
+</div>
+
+<div class="col-xs-12">
+
+{% if total > 0 %}
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-condensed table-hover">
       <thead class="thead-inverse">
         <tr>
           <th class="text-center th1">#</th>
           <th class="text-center th2">Nombres</th>
-          <th class="text-center th3">Comité</th>  
           <th class="text-center th3">Estado</th>  
           <th class="text-center th3">Fecha Afiliación</th>          
           <th class="text-center th3">Fecha Fin</th>  
           <th class="text-center th3">Alcance</th>  
-          <th class="text-center th3">Organización</th>  
           <th class="text-center th3">Sexo</th>  
-          <th class="text-center th3">Lugar Nacimiento</th>  
-          <th class="text-center th3">Ubigeo</th>  
           <th class="text-center th3">Teléfono</th>  
           <th  colspan="2" class="text-center th8">Botones</th>           
         </tr>
       </thead>
       <tbody>
-        {% for ficha in ficha %}
+        {% for ficha in fichas %}
     		<tr>
     			<td class="text-center td1">{{ forloop.counter }}</td>
     			<td id="ficha{{ficha.id}}" class="text-center td2">{{ficha.persona}} </td>
-    			<td class="text-center td3">{{ficha.comite}}</td>
     			<td class="text-center td3">{{ficha.estado}}</td>
     			<td class="text-center td3">{{ficha.fechaafiliacion}}</td>
     			<td class="text-center td3">{{ficha.fechafin}}</td>
     			<td class="text-center td3">{{ficha.alcance}}</td>
-    			<td class="text-center td3">{{ficha.organizacion}}</td>
     			<td class="text-center td3">{{ficha.sexo}}</td>
-    			<td class="text-center td3">{{ficha.lugarnacimiento}}</td>
-				<td class="text-center td3">{{ficha.ubigeo}}</td>
     			<td class="text-center td3">{{ficha.telefonoactual}}</td>
     			<td class="text-center td8">
       			{% csrf_token %}
@@ -84,11 +92,21 @@
     </ul>
   </nav>
 
+{% else %}
+
+  <div class="col-xs-12 text-center text-muted">
+      <img src="{% static 'images/forbidden.png' %}" alt="Sin items">
+      <br>
+      Sin items
+  </div>
+
+{% endif %}
+
 </div>
 
 <!-- Modal -->
 <div id="modalFichaForm" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" >
-   <div class="modal-dialog" role="document">
+   <div class="modal-dialog modal-lg" role="document">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -99,7 +117,7 @@
 
       </div>
       <div class="modal-footer">
-      	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
          <button type="button" class="btn btn-primary" id="guardarFicha" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>
     </div>
@@ -110,7 +128,7 @@
 
 
 <div id="modalFichaAlert" class="modal fade" tabindex="-1" role="dialog" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -120,7 +138,7 @@
         <p></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         <button id="EliminarFicha" type="button" class="btn btn-primary">Eliminar</button>
       </div>
     </div><!-- /.modal-content -->
@@ -131,7 +149,7 @@
 
 
 {% block maestro_scripts %}
-  <!-- <script src="{% static 'js/estadocivil/estadocivil.js' %}"> </script> -->
+  <script src="{% static 'js/ficha/fichas.js' %}"> </script>
 {% endblock maestro_scripts %}
 
 

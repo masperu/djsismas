@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 import json
+from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.db.models.deletion import ProtectedError
@@ -222,6 +223,41 @@ def ListaPersona(request):
 		return redirect('/login/')
 
 
+def PersonaDNI(request):
+	if(request.session.get("idusuario", False)):
+		dni = request.POST['dni']
+		persona = Persona.objects.filter(dni=dni)
+		
+		if persona.count() == 0:
+			response_data = {"error": "El DNI: " + dni + " no se ha encontrado" }
+			return HttpResponse(
+					json.dumps(response_data),
+					content_type="application/json"
+				)
+		else:
+			response_data = serializers.serialize('json', persona)
+			return HttpResponse(
+					response_data,
+					content_type="application/json"
+				)
+
+	else:
+		return redirect('/login/')
+
+	# idarea = int(request.GET.get("idarea", "0"))
+	# areasdatos = AreaDato.objects.filter(fin=None,area_id=idarea)
+
+	# total = areasdatos.count()
+	# return render(
+	# 	request,
+	# 	'mao/areasdatos/areadato.json',
+	# 	{
+	# 		'areasdatos': areasdatos,
+	# 		'total' : total,
+	# 	},
+	# 	content_type="application/json",
+	# )
+
 
 def PersonaAgregar(request):
 	if(request.session.get("idusuario", False)):
@@ -269,7 +305,7 @@ def PersonaEliminar(request):
 		if request.method == 'POST':
 			idpersona = request.POST['idpersona']
 			try:
-				persona = TipoCalle.objects.get(id = idpersona)
+				persona = Persona.objects.get(id = idpersona)
 				persona.delete()
 				response_data = {"success": "Persona Eliminado Correctamente"}
 				if persona:
@@ -277,7 +313,7 @@ def PersonaEliminar(request):
 						json.dumps(response_data),
 						content_type="application/json"
 					)
-					return HttpResponseRedirect('/persona.persona/')
+				return HttpResponseRedirect('/persona.persona/')
 			except ProtectedError as e:
 				# return HttpResponseRedirect('/menu/')
 				response_data = {"error": "No se puede eliminar este tipo de calle"}

@@ -1,374 +1,443 @@
 {% load static from staticfiles %}
 
+<div class="row">
 
-{% block maestro_estilos %}
-
-{% endblock maestro_estilos %}
-
-
-{% block maestro_contenido %}
-
-   <form id="formFicha" class="form-horizontal" role="form" method="post" action='{{url}}'>
+<form id="formFicha" class="form-horizontal" role="form" method="post" action='{{ url }}'>
    {% csrf_token %}
 
    {% for field in form %}
 
+
+	
+
+
+
 		{% if field.name == 'persona' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="persona">{{ field.label_tag }}</label>
+		<div class="col-sm-6">
+			<div class="form-group">
+
+				<div class="col-xs-12">
+                    <label for="comitepadre_text">DNI:</label>
+	            </div>
+	            <div class="col-xs-10">
+	                    <input type="text" name="persona_text" id="persona_text" class="form-control" placeholder="Escriba DNI" size="200" {% if field.value != None %} value="{{ persona.nombre }}" {% endif %}>
+	                    
+	                    <input type="hidden" name="persona" id="persona" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
+
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	            <div class="col-xs-2">
+	                    <a href="/persona.persona/dni/" id="validarDNI" >Validar</a>
+	            </div>	
 			</div>
-			<div class="col-xs-12 col-sm-8">
-				{{field}}
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
-		</div>
+
+            
+        </div>
 		{% endif %}
 
 		{% if field.name == 'comite' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="comite">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-				{{field}}
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
-		</div>
+		
+		<div class="col-sm-6">
+	    	<div class="form-group">
+
+	            <div class="col-xs-12">
+	                    <label for="comitepadre_text">Comite:</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="comite_text" id="comite_text" class="form-control" placeholder="Escriba comite" size="200" {% if field.value != None %} value="{{ comite.nombre }}" {% endif %}>
+	                    
+	                    <input type="hidden" name="comite" id="comite" {% if field.value != None %} value="{{ field.value }}" {% else %} value="" {% endif %} >
+
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+
+	        </div>
+        </div>
 		{% endif %}		
 
 		{% if field.name == 'estado' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="estado">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+				<div class="checkbox">
+				  <label><input type="checkbox" name="estado" value="">Activo</label>
+				</div>
+
+				<div class="col-xs-12">
+						
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
 		</div>
 		{% endif %}
 
 		{% if field.name == 'fechaafiliacion' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="fechaafiliacion">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
+		<div class="col-sm-6">
 			
-				{{field}}
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="fechaafiliacion">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12">
+				
+					{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
 			</div>
+
 		</div>
 		{% endif %}
 
-		{% if field.name == 'fechafin' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="fechafin">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
+		{% if field.name == 'fechafin' %}
+		<div class="col-sm-6">
+			
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="fechafin">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12">
+				
+					{{field}}
+
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
 			</div>
+
 		</div>
 		{% endif %}
 
 		{% if field.name == 'alcance' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="alcance">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
+		<div class="col-sm-6">
 			
-				{{field}}
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-4">
+				        <label for="alcance">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12 col-sm-8">
+				
+					{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
 			</div>
+
 		</div>
+		
 		{% endif %}		
 
 		{% if field.name == 'organizacion' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="organizacion">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="organizacion">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12">
+				
+					{{field}}
+
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
+			</div>	
+
 		</div>
 		{% endif %}
 
 		{% if field.name == 'paterno' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="paterno">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="paterno">Paterno</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="paterno" id="paterno" class="form-control" placeholder="Apellido paterno" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>
+
 		</div>
+		
 		{% endif %}		
 
-		{% if field.name == 'paterno' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="paterno">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
-
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
-		</div>
-		{% endif %}
-
 		{% if field.name == 'materno' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="materno">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
+		<div class="col-sm-6">
 			
-				{{field}}
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="materno">Materno</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="materno" id="materno" class="form-control" placeholder="Apellido materno" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
 		</div>
+		
 		{% endif %}		
 
 		{% if field.name == 'nombres' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="nombres">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
-
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="materno">Nombres</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="nombres" id="nombres" class="form-control" placeholder="Nombres" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>	
 		</div>
 		{% endif %}
 
 		{% if field.name == 'estadocivil' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="estadocivil">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
+		<div class="col-sm-6">
 			
-				{{field}}
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="estadocivil">Estado Civil</label>
+				</div>
+				<div class="col-xs-12">
+				
+					<select name="estadocivil" id="estadocivil" class="form-control">
+						{% for item in estadocivil %}
+						<option value="{{ item.nombre }}">{{ item.nombre }}</option>
+						{% endfor %}
+					</select>
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
 			</div>
+
 		</div>
+		
 		{% endif %}
 
 		{% if field.name == 'sexo' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="sexo">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="sexo">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12">
+				
+					{{field}}
+
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
 			</div>
+
 		</div>
+		
 		{% endif %}
 
 		{% if field.name == 'lugarnacimiento' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="lugarnacimiento">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="lugarnacimiento">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12">
+				
+					{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
+			</div>	
 		</div>
 		{% endif %}
 
 		{% if field.name == 'ubigeo' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="ubigeo">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
+			<div class="form-group">
+				<div class="col-xs-12">
+				        <label for="ubigeo">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12">
+				
+					{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
+			</div>	
 		</div>
 		{% endif %}
 
 		{% if field.name == 'direccionactual' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="direccionactual">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="direccionactual">Dirección</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="direccionactual" id="direccionactual" class="form-control" placeholder="Dirección" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>
+
 		</div>
+		
 		{% endif %}
 
 		{% if field.name == 'numeroactual' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="numeroactual">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="numeroactual">Número</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="numeroactual" id="numeroactual" class="form-control" placeholder="Numero" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>
+
 		</div>
+		
 		{% endif %}
 
 		{% if field.name == 'sectoractual' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="sectoractual">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="sectoractual">Sector actual</label>
+	            </div>
+	            <div class="col-xs-12">
+	                    <input type="text" name="sectoractual" id="sectoractual" class="form-control" placeholder="Sector actual" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>	
 		</div>
+		
 		{% endif %}		
 
 		{% if field.name == 'telefonoactual' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="telefonoactual">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
-
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                <label for="telefonoactual">Teléfono</label>
+	            </div>
+	            <div class="col-xs-12">
+	                <input type="text" name="telefonoactual" id="telefonoactual" class="form-control" placeholder="Teléfono" size="100" {% if field.value != None %} value="{{ field.value }}" {% endif %} >
+	                <div class="help-block alert-danger">
+	                	{{ field.errors }}
+					</div>
+	            </div>
+	        </div>	
 		</div>
+		
 		{% endif %}
+		
+		
 
 		{% if field.name == 'correos' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="correos">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
+		<div class="col-sm-12">
 			
-				{{field}}
+			<div class="form-group">
+	            <div class="col-xs-12">
+	                    <label for="correos">Correos</label>
+	            </div>
+	            <div class="col-xs-12">
+	    		        <textarea name="correos" id="correos" class="form-control" rows="3">
+	    		        	{% if field.value != None %} 
+	    		        		{{ field.value }} 
+	    		        	{% endif %}
+	    		        </textarea>
+	                    <div class="help-block alert-danger">
+	                            {{ field.errors }}        
+	                    </div>
+	            </div>
+	        </div>
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
 		</div>
+		
 		{% endif %}	
 
 		{% if field.name == 'tipodireccion' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="tipodireccion">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
-			
-				{{field}}
+		<div class="col-sm-6">
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-4">
+				        <label for="tipodireccion">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12 col-sm-8">
+				
+					{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
+			</div>	
 		</div>
+		
 		{% endif %}
 
 		{% if field.name == 'tiposector' %}
-		<div class="form-group">
-			<div class="col-xs-12 col-sm-4">
-			        <label for="tiposector">{{ field.label_tag }}</label>
-			</div>
-			<div class="col-xs-12 col-sm-8">
+		<div class="col-sm-6">
 			
-				{{field}}
+			<div class="form-group">
+				<div class="col-xs-12 col-sm-4">
+				        <label for="tiposector">{{ field.label_tag }}</label>
+				</div>
+				<div class="col-xs-12 col-sm-8">
+				
+					{{field}}
 
-				<div class="help-block alert-danger">
-					{{ field.errors }}        
-				</div>     
-			</div>
+					<div class="help-block alert-danger">
+						{{ field.errors }}        
+					</div>     
+				</div>
+			</div>	
+
 		</div>
+		
 		{% endif %}									
 
 	{% endfor %}
 
-	</form>
+</form>
 
 
-{% endblock maestro_contenido %}
-
+</div>
 
 {% block maestro_scripts %}
-
+  <script src="{% static 'js/ficha/ficha_formulario.js' %}"> </script>
 {% endblock maestro_scripts %}

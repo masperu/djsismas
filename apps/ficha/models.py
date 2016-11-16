@@ -1,5 +1,6 @@
 from django.db import models
 from apps.comite.models import Comite
+from apps.persona.models import Persona
 
 # Create your models here.
 
@@ -19,6 +20,7 @@ class Ficha(models.Model):
 	sectoractual = models.CharField(max_length = 255)
 	telefonoactual = models.CharField(max_length = 20)
 	correos = models.TextField(blank = True, null=True)
+	persona = models.ForeignKey(Persona, on_delete=models.PROTECT)
 
 	def __str__(self):
 		return self.nombres + " " + self.paterno + " " + self.materno

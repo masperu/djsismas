@@ -11,10 +11,22 @@
 {% block maestro_contenido %}
 
 <div class="col-xs-12">
+	<h4 class="title">
+		Tipo Cargo
+	</h4>
+</div>
+
+<div class="col-xs-12 text-right">
+	<a id="agregarTipoCargo" href="/tipocargo/agregar/" role="button" ><span class="glyphicon glyphicon-plus"></span>Agregar</a>
+</div>
+
+<div class="col-xs-12">
+	<br>
+</div>
+
+<div class="col-xs-12">
 
 	<!-- Inicio Grilla -->
-	<a id="agregarTipoCargo" class="btn btn-default" href="/tipocargo/agregar/" role="button" >Agregar</a>
-
 	<div class="table-responsive">
 		<table class="table table-bordered table-striped table-condensed table-hover">
 			<thead>
@@ -92,7 +104,7 @@
       </div>
       <div class="modal-footer">
       <!-- <input type="text" id="micajatexto2" class="nuevo"> -->
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         <!-- <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button> -->
         <button type="button" class="btn btn-primary" id="guardarTipoCargo" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>

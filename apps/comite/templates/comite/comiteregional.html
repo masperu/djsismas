@@ -8,13 +8,23 @@
 
 {% block maestro_contenido %}
 
+
 <div class="col-xs-12">
+	<h4 class="title">
+		Comités Regionales
+	</h4>
+</div>
 
-	
+<div class="col-xs-12 text-right">
+	<a id="agregarComite" href="/comite/regional/agregar/" role="button" ><span class="glyphicon glyphicon-plus"></span>Agregar</a>
+</div>
+
+<div class="col-xs-12">
+	<br>
+</div>
+
+<div class="col-xs-12">
 	<!-- Inicio Grilla -->
-	
-		<a id="agregarComite" class="btn btn-default" href="/comite/regional/agregar/" role="button" >Agregar</a>
-
 	
 	<div class="table-responsive">	
 		<table id="tableNivelComite" class="table table-bordered table-striped table-condensed table-hover">
@@ -98,7 +108,7 @@
       </div>
       <div class="modal-footer">
       <!-- <input type="text" id="micajatexto2" class="nuevo"> -->
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
         <!-- <button id="guardarNivelComite" type="button" class="btn btn-primary">Guardar</button> -->
         <button type="button" class="btn btn-primary" id="guardarComite" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Guardando datos">Guardar</button>
       </div>
